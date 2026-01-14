@@ -144,4 +144,40 @@ class TeacherProfile extends Model
             })
             ->count();
     }
+
+    public function getAllReviews()
+    {
+        // Get booking IDs for this teacher
+        $bookingIds = $this->bookings()->pluck('id');
+
+        // Get course IDs for this teacher
+        $courseIds = Course::where('teacher_id', $this->user_id)->pluck('id');
+
+        // Get all approved reviews: direct teacher reviews + booking reviews + course reviews
+        return Review::where('is_approved', true)
+            ->where(function ($query) use ($bookingIds, $courseIds) {
+                // Direct teacher profile reviews
+                $query->where(function ($q) {
+                    $q->where('reviewable_type', self::class)
+                        ->where('reviewable_id', $this->id);
+                })
+                // Booking reviews
+                ->orWhere(function ($q) use ($bookingIds) {
+                    if ($bookingIds->isNotEmpty()) {
+                        $q->where('reviewable_type', Booking::class)
+                            ->whereIn('reviewable_id', $bookingIds);
+                    }
+                })
+                // Course reviews
+                ->orWhere(function ($q) use ($courseIds) {
+                    if ($courseIds->isNotEmpty()) {
+                        $q->where('reviewable_type', Course::class)
+                            ->whereIn('reviewable_id', $courseIds);
+                    }
+                });
+            })
+            ->with('user')
+            ->latest()
+            ->get();
+    }
 }

@@ -68,6 +68,7 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
 
     // Review Routes
     Route::post('/reviews', [\App\Http\Controllers\Student\ReviewController::class, 'store'])->name('reviews.store');
+    Route::get('/teachers/{teacher}/reviews', [\App\Http\Controllers\Student\TeacherController::class, 'reviews'])->name('teachers.reviews');
 
     // Message Routes
     Route::get('/messages', [\App\Http\Controllers\Student\MessageController::class, 'index'])->name('messages.index');
