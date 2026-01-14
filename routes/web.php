@@ -10,11 +10,14 @@ use App\Http\Controllers\Teacher\AvailabilityController;
 use App\Http\Controllers\Teacher\BookingController as TeacherBookingController;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
 use App\Http\Controllers\Teacher\TimeSlotController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Middleware\DevOnlyMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+
+Route::get('/home', function () {
     if (Auth::check()) {
         $user = Auth::user();
         $dashboardRoute = match (true) {
@@ -28,7 +31,7 @@ Route::get('/', function () {
     }
 
     return redirect()->route('login');
-});
+})->name('home');
 
 require __DIR__.'/auth.php';
 

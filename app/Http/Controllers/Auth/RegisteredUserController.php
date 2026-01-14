@@ -41,11 +41,14 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // Assign student role by default
+        $user->assignRole('student');
+
         event(new Registered($user));
 
         Auth::login($user);
 
-        // Redirect to login since new users don't have roles yet
-        return redirect(route('login', absolute: false));
+        // Redirect to student dashboard
+        return redirect()->route('student.dashboard');
     }
 }
