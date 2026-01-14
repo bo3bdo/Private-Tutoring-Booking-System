@@ -12,12 +12,6 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if(session('success'))
-                <div class="mb-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             @if($errors->has('error'))
                 <div class="mb-4 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
                     {{ $errors->first('error') }}
