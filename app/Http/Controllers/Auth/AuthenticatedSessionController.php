@@ -28,7 +28,27 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+
+        // Redirect based on user role
+        $dashboardRoute = match (true) {
+            $user->isAdmin() => 'admin.dashboard',
+            $user->isTeacher() => 'teacher.dashboard',
+            $user->isStudent() => 'student.dashboard',
+            default => null,
+        };
+
+        if (! $dashboardRoute) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')->withErrors([
+                'email' => 'Your account does not have a valid role assigned.',
+            ]);
+        }
+
+        return redirect()->route($dashboardRoute);
     }
 
     /**

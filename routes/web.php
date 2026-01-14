@@ -28,6 +28,7 @@ Route::middleware([DevOnlyMiddleware::class])->group(function () {
 
 // Student Routes
 Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Student\DashboardController::class, 'index'])->name('dashboard');
     Route::get('/subjects', [StudentSubjectController::class, 'index'])->name('subjects.index');
     Route::get('/subjects/{subject}', [StudentSubjectController::class, 'show'])->name('subjects.show');
     Route::get('/teachers/{teacher}/slots', [StudentSubjectController::class, 'slots'])->name('teachers.slots');
@@ -70,6 +71,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('subjects', \App\Http\Controllers\Admin\SubjectController::class);
     Route::resource('locations', \App\Http\Controllers\Admin\LocationController::class);
+    Route::resource('teachers', \App\Http\Controllers\Admin\TeacherController::class);
 });
 
 // Payment Routes
