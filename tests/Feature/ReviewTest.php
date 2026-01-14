@@ -101,13 +101,16 @@ it('prevents duplicate reviews from same user', function () {
         'rating' => 5,
     ]);
 
-    $this->actingAs($this->student)
+    $response = $this->actingAs($this->student)
         ->post(route('student.reviews.store'), [
             'reviewable_type' => 'App\Models\Booking',
             'reviewable_id' => $booking->id,
             'rating' => 4,
-        ])
-        ->assertSessionHasErrors();
+        ]);
+
+    $response->assertRedirect();
+    // Check that notification was set (notify stores data in session)
+    expect(session()->has('notify'))->toBeTrue();
 });
 
 it('validates rating is between 1 and 5', function () {

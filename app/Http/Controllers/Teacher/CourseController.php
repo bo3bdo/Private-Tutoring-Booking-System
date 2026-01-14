@@ -60,8 +60,12 @@ class CourseController extends Controller
             $this->courseService->publish($course);
         }
 
-        return redirect()->route('teacher.courses.index')
-            ->with('success', 'Course created successfully.');
+        notify()->success()
+            ->title('تم الإنشاء')
+            ->message('تم إنشاء الكورس بنجاح')
+            ->send();
+
+        return redirect()->route('teacher.courses.index');
     }
 
     public function show(Course $course): View
@@ -108,8 +112,12 @@ class CourseController extends Controller
             $this->courseService->unpublish($course);
         }
 
-        return redirect()->route('teacher.courses.index')
-            ->with('success', 'Course updated successfully.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث الكورس بنجاح')
+            ->send();
+
+        return redirect()->route('teacher.courses.index');
     }
 
     public function destroy(Course $course): RedirectResponse
@@ -117,7 +125,12 @@ class CourseController extends Controller
         $this->authorize('delete', $course);
 
         if ($course->enrollments()->exists()) {
-            return back()->withErrors(['error' => 'Cannot delete course with existing enrollments.']);
+            notify()->error()
+                ->title('خطأ')
+                ->message('لا يمكن حذف الكورس الذي يحتوي على تسجيلات')
+                ->send();
+
+            return back();
         }
 
         if ($course->thumbnail_path) {
@@ -126,8 +139,12 @@ class CourseController extends Controller
 
         $course->delete();
 
-        return redirect()->route('teacher.courses.index')
-            ->with('success', 'Course deleted successfully.');
+        notify()->success()
+            ->title('تم الحذف')
+            ->message('تم حذف الكورس بنجاح')
+            ->send();
+
+        return redirect()->route('teacher.courses.index');
     }
 
     public function publish(Course $course): RedirectResponse
@@ -136,7 +153,12 @@ class CourseController extends Controller
 
         $this->courseService->publish($course);
 
-        return back()->with('success', 'Course published successfully.');
+        notify()->success()
+            ->title('تم النشر')
+            ->message('تم نشر الكورس بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function unpublish(Course $course): RedirectResponse
@@ -145,6 +167,11 @@ class CourseController extends Controller
 
         $this->courseService->unpublish($course);
 
-        return back()->with('success', 'Course unpublished successfully.');
+        notify()->success()
+            ->title('تم إلغاء النشر')
+            ->message('تم إلغاء نشر الكورس بنجاح')
+            ->send();
+
+        return back();
     }
 }

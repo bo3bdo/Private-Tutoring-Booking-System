@@ -64,14 +64,27 @@ class BookingController extends Controller
             );
 
             if ($booking->isAwaitingPayment()) {
-                return redirect()->route('student.bookings.pay', $booking)
-                    ->with('success', 'Booking created. Please complete payment.');
+                notify()->info()
+                    ->title('تم إنشاء الحجز')
+                    ->message('يرجى إتمام عملية الدفع')
+                    ->send();
+
+                return redirect()->route('student.bookings.pay', $booking);
             }
 
-            return redirect()->route('student.bookings.show', $booking)
-                ->with('success', 'Booking confirmed!');
+            notify()->success()
+                ->title('تم تأكيد الحجز')
+                ->message('تم إنشاء الحجز بنجاح')
+                ->send();
+
+            return redirect()->route('student.bookings.show', $booking);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()])->withInput();
+            notify()->error()
+                ->title('خطأ')
+                ->message($e->getMessage())
+                ->send();
+
+            return back()->withInput();
         }
     }
 
@@ -95,10 +108,19 @@ class BookingController extends Controller
         try {
             $this->bookingService->cancelBooking($booking, auth()->user(), $request->cancellation_reason);
 
-            return redirect()->route('student.bookings.index')
-                ->with('success', 'Booking cancelled successfully.');
+            notify()->success()
+                ->title('تم إلغاء الحجز')
+                ->message('تم إلغاء الحجز بنجاح')
+                ->send();
+
+            return redirect()->route('student.bookings.index');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()])->withInput();
+            notify()->error()
+                ->title('خطأ')
+                ->message($e->getMessage())
+                ->send();
+
+            return back()->withInput();
         }
     }
 

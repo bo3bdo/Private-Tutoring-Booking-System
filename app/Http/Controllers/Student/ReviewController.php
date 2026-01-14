@@ -8,8 +8,6 @@ use App\Models\Booking;
 use App\Models\Course;
 use App\Models\Review;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
@@ -22,7 +20,12 @@ class ReviewController extends Controller
         };
 
         if (! $reviewable) {
-            return back()->withErrors(['error' => 'Invalid review item.']);
+            notify()->error()
+                ->title('خطأ')
+                ->message('عنصر التقييم غير صحيح')
+                ->send();
+
+            return back();
         }
 
         // Check if user already reviewed this item
@@ -32,7 +35,12 @@ class ReviewController extends Controller
             ->first();
 
         if ($existingReview) {
-            return back()->withErrors(['error' => 'You have already reviewed this item.']);
+            notify()->warning()
+                ->title('تم التقييم مسبقاً')
+                ->message('لقد قمت بتقييم هذا العنصر من قبل')
+                ->send();
+
+            return back();
         }
 
         $review = Review::create([
@@ -44,6 +52,11 @@ class ReviewController extends Controller
             'is_approved' => false, // Requires admin approval
         ]);
 
-        return back()->with('success', 'Review submitted successfully. It will be published after approval.');
+        notify()->success()
+            ->title('تم إرسال التقييم')
+            ->message('تم إرسال التقييم بنجاح. سيتم نشره بعد الموافقة عليه')
+            ->send();
+
+        return back();
     }
 }

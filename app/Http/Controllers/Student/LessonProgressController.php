@@ -36,7 +36,12 @@ class LessonProgressController extends Controller
             return response()->json(['success' => true]);
         }
 
-        return back()->with('success', 'Progress updated.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث التقدم بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function complete(CourseLesson $lesson): RedirectResponse
@@ -50,6 +55,11 @@ class LessonProgressController extends Controller
 
         $this->progressService->markCompleted($lesson, $student);
 
-        return back()->with('success', 'Lesson marked as completed.');
+        notify()->success()
+            ->title('تم الإكمال')
+            ->message('تم تحديد الدرس كمكتمل')
+            ->send();
+
+        return back();
     }
 }

@@ -36,8 +36,12 @@ class AvailabilityController extends Controller
             'is_active' => true,
         ]);
 
-        return redirect()->route('teacher.availability.index')
-            ->with('success', 'Availability added successfully.');
+        notify()->success()
+            ->title('تم الإضافة')
+            ->message('تم إضافة التوفر بنجاح')
+            ->send();
+
+        return redirect()->route('teacher.availability.index');
     }
 
     public function destroy(TeacherAvailability $availability): RedirectResponse
@@ -46,7 +50,11 @@ class AvailabilityController extends Controller
 
         $availability->delete();
 
-        return redirect()->route('teacher.availability.index')
-            ->with('success', 'Availability removed successfully.');
+        notify()->success()
+            ->title('تم الحذف')
+            ->message('تم حذف التوفر بنجاح')
+            ->send();
+
+        return redirect()->route('teacher.availability.index');
     }
 }

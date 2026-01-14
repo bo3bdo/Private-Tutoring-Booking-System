@@ -32,7 +32,12 @@ class CoursesController extends Controller
                 'published_at' => null,
             ]);
 
-            return back()->with('success', 'Course unpublished successfully.');
+            notify()->success()
+                ->title('تم إلغاء النشر')
+                ->message('تم إلغاء نشر الكورس بنجاح')
+                ->send();
+
+            return back();
         }
 
         $course->update([
@@ -40,6 +45,11 @@ class CoursesController extends Controller
             'published_at' => now(),
         ]);
 
-        return back()->with('success', 'Course published successfully.');
+        notify()->success()
+            ->title('تم النشر')
+            ->message('تم نشر الكورس بنجاح')
+            ->send();
+
+        return back();
     }
 }

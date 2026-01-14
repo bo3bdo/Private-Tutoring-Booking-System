@@ -31,8 +31,12 @@ class SubjectController extends Controller
             'is_active' => $request->boolean('is_active', true),
         ]);
 
-        return redirect()->route('admin.subjects.index')
-            ->with('success', 'Subject created successfully.');
+        notify()->success()
+            ->title('تم الإنشاء')
+            ->message('تم إنشاء المادة بنجاح')
+            ->send();
+
+        return redirect()->route('admin.subjects.index');
     }
 
     public function show(Subject $subject): View
@@ -55,19 +59,32 @@ class SubjectController extends Controller
             'is_active' => $request->boolean('is_active', $subject->is_active),
         ]);
 
-        return redirect()->route('admin.subjects.index')
-            ->with('success', 'Subject updated successfully.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث المادة بنجاح')
+            ->send();
+
+        return redirect()->route('admin.subjects.index');
     }
 
     public function destroy(Subject $subject): RedirectResponse
     {
         if ($subject->bookings()->exists()) {
-            return back()->withErrors(['error' => 'Cannot delete subject with existing bookings.']);
+            notify()->error()
+                ->title('خطأ')
+                ->message('لا يمكن حذف المادة التي لديها حجوزات')
+                ->send();
+
+            return back();
         }
 
         $subject->delete();
 
-        return redirect()->route('admin.subjects.index')
-            ->with('success', 'Subject deleted successfully.');
+        notify()->success()
+            ->title('تم الحذف')
+            ->message('تم حذف المادة بنجاح')
+            ->send();
+
+        return redirect()->route('admin.subjects.index');
     }
 }

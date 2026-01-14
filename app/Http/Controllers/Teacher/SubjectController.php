@@ -29,7 +29,11 @@ class SubjectController extends Controller
         $teacher = auth()->user()->teacherProfile;
         $teacher->subjects()->sync($request->subjects ?? []);
 
-        return redirect()->route('teacher.subjects.index')
-            ->with('success', 'Subjects updated successfully.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث المواد بنجاح')
+            ->send();
+
+        return redirect()->route('teacher.subjects.index');
     }
 }

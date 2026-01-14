@@ -48,8 +48,12 @@ class LessonController extends Controller
 
         CourseLesson::create($data);
 
-        return redirect()->route('teacher.courses.lessons', $course)
-            ->with('success', 'Lesson created successfully.');
+        notify()->success()
+            ->title('تم الإنشاء')
+            ->message('تم إنشاء الدرس بنجاح')
+            ->send();
+
+        return redirect()->route('teacher.courses.lessons', $course);
     }
 
     public function update(UpdateLessonRequest $request, CourseLesson $lesson): RedirectResponse
@@ -58,7 +62,12 @@ class LessonController extends Controller
 
         $lesson->update($request->validated());
 
-        return back()->with('success', 'Lesson updated successfully.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث الدرس بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function destroy(CourseLesson $lesson): RedirectResponse
@@ -68,7 +77,11 @@ class LessonController extends Controller
         $course = $lesson->course;
         $lesson->delete();
 
-        return redirect()->route('teacher.courses.lessons', $course)
-            ->with('success', 'Lesson deleted successfully.');
+        notify()->success()
+            ->title('تم الحذف')
+            ->message('تم حذف الدرس بنجاح')
+            ->send();
+
+        return redirect()->route('teacher.courses.lessons', $course);
     }
 }

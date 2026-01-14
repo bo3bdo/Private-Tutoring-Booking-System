@@ -63,7 +63,12 @@ class SupportTicketController extends Controller
             'status' => 'in_progress',
         ]);
 
-        return back()->with('success', 'Ticket assigned successfully.');
+        notify()->success()
+            ->title('تم التعيين')
+            ->message('تم تعيين التذكرة بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function updateStatus(Request $request, SupportTicket $supportTicket): RedirectResponse
@@ -80,7 +85,12 @@ class SupportTicketController extends Controller
             $supportTicket->markAsClosed();
         }
 
-        return back()->with('success', 'Ticket status updated successfully.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث حالة التذكرة بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function reply(StoreSupportTicketReplyRequest $request, SupportTicket $supportTicket): RedirectResponse
@@ -91,6 +101,11 @@ class SupportTicketController extends Controller
             'is_internal' => $request->boolean('is_internal', false),
         ]);
 
-        return back()->with('success', 'Reply sent successfully.');
+        notify()->success()
+            ->title('تم الإرسال')
+            ->message('تم إرسال الرد بنجاح')
+            ->send();
+
+        return back();
     }
 }

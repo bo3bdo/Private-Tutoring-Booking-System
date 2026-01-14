@@ -83,7 +83,12 @@ class ResourceController extends Controller
         };
 
         if (! $resourceable) {
-            return back()->withErrors(['error' => 'Invalid resource item.']);
+            notify()->error()
+                ->title('خطأ')
+                ->message('عنصر المورد غير صحيح')
+                ->send();
+
+            return back();
         }
 
         $file = $request->file('file');
@@ -102,7 +107,12 @@ class ResourceController extends Controller
             'is_public' => $request->boolean('is_public', false),
         ]);
 
-        return back()->with('success', 'Resource uploaded successfully.');
+        notify()->success()
+            ->title('تم الرفع')
+            ->message('تم رفع المورد بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function destroy(Resource $resource): RedirectResponse
@@ -115,7 +125,12 @@ class ResourceController extends Controller
 
         $resource->delete();
 
-        return back()->with('success', 'Resource deleted successfully.');
+        notify()->success()
+            ->title('تم الحذف')
+            ->message('تم حذف المورد بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function downloadAttachment(\App\Models\MessageAttachment $attachment)

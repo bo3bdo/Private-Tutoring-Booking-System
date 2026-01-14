@@ -21,8 +21,12 @@ class QuickLoginController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('admin.dashboard')
-            ->with('success', 'Logged in as Admin');
+        notify()->success()
+            ->title('تم تسجيل الدخول')
+            ->message('تم تسجيل الدخول كمدير')
+            ->send();
+
+        return redirect()->route('admin.dashboard');
     }
 
     public function teacher(): RedirectResponse
@@ -36,8 +40,12 @@ class QuickLoginController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('teacher.dashboard')
-            ->with('success', 'Logged in as Teacher');
+        notify()->success()
+            ->title('تم تسجيل الدخول')
+            ->message('تم تسجيل الدخول كمعلم')
+            ->send();
+
+        return redirect()->route('teacher.dashboard');
     }
 
     public function student(): RedirectResponse
@@ -51,7 +59,11 @@ class QuickLoginController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('student.dashboard')
-            ->with('success', 'Logged in as Student');
+        notify()->success()
+            ->title('تم تسجيل الدخول')
+            ->message('تم تسجيل الدخول كطالب')
+            ->send();
+
+        return redirect()->route('student.dashboard');
     }
 }

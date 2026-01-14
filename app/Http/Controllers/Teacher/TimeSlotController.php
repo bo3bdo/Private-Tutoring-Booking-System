@@ -15,8 +15,7 @@ class TimeSlotController extends Controller
 {
     public function __construct(
         protected SlotGenerationService $slotService
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): View
     {
@@ -53,8 +52,12 @@ class TimeSlotController extends Controller
             subjectId: $request->subject_id
         );
 
-        return redirect()->route('teacher.slots.index')
-            ->with('success', "Generated {$generated} time slots.");
+        notify()->success()
+            ->title('تم الإنشاء')
+            ->message("تم إنشاء {$generated} فترات زمنية بنجاح")
+            ->send();
+
+        return redirect()->route('teacher.slots.index');
     }
 
     public function block(TimeSlot $slot): RedirectResponse
@@ -63,7 +66,12 @@ class TimeSlotController extends Controller
 
         $slot->update(['status' => \App\Enums\SlotStatus::Blocked]);
 
-        return back()->with('success', 'Slot blocked successfully.');
+        notify()->success()
+            ->title('تم الحظر')
+            ->message('تم حظر الفترة الزمنية بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function unblock(TimeSlot $slot): RedirectResponse
@@ -72,6 +80,11 @@ class TimeSlotController extends Controller
 
         $slot->update(['status' => \App\Enums\SlotStatus::Available]);
 
-        return back()->with('success', 'Slot unblocked successfully.');
+        notify()->success()
+            ->title('تم إلغاء الحظر')
+            ->message('تم إلغاء حظر الفترة الزمنية بنجاح')
+            ->send();
+
+        return back();
     }
 }

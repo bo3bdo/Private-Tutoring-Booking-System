@@ -57,8 +57,12 @@ class TeacherController extends Controller
             $teacherProfile->subjects()->sync($request->subjects);
         }
 
-        return redirect()->route('admin.teachers.index')
-            ->with('success', 'Teacher created successfully.');
+        notify()->success()
+            ->title('تم الإنشاء')
+            ->message('تم إنشاء المعلم بنجاح')
+            ->send();
+
+        return redirect()->route('admin.teachers.index');
     }
 
     public function show(TeacherProfile $teacher): View
@@ -109,21 +113,34 @@ class TeacherController extends Controller
             $teacher->subjects()->detach();
         }
 
-        return redirect()->route('admin.teachers.index')
-            ->with('success', 'Teacher updated successfully.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث المعلم بنجاح')
+            ->send();
+
+        return redirect()->route('admin.teachers.index');
     }
 
     public function destroy(TeacherProfile $teacher): RedirectResponse
     {
         if ($teacher->bookings()->exists()) {
-            return back()->withErrors(['error' => 'Cannot delete teacher with existing bookings.']);
+            notify()->error()
+                ->title('خطأ')
+                ->message('لا يمكن حذف المعلم الذي لديه حجوزات')
+                ->send();
+
+            return back();
         }
 
         $user = $teacher->user;
         $teacher->delete();
         $user->delete();
 
-        return redirect()->route('admin.teachers.index')
-            ->with('success', 'Teacher deleted successfully.');
+        notify()->success()
+            ->title('تم الحذف')
+            ->message('تم حذف المعلم بنجاح')
+            ->send();
+
+        return redirect()->route('admin.teachers.index');
     }
 }

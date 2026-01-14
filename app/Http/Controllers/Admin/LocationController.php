@@ -33,8 +33,12 @@ class LocationController extends Controller
             'is_active' => $request->boolean('is_active', true),
         ]);
 
-        return redirect()->route('admin.locations.index')
-            ->with('success', 'Location created successfully.');
+        notify()->success()
+            ->title('تم الإنشاء')
+            ->message('تم إنشاء الموقع بنجاح')
+            ->send();
+
+        return redirect()->route('admin.locations.index');
     }
 
     public function show(Location $location): View
@@ -59,19 +63,32 @@ class LocationController extends Controller
             'is_active' => $request->boolean('is_active', $location->is_active),
         ]);
 
-        return redirect()->route('admin.locations.index')
-            ->with('success', 'Location updated successfully.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث الموقع بنجاح')
+            ->send();
+
+        return redirect()->route('admin.locations.index');
     }
 
     public function destroy(Location $location): RedirectResponse
     {
         if ($location->bookings()->exists()) {
-            return back()->withErrors(['error' => 'Cannot delete location with existing bookings.']);
+            notify()->error()
+                ->title('خطأ')
+                ->message('لا يمكن حذف الموقع الذي لديه حجوزات')
+                ->send();
+
+            return back();
         }
 
         $location->delete();
 
-        return redirect()->route('admin.locations.index')
-            ->with('success', 'Location deleted successfully.');
+        notify()->success()
+            ->title('تم الحذف')
+            ->message('تم حذف الموقع بنجاح')
+            ->send();
+
+        return redirect()->route('admin.locations.index');
     }
 }

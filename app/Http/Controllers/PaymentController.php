@@ -32,18 +32,30 @@ class PaymentController extends Controller
     public function stripeSuccess(Payment $payment): RedirectResponse
     {
         if ($payment->isSucceeded()) {
-            return redirect()->route('student.bookings.show', $payment->booking)
-                ->with('success', 'Payment successful! Booking confirmed.');
+            notify()->success()
+                ->title('تم الدفع بنجاح')
+                ->message('تم تأكيد الحجز بنجاح')
+                ->send();
+
+            return redirect()->route('student.bookings.show', $payment->booking);
         }
 
-        return redirect()->route('student.bookings.pay', $payment->booking)
-            ->with('error', 'Payment is still processing.');
+        notify()->warning()
+            ->title('قيد المعالجة')
+            ->message('الدفع لا يزال قيد المعالجة')
+            ->send();
+
+        return redirect()->route('student.bookings.pay', $payment->booking);
     }
 
     public function stripeCancel(Payment $payment): RedirectResponse
     {
-        return redirect()->route('student.bookings.pay', $payment->booking)
-            ->with('error', 'Payment was cancelled.');
+        notify()->error()
+            ->title('تم الإلغاء')
+            ->message('تم إلغاء عملية الدفع')
+            ->send();
+
+        return redirect()->route('student.bookings.pay', $payment->booking);
     }
 
     public function stripeWebhook(Request $request): Response
@@ -82,8 +94,12 @@ class PaymentController extends Controller
         $this->authorize('view', $booking);
 
         if (! $booking->isAwaitingPayment()) {
-            return redirect()->route('student.bookings.show', $booking)
-                ->with('error', 'This booking does not require payment.');
+            notify()->warning()
+                ->title('لا يتطلب الدفع')
+                ->message('هذا الحجز لا يتطلب دفع')
+                ->send();
+
+            return redirect()->route('student.bookings.show', $booking);
         }
 
         $amount = $booking->teacher->hourly_rate ?? 25.00;
@@ -104,7 +120,11 @@ class PaymentController extends Controller
         // Confirm the booking
         $this->paymentService->confirmPayment($payment);
 
-        return redirect()->route('student.bookings.show', $booking)
-            ->with('success', 'Payment completed successfully! (Test Mode)');
+        notify()->success()
+            ->title('تم الدفع')
+            ->message('تم إتمام الدفع بنجاح! (وضع الاختبار)')
+            ->send();
+
+        return redirect()->route('student.bookings.show', $booking);
     }
 }

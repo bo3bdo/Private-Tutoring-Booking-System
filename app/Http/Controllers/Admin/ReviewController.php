@@ -31,13 +31,23 @@ class ReviewController extends Controller
     {
         $review->approve();
 
-        return back()->with('success', 'Review approved successfully.');
+        notify()->success()
+            ->title('تم الموافقة')
+            ->message('تم الموافقة على التقييم بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function destroy(Review $review): RedirectResponse
     {
         $review->delete();
 
-        return back()->with('success', 'Review deleted successfully.');
+        notify()->success()
+            ->title('تم الحذف')
+            ->message('تم حذف التقييم بنجاح')
+            ->send();
+
+        return back();
     }
 }

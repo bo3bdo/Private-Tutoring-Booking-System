@@ -9,7 +9,6 @@ use App\Models\Conversation;
 use App\Models\Message;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class MessageController extends Controller
@@ -91,8 +90,12 @@ class MessageController extends Controller
         // Update conversation last message time
         $conversation->update(['last_message_at' => now()]);
 
-        return redirect()->route('student.messages.show', $conversation)
-            ->with('success', 'Message sent successfully.');
+        notify()->success()
+            ->title('تم الإرسال')
+            ->message('تم إرسال الرسالة بنجاح')
+            ->send();
+
+        return redirect()->route('student.messages.show', $conversation);
     }
 
     public function startConversation(Request $request): RedirectResponse

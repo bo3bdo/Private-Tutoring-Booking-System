@@ -59,7 +59,12 @@ class BookingController extends Controller
 
         $this->bookingService->updateStatus($booking, $status, auth()->user());
 
-        return back()->with('success', 'Booking status updated.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث حالة الحجز بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function reschedule(Request $request, Booking $booking): RedirectResponse
@@ -75,9 +80,19 @@ class BookingController extends Controller
         try {
             $this->bookingService->rescheduleBooking($booking, $newSlot, auth()->user());
 
-            return back()->with('success', 'Booking rescheduled successfully.');
+            notify()->success()
+                ->title('تم إعادة الجدولة')
+                ->message('تم إعادة جدولة الحجز بنجاح')
+                ->send();
+
+            return back();
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            notify()->error()
+                ->title('خطأ')
+                ->message($e->getMessage())
+                ->send();
+
+            return back();
         }
     }
 
@@ -104,7 +119,12 @@ class BookingController extends Controller
             'new_payload' => ['meeting_url' => $request->meeting_url],
         ]);
 
-        return back()->with('success', 'Meeting URL updated successfully.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث رابط الاجتماع بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function updateLocation(Request $request, Booking $booking): RedirectResponse
@@ -130,7 +150,12 @@ class BookingController extends Controller
             'new_payload' => ['location_id' => $request->location_id],
         ]);
 
-        return back()->with('success', 'Location updated successfully.');
+        notify()->success()
+            ->title('تم التحديث')
+            ->message('تم تحديث الموقع بنجاح')
+            ->send();
+
+        return back();
     }
 
     public function cancel(Request $request, Booking $booking): RedirectResponse
@@ -144,9 +169,19 @@ class BookingController extends Controller
         try {
             $this->bookingService->cancelBooking($booking, auth()->user(), $request->cancellation_reason);
 
-            return back()->with('success', 'Booking cancelled successfully.');
+            notify()->success()
+                ->title('تم الإلغاء')
+                ->message('تم إلغاء الحجز بنجاح')
+                ->send();
+
+            return back();
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()])->withInput();
+            notify()->error()
+                ->title('خطأ')
+                ->message($e->getMessage())
+                ->send();
+
+            return back()->withInput();
         }
     }
 }

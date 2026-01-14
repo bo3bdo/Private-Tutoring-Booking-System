@@ -20,13 +20,22 @@ class CoursePurchasePaymentController extends Controller
 
         // Check if course is published
         if (! $course->is_published) {
-            return back()->withErrors(['error' => 'This course is not available for purchase.']);
+            notify()->error()
+                ->title('غير متاح')
+                ->message('هذا الكورس غير متاح للشراء')
+                ->send();
+
+            return back();
         }
 
         // Check if already enrolled
         if ($course->isEnrolledBy($student)) {
-            return redirect()->route('student.my-courses.learn', $course->slug)
-                ->with('info', 'You are already enrolled in this course.');
+            notify()->info()
+                ->title('مسجل مسبقاً')
+                ->message('أنت مسجل في هذا الكورس بالفعل')
+                ->send();
+
+            return redirect()->route('student.my-courses.learn', $course->slug);
         }
 
         try {
@@ -35,7 +44,12 @@ class CoursePurchasePaymentController extends Controller
 
             return redirect($payment->checkout_url);
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            notify()->error()
+                ->title('خطأ')
+                ->message($e->getMessage())
+                ->send();
+
+            return back();
         }
     }
 }

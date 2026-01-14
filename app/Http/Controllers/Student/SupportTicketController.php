@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreSupportTicketRequest;
 use App\Http\Requests\StoreSupportTicketReplyRequest;
+use App\Http\Requests\StoreSupportTicketRequest;
 use App\Models\SupportTicket;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -50,8 +50,12 @@ class SupportTicketController extends Controller
             'status' => 'open',
         ]);
 
-        return redirect()->route('student.support-tickets.show', $ticket)
-            ->with('success', 'Support ticket created successfully. Ticket number: '.$ticket->ticket_number);
+        notify()->success()
+            ->title('تم إنشاء تذكرة الدعم')
+            ->message('تم إنشاء تذكرة الدعم بنجاح. رقم التذكرة: '.$ticket->ticket_number)
+            ->send();
+
+        return redirect()->route('student.support-tickets.show', $ticket);
     }
 
     public function show(SupportTicket $supportTicket): View
@@ -78,6 +82,11 @@ class SupportTicketController extends Controller
             $supportTicket->update(['status' => 'open']);
         }
 
-        return back()->with('success', 'Reply sent successfully.');
+        notify()->success()
+            ->title('تم الإرسال')
+            ->message('تم إرسال الرد بنجاح')
+            ->send();
+
+        return back();
     }
 }
