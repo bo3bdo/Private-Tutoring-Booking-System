@@ -50,7 +50,7 @@
                                             </svg>
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <div class="flex items-center gap-3 mb-2">
+                                            <div class="flex items-center gap-3 mb-2 flex-wrap">
                                                 <h3 class="text-lg font-bold text-gray-900">{{ $booking->subject->name }}</h3>
                                                 <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold
                                                     @if($booking->status->value === 'confirmed') bg-green-100 text-green-800
@@ -61,6 +61,33 @@
                                                     @endif">
                                                     {{ $booking->status->label() }}
                                                 </span>
+                                                @if($booking->needsReviewFrom(auth()->user()))
+                                                    <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 shadow-md animate-pulse">
+                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                        </svg>
+                                                        يحتاج تقييم
+                                                    </span>
+                                                @elseif($booking->isCompleted() && $booking->hasReviewFrom(auth()->user()))
+                                                    @php
+                                                        $userReview = $booking->reviews()->where('user_id', auth()->id())->first();
+                                                    @endphp
+                                                    <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold text-white bg-gradient-to-r from-emerald-500 to-green-500 shadow-md">
+                                                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        تم التقييم
+                                                        @if($userReview)
+                                                            <span class="flex items-center gap-0.5">
+                                                                @for($i = 1; $i <= 5; $i++)
+                                                                    <svg class="w-3 h-3 {{ $i <= $userReview->rating ? 'text-yellow-300' : 'text-white/40' }}" fill="currentColor" viewBox="0 0 20 20">
+                                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                                    </svg>
+                                                                @endfor
+                                                            </span>
+                                                        @endif
+                                                    </span>
+                                                @endif
                                             </div>
                                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600">
                                                 <div class="flex items-center gap-2">
@@ -79,7 +106,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-2 flex-shrink-0">
+                                <div class="flex items-center gap-2 flex-shrink-0 flex-wrap">
                                     <a href="{{ route('student.bookings.show', $booking) }}" 
                                        class="inline-flex items-center px-4 py-2 border-2 border-slate-300 rounded-xl text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 hover:border-slate-400 transition">
                                         View Details
@@ -91,6 +118,15 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                             </svg>
                                             Pay Now
+                                        </a>
+                                    @endif
+                                    @if($booking->needsReviewFrom(auth()->user()))
+                                        <a href="{{ route('student.bookings.show', $booking) }}#review" 
+                                           class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl text-sm font-semibold text-white shadow-md hover:from-amber-600 hover:to-orange-600 transform hover:scale-105 transition">
+                                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            قيّم الآن
                                         </a>
                                     @endif
                                 </div>

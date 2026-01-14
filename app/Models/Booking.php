@@ -120,4 +120,16 @@ class Booking extends Model
     {
         return $this->hasOne(Conversation::class);
     }
+
+    public function hasReviewFrom(User $user): bool
+    {
+        return $this->reviews()
+            ->where('user_id', $user->id)
+            ->exists();
+    }
+
+    public function needsReviewFrom(User $user): bool
+    {
+        return $this->isCompleted() && ! $this->hasReviewFrom($user);
+    }
 }

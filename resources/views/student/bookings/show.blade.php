@@ -432,7 +432,7 @@
                     $existingReview = $booking->reviews()->where('user_id', auth()->id())->first();
                 @endphp
                 @if(!$existingReview)
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                    <div id="review" class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
                         <div class="p-6">
                             <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                                 <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

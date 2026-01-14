@@ -19,7 +19,7 @@ class BookingController extends Controller
 
     public function index(Request $request): View
     {
-        $query = auth()->user()->bookings()->with(['teacher.user', 'subject', 'timeSlot']);
+        $query = auth()->user()->bookings()->with(['teacher.user', 'subject', 'timeSlot', 'reviews']);
 
         if ($request->has('filter')) {
             match ($request->filter) {
