@@ -49,12 +49,13 @@ class ReviewController extends Controller
             'reviewable_id' => $request->reviewable_id,
             'rating' => $request->rating,
             'comment' => $request->comment,
-            'is_approved' => false, // Requires admin approval
+            'is_approved' => true, // Auto-approve reviews
+            'approved_at' => now(),
         ]);
 
         notify()->success()
             ->title('تم إرسال التقييم')
-            ->message('تم إرسال التقييم بنجاح. سيتم نشره بعد الموافقة عليه')
+            ->message('تم إرسال التقييم بنجاح')
             ->send();
 
         return back();

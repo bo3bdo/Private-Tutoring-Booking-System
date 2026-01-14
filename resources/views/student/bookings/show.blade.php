@@ -45,7 +45,7 @@
                                                 </svg>
                                             @endfor
                                         </div>
-                                        <span class="text-sm font-semibold text-gray-700">{{ number_format($teacherRating, 1) }}</span>
+                                        <span class="text-sm font-semibold text-gray-700">{{ round($teacherRating) }}</span>
                                         <span class="text-xs text-gray-500">({{ $teacherReviewsCount }} {{ $teacherReviewsCount === 1 ? 'review' : 'reviews' }})</span>
                                     </div>
                                 @else
