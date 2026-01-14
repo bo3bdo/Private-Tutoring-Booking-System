@@ -42,6 +42,11 @@ class Payment extends Model
         return $this->belongsTo(Booking::class);
     }
 
+    public function paymentIntent(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(PaymentIntent::class);
+    }
+
     public function student(): BelongsTo
     {
         return $this->belongsTo(User::class, 'student_id');

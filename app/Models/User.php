@@ -94,4 +94,24 @@ class User extends Authenticatable
     {
         return $this->hasRole('student');
     }
+
+    public function courses(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Course::class, 'teacher_id');
+    }
+
+    public function courseEnrollments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CourseEnrollment::class, 'student_id');
+    }
+
+    public function lessonProgress(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LessonProgress::class, 'student_id');
+    }
+
+    public function coursePurchases(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CoursePurchase::class, 'student_id');
+    }
 }

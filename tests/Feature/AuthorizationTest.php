@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\BookingStatus;
+use App\Enums\LessonMode;
 use App\Enums\SlotStatus;
 use App\Models\Booking;
 use App\Models\Subject;
@@ -12,6 +13,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
+    $this->seed(\Database\Seeders\RolePermissionSeeder::class);
     $this->admin = User::factory()->create();
     $this->admin->assignRole('admin');
 
@@ -30,10 +32,21 @@ beforeEach(function () {
 });
 
 it('allows students to view their own bookings', function () {
+    $slot = TimeSlot::factory()->create([
+        'teacher_id' => $this->teacherProfile->id,
+        'subject_id' => $this->subject->id,
+        'start_at' => now()->addDay(),
+        'end_at' => now()->addDay()->addHour(),
+    ]);
+
     $booking = Booking::factory()->create([
         'student_id' => $this->student->id,
         'teacher_id' => $this->teacherProfile->id,
         'subject_id' => $this->subject->id,
+        'time_slot_id' => $slot->id,
+        'start_at' => $slot->start_at,
+        'end_at' => $slot->end_at,
+        'lesson_mode' => LessonMode::Online,
     ]);
 
     $this->actingAs($this->student)
@@ -42,10 +55,21 @@ it('allows students to view their own bookings', function () {
 });
 
 it('prevents students from viewing other students bookings', function () {
+    $slot = TimeSlot::factory()->create([
+        'teacher_id' => $this->teacherProfile->id,
+        'subject_id' => $this->subject->id,
+        'start_at' => now()->addDay(),
+        'end_at' => now()->addDay()->addHour(),
+    ]);
+
     $booking = Booking::factory()->create([
         'student_id' => $this->student->id,
         'teacher_id' => $this->teacherProfile->id,
         'subject_id' => $this->subject->id,
+        'time_slot_id' => $slot->id,
+        'start_at' => $slot->start_at,
+        'end_at' => $slot->end_at,
+        'lesson_mode' => LessonMode::Online,
     ]);
 
     $this->actingAs($this->otherStudent)
@@ -54,10 +78,21 @@ it('prevents students from viewing other students bookings', function () {
 });
 
 it('allows teachers to view their own bookings', function () {
+    $slot = TimeSlot::factory()->create([
+        'teacher_id' => $this->teacherProfile->id,
+        'subject_id' => $this->subject->id,
+        'start_at' => now()->addDay(),
+        'end_at' => now()->addDay()->addHour(),
+    ]);
+
     $booking = Booking::factory()->create([
         'student_id' => $this->student->id,
         'teacher_id' => $this->teacherProfile->id,
         'subject_id' => $this->subject->id,
+        'time_slot_id' => $slot->id,
+        'start_at' => $slot->start_at,
+        'end_at' => $slot->end_at,
+        'lesson_mode' => LessonMode::Online,
     ]);
 
     $this->actingAs($this->teacher)
@@ -68,12 +103,18 @@ it('allows teachers to view their own bookings', function () {
 it('allows students to view only available slots', function () {
     $availableSlot = TimeSlot::factory()->create([
         'teacher_id' => $this->teacherProfile->id,
+        'subject_id' => $this->subject->id,
         'status' => SlotStatus::Available,
+        'start_at' => now()->addDay(),
+        'end_at' => now()->addDay()->addHour(),
     ]);
 
     $blockedSlot = TimeSlot::factory()->create([
         'teacher_id' => $this->teacherProfile->id,
+        'subject_id' => $this->subject->id,
         'status' => SlotStatus::Blocked,
+        'start_at' => now()->addDay()->addHours(2),
+        'end_at' => now()->addDay()->addHours(3),
     ]);
 
     $this->actingAs($this->student)
@@ -84,10 +125,21 @@ it('allows students to view only available slots', function () {
 });
 
 it('allows students to cancel their own bookings', function () {
+    $slot = TimeSlot::factory()->create([
+        'teacher_id' => $this->teacherProfile->id,
+        'subject_id' => $this->subject->id,
+        'start_at' => now()->addDay(),
+        'end_at' => now()->addDay()->addHour(),
+    ]);
+
     $booking = Booking::factory()->create([
         'student_id' => $this->student->id,
         'teacher_id' => $this->teacherProfile->id,
         'subject_id' => $this->subject->id,
+        'time_slot_id' => $slot->id,
+        'start_at' => $slot->start_at,
+        'end_at' => $slot->end_at,
+        'lesson_mode' => LessonMode::Online,
         'status' => BookingStatus::AwaitingPayment,
     ]);
 
@@ -97,10 +149,21 @@ it('allows students to cancel their own bookings', function () {
 });
 
 it('prevents students from cancelling completed bookings', function () {
+    $slot = TimeSlot::factory()->create([
+        'teacher_id' => $this->teacherProfile->id,
+        'subject_id' => $this->subject->id,
+        'start_at' => now()->subDay(),
+        'end_at' => now()->subDay()->addHour(),
+    ]);
+
     $booking = Booking::factory()->create([
         'student_id' => $this->student->id,
         'teacher_id' => $this->teacherProfile->id,
         'subject_id' => $this->subject->id,
+        'time_slot_id' => $slot->id,
+        'start_at' => $slot->start_at,
+        'end_at' => $slot->end_at,
+        'lesson_mode' => LessonMode::Online,
         'status' => BookingStatus::Completed,
     ]);
 

@@ -14,7 +14,9 @@ test('email verification screen can be rendered', function () {
 });
 
 test('email can be verified', function () {
+    $this->seed(\Database\Seeders\RolePermissionSeeder::class);
     $user = User::factory()->unverified()->create();
+    $user->assignRole('student');
 
     Event::fake();
 
@@ -28,7 +30,7 @@ test('email can be verified', function () {
 
     Event::assertDispatched(Verified::class);
     expect($user->fresh()->hasVerifiedEmail())->toBeTrue();
-    $response->assertRedirect(route('dashboard', absolute: false).'?verified=1');
+    $response->assertRedirect(route('student.dashboard', absolute: false).'?verified=1');
 });
 
 test('email is not verified with invalid hash', function () {

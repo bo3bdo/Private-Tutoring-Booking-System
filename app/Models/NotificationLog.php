@@ -16,6 +16,7 @@ class NotificationLog extends Model
     protected $fillable = [
         'user_id',
         'booking_id',
+        'course_id',
         'channel',
         'status',
         'provider_message_id',
@@ -40,5 +41,10 @@ class NotificationLog extends Model
     public function booking(): BelongsTo
     {
         return $this->belongsTo(Booking::class);
+    }
+
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class);
     }
 }

@@ -38,14 +38,29 @@ class RolePermissionSeeder extends Seeder
             'view own bookings',
             'cancel own bookings',
             'pay for booking',
+            'browse courses',
+            'purchase courses',
+            'access enrolled courses',
+
+            // Teacher course permissions
+            'teacher.manage_courses',
+            'teacher.manage_course_lessons',
+            'teacher.view_course_sales',
+
+            // Admin course permissions
+            'admin.manage_all_courses',
         ];
 
+        // Create all permissions first (with explicit guard)
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+            Permission::firstOrCreate(
+                ['name' => $permission, 'guard_name' => 'web']
+            );
         }
 
+        // Admin role
         $admin = Role::firstOrCreate(['name' => 'admin']);
-        $admin->givePermissionTo([
+        $adminPermissionNames = [
             'manage users',
             'manage subjects',
             'manage locations',
@@ -54,10 +69,14 @@ class RolePermissionSeeder extends Seeder
             'manage payments',
             'manage settings',
             'view reports',
-        ]);
+            'admin.manage_all_courses',
+        ];
+        $adminPermissions = Permission::whereIn('name', $adminPermissionNames)->where('guard_name', 'web')->get();
+        $admin->syncPermissions($adminPermissions);
 
+        // Teacher role
         $teacher = Role::firstOrCreate(['name' => 'teacher']);
-        $teacher->givePermissionTo([
+        $teacherPermissionNames = [
             'manage own availability',
             'manage own slots',
             'view own bookings',
@@ -65,10 +84,16 @@ class RolePermissionSeeder extends Seeder
             'mark booking status',
             'reschedule booking',
             'block slots',
-        ]);
+            'teacher.manage_courses',
+            'teacher.manage_course_lessons',
+            'teacher.view_course_sales',
+        ];
+        $teacherPermissions = Permission::whereIn('name', $teacherPermissionNames)->where('guard_name', 'web')->get();
+        $teacher->syncPermissions($teacherPermissions);
 
+        // Student role
         $student = Role::firstOrCreate(['name' => 'student']);
-        $student->givePermissionTo([
+        $studentPermissionNames = [
             'browse subjects',
             'browse teachers',
             'view available slots',
@@ -76,6 +101,11 @@ class RolePermissionSeeder extends Seeder
             'view own bookings',
             'cancel own bookings',
             'pay for booking',
-        ]);
+            'browse courses',
+            'purchase courses',
+            'access enrolled courses',
+        ];
+        $studentPermissions = Permission::whereIn('name', $studentPermissionNames)->where('guard_name', 'web')->get();
+        $student->syncPermissions($studentPermissions);
     }
 }

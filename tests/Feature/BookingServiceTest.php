@@ -3,7 +3,6 @@
 use App\Enums\BookingStatus;
 use App\Enums\LessonMode;
 use App\Enums\SlotStatus;
-use App\Models\Booking;
 use App\Models\BookingHistory;
 use App\Models\Subject;
 use App\Models\TeacherProfile;
@@ -15,6 +14,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
+    $this->seed(\Database\Seeders\RolePermissionSeeder::class);
     $this->teacher = User::factory()->create();
     $this->teacher->assignRole('teacher');
     $this->teacherProfile = TeacherProfile::factory()->create(['user_id' => $this->teacher->id]);

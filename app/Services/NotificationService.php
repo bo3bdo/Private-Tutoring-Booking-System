@@ -75,20 +75,44 @@ class NotificationService
         }
     }
 
+    public function sendCourseEnrolledToStudent(\App\Models\Course $course, \App\Models\User $student): void
+    {
+        try {
+            $notification = new \App\Notifications\CourseEnrolledNotification($course, $student);
+            Notification::send($student, $notification);
+            $this->logNotification($student, null, NotificationChannel::Email, 'sent', null, $course);
+        } catch (\Exception $e) {
+            $this->logNotification($student, null, NotificationChannel::Email, 'failed', $e->getMessage(), $course);
+        }
+    }
+
+    public function sendCourseEnrolledToTeacher(\App\Models\Course $course, \App\Models\User $student): void
+    {
+        try {
+            $notification = new \App\Notifications\CourseEnrolledToTeacherNotification($course, $student);
+            Notification::send($course->teacher, $notification);
+            $this->logNotification($course->teacher, null, NotificationChannel::Email, 'sent', null, $course);
+        } catch (\Exception $e) {
+            $this->logNotification($course->teacher, null, NotificationChannel::Email, 'failed', $e->getMessage(), $course);
+        }
+    }
+
     protected function logNotification(
         $user,
         ?Booking $booking,
         NotificationChannel $channel,
         string $status,
-        ?string $errorMessage = null
+        ?string $errorMessage = null,
+        ?\App\Models\Course $course = null
     ): void {
         NotificationLog::create([
             'user_id' => $user->id,
             'booking_id' => $booking?->id,
+            'course_id' => $course?->id,
             'channel' => $channel,
             'status' => $status,
             'payload' => [
-                'notification_type' => get_class($booking ?: new \stdClass()),
+                'notification_type' => get_class($booking ?: ($course ?: new \stdClass())),
             ],
             'error_message' => $errorMessage,
         ]);
