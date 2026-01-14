@@ -1,16 +1,32 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div>
-                <h2 class="font-semibold text-2xl text-gray-900 leading-tight">
-                    Teacher Dashboard
-                </h2>
-                <p class="text-sm text-gray-600 mt-1">Manage your teaching schedule and bookings</p>
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 p-8 mb-8">
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-900/80 via-indigo-900/80 to-blue-900/80 z-10"></div>
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center bg-no-repeat"></div>
+            </div>
+            
+            <!-- Content -->
+            <div class="relative z-20 flex items-center justify-between">
+                <div>
+                    <h2 class="font-semibold text-3xl text-white leading-tight drop-shadow-lg">
+                        Teacher Dashboard
+                    </h2>
+                    <p class="text-sm text-gray-100 mt-2 drop-shadow-md">Manage your teaching schedule and bookings</p>
+                </div>
+                <div class="hidden md:block">
+                    <div class="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-8 -mt-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

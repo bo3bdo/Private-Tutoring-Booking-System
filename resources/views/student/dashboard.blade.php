@@ -1,16 +1,32 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div>
-                <h2 class="font-semibold text-2xl text-gray-900 leading-tight">
-                    Student Dashboard
-                </h2>
-                <p class="text-sm text-gray-600 mt-1">Track your learning progress and bookings</p>
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-emerald-600 to-purple-600 p-8 mb-8">
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-emerald-900/80 to-purple-900/80 z-10"></div>
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center bg-no-repeat"></div>
+            </div>
+            
+            <!-- Content -->
+            <div class="relative z-20 flex items-center justify-between">
+                <div>
+                    <h2 class="font-semibold text-3xl text-white leading-tight drop-shadow-lg">
+                        Student Dashboard
+                    </h2>
+                    <p class="text-sm text-gray-100 mt-2 drop-shadow-md">Track your learning progress and bookings</p>
+                </div>
+                <div class="hidden md:block">
+                    <div class="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-8">
+    <div class="py-8 -mt-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <!-- Payment Statistics -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
