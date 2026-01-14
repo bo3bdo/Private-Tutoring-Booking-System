@@ -1,4 +1,4 @@
-@props(['active'])
+@props(['active', 'badge' => null])
 
 @php
 $classes = ($active ?? false)
@@ -7,5 +7,12 @@ $classes = ($active ?? false)
 @endphp
 
 <a {{ $attributes->merge(['class' => $classes]) }}>
-    {{ $slot }}
+    <div class="flex items-center justify-between">
+        <span>{{ $slot }}</span>
+        @if($badge && $badge > 0)
+            <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+                {{ $badge > 99 ? '99+' : $badge }}
+            </span>
+        @endif
+    </div>
 </a>

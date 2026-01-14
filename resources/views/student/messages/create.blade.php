@@ -17,21 +17,34 @@
             <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
                 <form method="POST" action="{{ route('student.messages.start') }}">
                     @csrf
-                    <div class="mb-4">
-                        <label for="user_id" class="block text-sm font-semibold text-gray-900 mb-2">
-                            Select Teacher
-                        </label>
-                        <select name="user_id" id="user_id" required class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 transition">
-                            <option value="">Choose a teacher...</option>
-                            @foreach(\App\Models\User::whereHas('roles', fn($q) => $q->where('name', 'teacher'))->get() as $teacher)
-                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    @if($booking)
+                    @if($booking && $otherUser)
+                        {{-- If booking is provided, show only the teacher from that booking --}}
+                        <input type="hidden" name="user_id" value="{{ $otherUser->id }}">
                         <input type="hidden" name="booking_id" value="{{ $booking->id }}">
-                        <div class="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                            <p class="text-sm text-blue-900">This conversation is related to booking: <strong>{{ $booking->subject->name }}</strong></p>
+                        <div class="mb-6 p-4 bg-gradient-to-r from-emerald-50 to-blue-50 border-2 border-emerald-200 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center text-white font-bold shadow-md">
+                                    {{ substr($otherUser->name, 0, 1) }}
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-semibold text-gray-900">Sending message to:</p>
+                                    <p class="text-lg font-bold text-emerald-700">{{ $otherUser->name }}</p>
+                                    <p class="text-xs text-gray-600 mt-1">Related to booking: <strong>{{ $booking->subject->name }}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        {{-- If no booking, show all teachers --}}
+                        <div class="mb-4">
+                            <label for="user_id" class="block text-sm font-semibold text-gray-900 mb-2">
+                                Select Teacher
+                            </label>
+                            <select name="user_id" id="user_id" required class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 transition">
+                                <option value="">Choose a teacher...</option>
+                                @foreach(\App\Models\User::whereHas('roles', fn($q) => $q->where('name', 'teacher'))->get() as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     @endif
                     <div class="flex items-center justify-end gap-3">

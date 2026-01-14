@@ -33,10 +33,10 @@
                         <x-nav-link :href="route('admin.teachers.index')" :active="request()->routeIs('admin.teachers.*')">
                             {{ __('Teachers') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')">
+                        <x-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')" :badge="auth()->user()->pendingReviewsCount()">
                             {{ __('Reviews') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('admin.support-tickets.index')" :active="request()->routeIs('admin.support-tickets.*')">
+                        <x-nav-link :href="route('admin.support-tickets.index')" :active="request()->routeIs('admin.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                             {{ __('Support Tickets') }}
                         </x-nav-link>
                     @elseif(auth()->user()->isTeacher())
@@ -55,10 +55,10 @@
                         <x-nav-link :href="route('teacher.availability.index')" :active="request()->routeIs('teacher.availability.*')">
                             {{ __('Availability') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('teacher.bookings.index')" :active="request()->routeIs('teacher.bookings.*')">
+                        <x-nav-link :href="route('teacher.bookings.index')" :active="request()->routeIs('teacher.bookings.*')" :badge="auth()->user()->pendingBookingsCount()">
                             {{ __('Bookings') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('teacher.messages.index')" :active="request()->routeIs('teacher.messages.*')">
+                        <x-nav-link :href="route('teacher.messages.index')" :active="request()->routeIs('teacher.messages.*')" :badge="auth()->user()->totalUnreadMessagesCount()">
                             {{ __('Messages') }}
                         </x-nav-link>
                         <x-nav-link :href="route('teacher.resources.index')" :active="request()->routeIs('teacher.resources.*')">
@@ -74,16 +74,16 @@
                         <x-nav-link :href="route('student.my-courses.index')" :active="request()->routeIs('student.my-courses.*') || request()->routeIs('student.courses.*')">
                             {{ __('Recorded Courses') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('student.bookings.index')" :active="request()->routeIs('student.bookings.*')">
+                        <x-nav-link :href="route('student.bookings.index')" :active="request()->routeIs('student.bookings.*')" :badge="auth()->user()->pendingBookingsCount()">
                             {{ __('My Bookings') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('student.messages.index')" :active="request()->routeIs('student.messages.*')">
+                        <x-nav-link :href="route('student.messages.index')" :active="request()->routeIs('student.messages.*')" :badge="auth()->user()->totalUnreadMessagesCount()">
                             {{ __('Messages') }}
                         </x-nav-link>
                         <x-nav-link :href="route('student.resources.index')" :active="request()->routeIs('student.resources.*')">
                             {{ __('Resources') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('student.support-tickets.index')" :active="request()->routeIs('student.support-tickets.*')">
+                        <x-nav-link :href="route('student.support-tickets.index')" :active="request()->routeIs('student.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                             {{ __('Support') }}
                         </x-nav-link>
                     @endif
@@ -155,10 +155,10 @@
                 <x-responsive-nav-link :href="route('admin.teachers.index')" :active="request()->routeIs('admin.teachers.*')">
                     {{ __('Teachers') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')">
+                <x-responsive-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')" :badge="auth()->user()->pendingReviewsCount()">
                     {{ __('Reviews') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('admin.support-tickets.index')" :active="request()->routeIs('admin.support-tickets.*')">
+                <x-responsive-nav-link :href="route('admin.support-tickets.index')" :active="request()->routeIs('admin.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                     {{ __('Support Tickets') }}
                 </x-responsive-nav-link>
             @elseif(auth()->user()->isTeacher())
@@ -168,7 +168,10 @@
                 <x-responsive-nav-link :href="route('teacher.courses.index')" :active="request()->routeIs('teacher.courses.*') || request()->routeIs('teacher.lessons.*')">
                     {{ __('Courses') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('teacher.messages.index')" :active="request()->routeIs('teacher.messages.*')">
+                <x-responsive-nav-link :href="route('teacher.bookings.index')" :active="request()->routeIs('teacher.bookings.*')" :badge="auth()->user()->pendingBookingsCount()">
+                    {{ __('Bookings') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('teacher.messages.index')" :active="request()->routeIs('teacher.messages.*')" :badge="auth()->user()->totalUnreadMessagesCount()">
                     {{ __('Messages') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('teacher.resources.index')" :active="request()->routeIs('teacher.resources.*')">
@@ -184,16 +187,16 @@
                 <x-responsive-nav-link :href="route('student.my-courses.index')" :active="request()->routeIs('student.my-courses.*') || request()->routeIs('student.courses.*')">
                     {{ __('Recorded Courses') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('student.bookings.index')" :active="request()->routeIs('student.bookings.*')">
+                <x-responsive-nav-link :href="route('student.bookings.index')" :active="request()->routeIs('student.bookings.*')" :badge="auth()->user()->pendingBookingsCount()">
                     {{ __('My Bookings') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('student.messages.index')" :active="request()->routeIs('student.messages.*')">
+                <x-responsive-nav-link :href="route('student.messages.index')" :active="request()->routeIs('student.messages.*')" :badge="auth()->user()->totalUnreadMessagesCount()">
                     {{ __('Messages') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('student.resources.index')" :active="request()->routeIs('student.resources.*')">
                     {{ __('Resources') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('student.support-tickets.index')" :active="request()->routeIs('student.support-tickets.*')">
+                <x-responsive-nav-link :href="route('student.support-tickets.index')" :active="request()->routeIs('student.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                     {{ __('Support') }}
                 </x-responsive-nav-link>
             @endif

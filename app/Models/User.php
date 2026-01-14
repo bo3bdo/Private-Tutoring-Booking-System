@@ -12,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -158,5 +158,76 @@ class User extends Authenticatable
     public function ticketReplies(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(SupportTicketReply::class);
+    }
+
+    public function totalUnreadMessagesCount(): int
+    {
+        $userId = $this->id;
+
+        return \App\Models\Message::whereHas('conversation', function ($query) use ($userId) {
+            $query->where(function ($q) use ($userId) {
+                $q->where('user_one_id', $userId)
+                    ->orWhere('user_two_id', $userId);
+            });
+        })
+            ->where('sender_id', '!=', $userId)
+            ->where('is_read', false)
+            ->count();
+    }
+
+    public function totalUnreadSupportTicketsCount(): int
+    {
+        if ($this->isStudent()) {
+            // For students, count tickets that are not closed (they can see updates)
+            return $this->supportTickets()
+                ->where('status', '!=', 'closed')
+                ->count();
+        }
+
+        if ($this->isAdmin()) {
+            // For admin, count open or in_progress tickets
+            return \App\Models\SupportTicket::whereIn('status', ['open', 'in_progress'])
+                ->count();
+        }
+
+        return 0;
+    }
+
+    public function pendingBookingsCount(): int
+    {
+        if ($this->isStudent()) {
+            // For students, count bookings awaiting payment or confirmed (upcoming)
+            return $this->bookings()
+                ->whereIn('status', [
+                    \App\Enums\BookingStatus::AwaitingPayment->value,
+                    \App\Enums\BookingStatus::Confirmed->value,
+                ])
+                ->where('start_at', '>', now())
+                ->count();
+        }
+
+        if ($this->isTeacher()) {
+            // For teachers, count pending bookings (awaiting payment or confirmed)
+            return $this->teacherBookings()
+                ->whereIn('status', [
+                    \App\Enums\BookingStatus::AwaitingPayment->value,
+                    \App\Enums\BookingStatus::Confirmed->value,
+                ])
+                ->where('start_at', '>', now())
+                ->count();
+        }
+
+        return 0;
+    }
+
+    public function pendingReviewsCount(): int
+    {
+        if ($this->isAdmin()) {
+            // For admin, count reviews that are not approved yet
+            return \App\Models\Review::where('is_approved', false)
+                ->count();
+        }
+
+        return 0;
     }
 }

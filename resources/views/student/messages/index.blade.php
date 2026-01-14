@@ -1,18 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div>
-                <h2 class="font-semibold text-2xl text-gray-900 leading-tight">
-                    Messages
-                </h2>
-                <p class="text-sm text-gray-600 mt-1">Chat with your teachers</p>
-            </div>
-            <a href="{{ route('student.messages.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-                New Message
-            </a>
+        <div>
+            <h2 class="font-semibold text-2xl text-gray-900 leading-tight">
+                Messages
+            </h2>
+            <p class="text-sm text-gray-600 mt-1">Chat with your teachers</p>
         </div>
     </x-slot>
 
@@ -24,10 +16,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                     </svg>
                     <p class="text-gray-600 text-lg mb-2">No conversations yet</p>
-                    <p class="text-gray-500 text-sm mb-4">Start a conversation with your teacher</p>
-                    <a href="{{ route('student.messages.create') }}" class="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition">
-                        Start Conversation
-                    </a>
+                    <p class="text-gray-500 text-sm">Start a conversation with your teacher from a booking page</p>
                 </div>
             @else
                 <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
