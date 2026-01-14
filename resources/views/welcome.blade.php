@@ -38,24 +38,31 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 py-20 lg:py-32">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="relative py-20 lg:py-32 overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-blue-900/70 to-slate-800/80 z-10"></div>
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center bg-no-repeat"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg">
                     Learn from Expert Teachers
-                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">
+                    <span class="block text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-emerald-300">
                         Anytime, Anywhere
                     </span>
                 </h1>
-                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                <p class="text-xl text-gray-100 mb-8 max-w-3xl mx-auto drop-shadow-md">
                     Book private tutoring sessions, access recorded courses, and connect with qualified teachers. 
                     Start your learning journey today.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('register') }}" class="px-8 py-4 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl font-semibold text-lg hover:from-slate-800 hover:to-slate-700 transition shadow-lg transform hover:scale-105">
+                    <a href="{{ route('register') }}" class="px-8 py-4 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl font-semibold text-lg hover:from-slate-800 hover:to-slate-700 transition shadow-lg transform hover:scale-105 backdrop-blur-sm bg-white/10 border border-white/20">
                         Start Learning Now
                     </a>
-                    <a href="#features" class="px-8 py-4 bg-white text-slate-900 border-2 border-slate-300 rounded-xl font-semibold text-lg hover:bg-slate-50 transition shadow-md">
+                    <a href="#features" class="px-8 py-4 bg-white/90 text-slate-900 border-2 border-white/50 rounded-xl font-semibold text-lg hover:bg-white transition shadow-md backdrop-blur-sm">
                         Learn More
                     </a>
                 </div>
