@@ -42,8 +42,9 @@ class BookingController extends Controller
         $this->authorize('view', $booking);
 
         $booking->load(['student', 'subject', 'timeSlot', 'location', 'payment', 'histories.actor']);
+        $locations = \App\Models\Location::where('is_active', true)->get();
 
-        return view('teacher.bookings.show', compact('booking'));
+        return view('teacher.bookings.show', compact('booking', 'locations'));
     }
 
     public function updateStatus(Request $request, Booking $booking): RedirectResponse
@@ -104,5 +105,48 @@ class BookingController extends Controller
         ]);
 
         return back()->with('success', 'Meeting URL updated successfully.');
+    }
+
+    public function updateLocation(Request $request, Booking $booking): RedirectResponse
+    {
+        $this->authorize('update', $booking);
+
+        $request->validate([
+            'location_id' => ['required', 'exists:locations,id'],
+        ]);
+
+        $oldLocationId = $booking->location_id;
+
+        $booking->update([
+            'location_id' => $request->location_id,
+        ]);
+
+        // Log the change in booking history
+        \App\Models\BookingHistory::create([
+            'booking_id' => $booking->id,
+            'actor_id' => auth()->id(),
+            'action' => 'location_updated',
+            'old_payload' => ['location_id' => $oldLocationId],
+            'new_payload' => ['location_id' => $request->location_id],
+        ]);
+
+        return back()->with('success', 'Location updated successfully.');
+    }
+
+    public function cancel(Request $request, Booking $booking): RedirectResponse
+    {
+        $this->authorize('cancel', $booking);
+
+        $request->validate([
+            'cancellation_reason' => ['required', 'string', 'max:1000'],
+        ]);
+
+        try {
+            $this->bookingService->cancelBooking($booking, auth()->user(), $request->cancellation_reason);
+
+            return back()->with('success', 'Booking cancelled successfully.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => $e->getMessage()])->withInput();
+        }
     }
 }

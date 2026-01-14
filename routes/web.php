@@ -60,13 +60,16 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::get('/bookings/{booking}', [TeacherBookingController::class, 'show'])->name('bookings.show');
     Route::post('/bookings/{booking}/status', [TeacherBookingController::class, 'updateStatus'])->name('bookings.status');
     Route::post('/bookings/{booking}/reschedule', [TeacherBookingController::class, 'reschedule'])->name('bookings.reschedule');
+    Route::post('/bookings/{booking}/cancel', [TeacherBookingController::class, 'cancel'])->name('bookings.cancel');
     Route::patch('/bookings/{booking}/meeting-url', [TeacherBookingController::class, 'updateMeetingUrl'])->name('bookings.update-meeting-url');
+    Route::patch('/bookings/{booking}/location', [TeacherBookingController::class, 'updateLocation'])->name('bookings.update-location');
 });
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('subjects', \App\Http\Controllers\Admin\SubjectController::class);
+    Route::resource('locations', \App\Http\Controllers\Admin\LocationController::class);
 });
 
 // Payment Routes

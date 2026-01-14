@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Enums\LessonMode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Booking;
@@ -45,9 +44,8 @@ class BookingController extends Controller
             : $slot->subject;
 
         $teacher = $slot->teacher;
-        $locations = \App\Models\Location::where('is_active', true)->get();
 
-        return view('student.bookings.create', compact('slot', 'subject', 'teacher', 'locations'));
+        return view('student.bookings.create', compact('slot', 'subject', 'teacher'));
     }
 
     public function store(StoreBookingRequest $request): RedirectResponse
@@ -60,7 +58,7 @@ class BookingController extends Controller
                 timeSlot: $slot,
                 subjectId: $request->subject_id,
                 lessonMode: $request->lesson_mode,
-                locationId: $request->lesson_mode === LessonMode::InPerson->value ? $request->location_id : null,
+                locationId: null, // Location will be set by teacher/admin for in-person lessons
                 meetingUrl: null, // Meeting URL will be set by teacher/admin
                 notes: $request->notes
             );
@@ -86,17 +84,21 @@ class BookingController extends Controller
         return view('student.bookings.show', compact('booking'));
     }
 
-    public function cancel(Booking $booking): RedirectResponse
+    public function cancel(Request $request, Booking $booking): RedirectResponse
     {
         $this->authorize('cancel', $booking);
 
+        $request->validate([
+            'cancellation_reason' => ['required', 'string', 'max:1000'],
+        ]);
+
         try {
-            $this->bookingService->cancelBooking($booking, auth()->user());
+            $this->bookingService->cancelBooking($booking, auth()->user(), $request->cancellation_reason);
 
             return redirect()->route('student.bookings.index')
                 ->with('success', 'Booking cancelled successfully.');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return back()->withErrors(['error' => $e->getMessage()])->withInput();
         }
     }
 

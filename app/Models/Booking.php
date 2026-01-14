@@ -31,6 +31,7 @@ class Booking extends Model
         'meeting_meta',
         'notes',
         'cancelled_at',
+        'cancellation_reason',
         'completed_at',
     ];
 

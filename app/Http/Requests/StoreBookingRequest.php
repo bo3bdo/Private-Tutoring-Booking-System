@@ -19,11 +19,6 @@ class StoreBookingRequest extends FormRequest
             'time_slot_id' => ['required', 'exists:teacher_time_slots,id'],
             'subject_id' => ['required', 'exists:subjects,id'],
             'lesson_mode' => ['required', Rule::enum(LessonMode::class)],
-            'location_id' => [
-                Rule::requiredIf($this->lesson_mode === LessonMode::InPerson->value),
-                'nullable',
-                'exists:locations,id',
-            ],
             'notes' => ['nullable', 'string', 'max:1000'],
         ];
     }
@@ -37,8 +32,6 @@ class StoreBookingRequest extends FormRequest
             'subject_id.exists' => 'Selected subject does not exist.',
             'lesson_mode.required' => 'Please select a lesson mode (Online or In Person).',
             'lesson_mode.enum' => 'Invalid lesson mode selected.',
-            'location_id.required' => 'Please select a location for in-person lessons.',
-            'location_id.exists' => 'Selected location does not exist.',
         ];
     }
 }

@@ -10,14 +10,12 @@ use App\Models\Setting;
 use App\Models\TimeSlot;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class BookingService
 {
     public function __construct(
         protected NotificationService $notificationService
-    ) {
-    }
+    ) {}
 
     public function createBooking(
         User $student,
@@ -43,6 +41,19 @@ class BookingService
 
             if (! $lockedSlot || $lockedSlot->status !== SlotStatus::Available) {
                 throw new \Exception('This slot is no longer available. Please choose another time.');
+            }
+
+            // Check if there's an existing booking for this slot (even if cancelled)
+            $existingBooking = Booking::where('time_slot_id', $timeSlot->id)
+                ->lockForUpdate()
+                ->first();
+
+            // If there's a cancelled booking, delete it to allow a new booking
+            if ($existingBooking && $existingBooking->status === BookingStatus::Cancelled) {
+                $existingBooking->delete();
+            } elseif ($existingBooking) {
+                // If there's an active booking, throw an error
+                throw new \Exception('This slot is already booked. Please choose another time.');
             }
 
             $paymentRequired = Setting::get('payment_required', true);
@@ -90,6 +101,7 @@ class BookingService
             $booking->update([
                 'status' => BookingStatus::Cancelled,
                 'cancelled_at' => now(),
+                'cancellation_reason' => $reason,
             ]);
 
             if ($booking->timeSlot) {
