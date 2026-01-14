@@ -548,7 +548,7 @@ php artisan migrate:status
 
 This project is proprietary software. All rights reserved.
 
-## 🤝 Support
+## Support
 
 For issues, questions, or feature requests, please contact the development team or create an issue in the repository.
 
@@ -560,4 +560,4 @@ For issues, questions, or feature requests, please contact the development team 
 
 ---
 
-**Built with ❤️ using Laravel 12**
+**Built with Laravel 12**
