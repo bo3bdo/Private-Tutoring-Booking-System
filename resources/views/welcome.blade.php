@@ -84,11 +84,15 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature 1: Book Sessions -->
-                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition">
-                    <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition overflow-hidden group">
+                    <div class="relative h-48 mb-6 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Easy Booking" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-600/80 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 w-14 h-14 bg-white/90 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Easy Booking</h3>
                     <p class="text-gray-600">
@@ -98,11 +102,15 @@
                 </div>
 
                 <!-- Feature 2: Recorded Courses -->
-                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition">
-                    <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                        </svg>
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition overflow-hidden group">
+                    <div class="relative h-48 mb-6 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Recorded Courses" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-600/80 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 w-14 h-14 bg-white/90 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Recorded Courses</h3>
                     <p class="text-gray-600">
@@ -112,11 +120,15 @@
                 </div>
 
                 <!-- Feature 3: Expert Teachers -->
-                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition">
-                    <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition overflow-hidden group">
+                    <div class="relative h-48 mb-6 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Expert Teachers" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-purple-600/80 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 w-14 h-14 bg-white/90 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                        </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Expert Teachers</h3>
                     <p class="text-gray-600">
@@ -126,11 +138,15 @@
                 </div>
 
                 <!-- Feature 4: Direct Messaging -->
-                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition">
-                    <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                        </svg>
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition overflow-hidden group">
+                    <div class="relative h-48 mb-6 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Direct Messaging" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-amber-600/80 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 w-14 h-14 bg-white/90 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                        </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Direct Messaging</h3>
                     <p class="text-gray-600">
@@ -140,11 +156,15 @@
                 </div>
 
                 <!-- Feature 5: Resources & Materials -->
-                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition">
-                    <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition overflow-hidden group">
+                    <div class="relative h-48 mb-6 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Resources & Materials" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-red-600/80 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 w-14 h-14 bg-white/90 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Resources & Materials</h3>
                     <p class="text-gray-600">
@@ -154,11 +174,15 @@
                 </div>
 
                 <!-- Feature 6: Reviews & Ratings -->
-                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition">
-                    <div class="w-14 h-14 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
+                <div class="bg-white rounded-2xl p-8 border border-gray-200 shadow-lg hover:shadow-xl transition overflow-hidden group">
+                    <div class="relative h-48 mb-6 rounded-xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Reviews & Ratings" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-yellow-600/80 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 w-14 h-14 bg-white/90 rounded-xl flex items-center justify-center shadow-lg">
+                            <svg class="w-7 h-7 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                        </div>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Reviews & Ratings</h3>
                     <p class="text-gray-600">
@@ -183,33 +207,53 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
-                        1
+                <div class="text-center group">
+                    <div class="relative mb-6 mx-auto w-32 h-32 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sign Up" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-600/60 to-blue-800/60 flex items-center justify-center">
+                            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-blue-600 text-2xl font-bold shadow-lg">
+                                1
+                            </div>
+                        </div>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Sign Up</h3>
                     <p class="text-gray-600">Create your free account in seconds. Choose your role as a student or teacher.</p>
                 </div>
 
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
-                        2
+                <div class="text-center group">
+                    <div class="relative mb-6 mx-auto w-32 h-32 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Browse & Choose" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/60 to-emerald-800/60 flex items-center justify-center">
+                            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-emerald-600 text-2xl font-bold shadow-lg">
+                                2
+                            </div>
+                        </div>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Browse & Choose</h3>
                     <p class="text-gray-600">Explore subjects, view teacher profiles, ratings, and available time slots.</p>
                 </div>
 
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
-                        3
+                <div class="text-center group">
+                    <div class="relative mb-6 mx-auto w-32 h-32 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Book & Pay" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-600/60 to-purple-800/60 flex items-center justify-center">
+                            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-purple-600 text-2xl font-bold shadow-lg">
+                                3
+                            </div>
+                        </div>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Book & Pay</h3>
                     <p class="text-gray-600">Select your preferred time slot, complete secure payment, and confirm your booking.</p>
                 </div>
 
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold shadow-lg">
-                        4
+                <div class="text-center group">
+                    <div class="relative mb-6 mx-auto w-32 h-32 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-xl transition">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Learn & Grow" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-br from-amber-600/60 to-amber-800/60 flex items-center justify-center">
+                            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-amber-600 text-2xl font-bold shadow-lg">
+                                4
+                            </div>
+                        </div>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-2">Learn & Grow</h3>
                     <p class="text-gray-600">Attend your session, access resources, and continue learning with recorded courses.</p>
@@ -219,12 +263,19 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-r from-slate-900 to-slate-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+    <section class="relative py-20 overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-800/90 z-10"></div>
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center bg-no-repeat"></div>
+        </div>
+        
+        <!-- Content -->
+        <div class="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 drop-shadow-lg">
                 Ready to Start Learning?
             </h2>
-            <p class="text-xl text-gray-300 mb-8">
+            <p class="text-xl text-gray-100 mb-8 drop-shadow-md">
                 Join thousands of students already learning with our platform. 
                 Get started today and unlock your potential.
             </p>
@@ -232,7 +283,7 @@
                 <a href="{{ route('register') }}" class="px-8 py-4 bg-white text-slate-900 rounded-xl font-semibold text-lg hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
                     Create Free Account
                 </a>
-                <a href="{{ route('login') }}" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl font-semibold text-lg hover:bg-white hover:text-slate-900 transition">
+                <a href="{{ route('login') }}" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl font-semibold text-lg hover:bg-white hover:text-slate-900 transition backdrop-blur-sm">
                     Sign In
                 </a>
             </div>

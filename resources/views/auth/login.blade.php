@@ -3,21 +3,21 @@
             <!-- Logo & Header -->
             <div class="text-center">
                 <div class="flex justify-center mb-6">
-                    <div class="w-16 h-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl flex items-center justify-center shadow-lg">
-                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-lg border border-white/20">
+                        <svg class="w-10 h-10 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                         </svg>
                     </div>
                 </div>
-                <h2 class="text-3xl font-bold text-gray-900">Welcome Back</h2>
-                <p class="mt-2 text-sm text-gray-600">Sign in to your account to continue</p>
+                <h2 class="text-3xl font-bold text-white drop-shadow-lg">Welcome Back</h2>
+                <p class="mt-2 text-sm text-gray-100 drop-shadow-md">Sign in to your account to continue</p>
             </div>
 
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
             <!-- Login Form -->
-            <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-8">
+            <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 p-8">
                 <form method="POST" action="{{ route('login') }}" class="space-y-6">
                     @csrf
 
