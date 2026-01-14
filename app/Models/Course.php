@@ -98,4 +98,30 @@ class Course extends Model
             ->where('student_id', $student->id)
             ->exists();
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewable_id')
+            ->where('reviewable_type', self::class);
+    }
+
+    public function resources(): HasMany
+    {
+        return $this->hasMany(Resource::class, 'resourceable_id')
+            ->where('resourceable_type', self::class);
+    }
+
+    public function averageRating(): float
+    {
+        return $this->reviews()
+            ->where('is_approved', true)
+            ->avg('rating') ?? 0;
+    }
+
+    public function reviewsCount(): int
+    {
+        return $this->reviews()
+            ->where('is_approved', true)
+            ->count();
+    }
 }

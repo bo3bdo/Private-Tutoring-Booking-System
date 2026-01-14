@@ -62,6 +62,28 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     Route::get('/my-courses/{course:slug}/lesson/{lesson}', [\App\Http\Controllers\Student\LearningController::class, 'showLesson'])->name('my-courses.lesson');
     Route::post('/lessons/{lesson}/progress', [\App\Http\Controllers\Student\LessonProgressController::class, 'update'])->name('lessons.progress');
     Route::post('/lessons/{lesson}/complete', [\App\Http\Controllers\Student\LessonProgressController::class, 'complete'])->name('lessons.complete');
+
+    // Review Routes
+    Route::post('/reviews', [\App\Http\Controllers\Student\ReviewController::class, 'store'])->name('reviews.store');
+
+    // Message Routes
+    Route::get('/messages', [\App\Http\Controllers\Student\MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/create', [\App\Http\Controllers\Student\MessageController::class, 'create'])->name('messages.create');
+    Route::post('/messages/start', [\App\Http\Controllers\Student\MessageController::class, 'startConversation'])->name('messages.start');
+    Route::get('/messages/{conversation}', [\App\Http\Controllers\Student\MessageController::class, 'show'])->name('messages.show');
+    Route::post('/messages', [\App\Http\Controllers\Student\MessageController::class, 'store'])->name('messages.store');
+
+    // Resource Routes
+    Route::get('/resources', [\App\Http\Controllers\Student\ResourceController::class, 'index'])->name('resources.index');
+    Route::get('/resources/{resource}/download', [\App\Http\Controllers\Student\ResourceController::class, 'download'])->name('resources.download');
+    Route::get('/message-attachments/{attachment}/download', [\App\Http\Controllers\Student\ResourceController::class, 'downloadAttachment'])->name('message-attachments.download');
+
+    // Support Ticket Routes
+    Route::get('/support-tickets', [\App\Http\Controllers\Student\SupportTicketController::class, 'index'])->name('support-tickets.index');
+    Route::get('/support-tickets/create', [\App\Http\Controllers\Student\SupportTicketController::class, 'create'])->name('support-tickets.create');
+    Route::post('/support-tickets', [\App\Http\Controllers\Student\SupportTicketController::class, 'store'])->name('support-tickets.store');
+    Route::get('/support-tickets/{supportTicket}', [\App\Http\Controllers\Student\SupportTicketController::class, 'show'])->name('support-tickets.show');
+    Route::post('/support-tickets/{supportTicket}/reply', [\App\Http\Controllers\Student\SupportTicketController::class, 'reply'])->name('support-tickets.reply');
 });
 
 // Teacher Routes
@@ -97,6 +119,18 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::put('/lessons/{lesson}', [\App\Http\Controllers\Teacher\LessonController::class, 'update'])->name('lessons.update');
     Route::delete('/lessons/{lesson}', [\App\Http\Controllers\Teacher\LessonController::class, 'destroy'])->name('lessons.destroy');
     Route::get('/courses/{course}/sales', [\App\Http\Controllers\Teacher\CourseSalesController::class, 'index'])->name('courses.sales');
+
+    // Message Routes
+    Route::get('/messages', [\App\Http\Controllers\Teacher\MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/{conversation}', [\App\Http\Controllers\Teacher\MessageController::class, 'show'])->name('messages.show');
+    Route::post('/messages', [\App\Http\Controllers\Teacher\MessageController::class, 'store'])->name('messages.store');
+
+    // Resource Routes
+    Route::get('/resources', [\App\Http\Controllers\Teacher\ResourceController::class, 'index'])->name('resources.index');
+    Route::get('/resources/create', [\App\Http\Controllers\Teacher\ResourceController::class, 'create'])->name('resources.create');
+    Route::post('/resources', [\App\Http\Controllers\Teacher\ResourceController::class, 'store'])->name('resources.store');
+    Route::delete('/resources/{resource}', [\App\Http\Controllers\Teacher\ResourceController::class, 'destroy'])->name('resources.destroy');
+    Route::get('/message-attachments/{attachment}/download', [\App\Http\Controllers\Teacher\ResourceController::class, 'downloadAttachment'])->name('message-attachments.download');
 });
 
 // Admin Routes
@@ -109,6 +143,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/courses/{course}', [\App\Http\Controllers\Admin\CoursesController::class, 'show'])->name('courses.show');
     Route::put('/courses/{course}/toggle-publish', [\App\Http\Controllers\Admin\CoursesController::class, 'togglePublish'])->name('courses.toggle-publish');
     Route::get('/course-sales', [\App\Http\Controllers\Admin\CourseSalesController::class, 'index'])->name('course-sales.index');
+
+    // Review Management Routes
+    Route::get('/reviews', [\App\Http\Controllers\Admin\ReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/reviews/{review}/approve', [\App\Http\Controllers\Admin\ReviewController::class, 'approve'])->name('reviews.approve');
+    Route::delete('/reviews/{review}', [\App\Http\Controllers\Admin\ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    // Support Ticket Routes
+    Route::get('/support-tickets', [\App\Http\Controllers\Admin\SupportTicketController::class, 'index'])->name('support-tickets.index');
+    Route::get('/support-tickets/{supportTicket}', [\App\Http\Controllers\Admin\SupportTicketController::class, 'show'])->name('support-tickets.show');
+    Route::post('/support-tickets/{supportTicket}/assign', [\App\Http\Controllers\Admin\SupportTicketController::class, 'assign'])->name('support-tickets.assign');
+    Route::post('/support-tickets/{supportTicket}/status', [\App\Http\Controllers\Admin\SupportTicketController::class, 'updateStatus'])->name('support-tickets.update-status');
+    Route::post('/support-tickets/{supportTicket}/reply', [\App\Http\Controllers\Admin\SupportTicketController::class, 'reply'])->name('support-tickets.reply');
 });
 
 // Payment Routes

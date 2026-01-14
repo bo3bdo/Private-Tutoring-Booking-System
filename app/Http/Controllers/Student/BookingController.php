@@ -79,7 +79,7 @@ class BookingController extends Controller
     {
         $this->authorize('view', $booking);
 
-        $booking->load(['teacher.user', 'subject', 'timeSlot', 'location', 'payment', 'histories.actor']);
+        $booking->load(['teacher.user', 'teacher.reviews.user', 'subject', 'timeSlot', 'location', 'payment', 'histories.actor', 'reviews', 'resources']);
 
         return view('student.bookings.show', compact('booking'));
     }

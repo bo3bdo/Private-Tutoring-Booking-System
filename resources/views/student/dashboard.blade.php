@@ -224,12 +224,18 @@
                 <!-- Quick Actions -->
                 <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border-2 border-slate-200 p-6">
                     <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">Quick Actions</h3>
-                    <div class="space-y-2">
-                        <a href="{{ route('student.subjects.index') }}" class="block w-full px-4 py-2 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:bg-slate-800 transition text-center">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="{{ route('student.subjects.index') }}" class="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:bg-slate-800 transition text-center">
                             Browse Subjects
                         </a>
-                        <a href="{{ route('student.bookings.index') }}" class="block w-full px-4 py-2 bg-white border-2 border-slate-300 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-50 transition text-center">
-                            View All Bookings
+                        <a href="{{ route('student.bookings.index') }}" class="px-4 py-2 bg-white border-2 border-slate-300 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-50 transition text-center">
+                            My Bookings
+                        </a>
+                        <a href="{{ route('student.messages.index') }}" class="px-4 py-2 bg-white border-2 border-slate-300 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-50 transition text-center">
+                            Messages
+                        </a>
+                        <a href="{{ route('student.resources.index') }}" class="px-4 py-2 bg-white border-2 border-slate-300 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-50 transition text-center">
+                            Resources
                         </a>
                     </div>
                 </div>

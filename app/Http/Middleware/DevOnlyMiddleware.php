@@ -15,10 +15,14 @@ class DevOnlyMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! app()->environment('local') && ! config('app.debug')) {
-            abort(404);
+        // Allow in local environment OR when debug is enabled
+        $isLocal = app()->environment('local');
+        $isDebug = filter_var(config('app.debug', false), FILTER_VALIDATE_BOOLEAN);
+
+        if ($isLocal || $isDebug) {
+            return $next($request);
         }
 
-        return $next($request);
+        abort(404, 'Dev routes are only available in local environment or when debug is enabled.');
     }
 }

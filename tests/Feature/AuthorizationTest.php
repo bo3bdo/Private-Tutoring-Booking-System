@@ -117,11 +117,20 @@ it('allows students to view only available slots', function () {
         'end_at' => now()->addDay()->addHours(3),
     ]);
 
-    $this->actingAs($this->student)
+    $response = $this->actingAs($this->student)
         ->get(route('student.teachers.slots', $this->teacherProfile))
-        ->assertSuccessful()
-        ->assertSee($availableSlot->start_at->format('H:i'))
-        ->assertDontSee($blockedSlot->start_at->format('H:i'));
+        ->assertSuccessful();
+
+    // Check for time in different formats (12h or 24h)
+    $availableTime12h = $availableSlot->start_at->format('g:i A');
+    $availableTime24h = $availableSlot->start_at->format('H:i');
+    $blockedTime12h = $blockedSlot->start_at->format('g:i A');
+    $blockedTime24h = $blockedSlot->start_at->format('H:i');
+
+    $content = $response->getContent();
+    expect(str_contains($content, $availableTime12h) || str_contains($content, $availableTime24h))->toBeTrue();
+    expect(str_contains($content, $blockedTime12h))->toBeFalse();
+    expect(str_contains($content, $blockedTime24h))->toBeFalse();
 });
 
 it('allows students to cancel their own bookings', function () {

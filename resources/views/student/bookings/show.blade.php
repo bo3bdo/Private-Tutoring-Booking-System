@@ -26,12 +26,31 @@
                             </div>
                             <div>
                                 <h1 class="text-2xl font-bold text-gray-900 mb-1">{{ $booking->subject->name }}</h1>
-                                <p class="text-gray-600 flex items-center gap-2">
+                                <p class="text-gray-600 flex items-center gap-2 mb-2">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
                                     {{ $booking->teacher->user->name }}
                                 </p>
+                                @php
+                                    $teacherRating = $booking->teacher->averageRating();
+                                    $teacherReviewsCount = $booking->teacher->reviewsCount();
+                                @endphp
+                                @if($teacherReviewsCount > 0)
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex items-center gap-1">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <svg class="w-4 h-4 {{ $i <= round($teacherRating) ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                </svg>
+                                            @endfor
+                                        </div>
+                                        <span class="text-sm font-semibold text-gray-700">{{ number_format($teacherRating, 1) }}</span>
+                                        <span class="text-xs text-gray-500">({{ $teacherReviewsCount }} {{ $teacherReviewsCount === 1 ? 'review' : 'reviews' }})</span>
+                                    </div>
+                                @else
+                                    <p class="text-xs text-gray-500">No reviews yet</p>
+                                @endif
                             </div>
                         </div>
                         <span class="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold
@@ -234,6 +253,32 @@
             <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
                 <div class="p-6">
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        @php
+                            $conversation = \App\Models\Conversation::where(function($q) use ($booking) {
+                                $q->where('user_one_id', auth()->id())
+                                  ->where('user_two_id', $booking->teacher->user_id)
+                                  ->where('booking_id', $booking->id);
+                            })->orWhere(function($q) use ($booking) {
+                                $q->where('user_one_id', $booking->teacher->user_id)
+                                  ->where('user_two_id', auth()->id())
+                                  ->where('booking_id', $booking->id);
+                            })->first();
+                        @endphp
+                        @if($conversation)
+                            <a href="{{ route('student.messages.show', $conversation) }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-blue-700 hover:to-blue-800 transition">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                                Message Teacher
+                            </a>
+                        @else
+                            <a href="{{ route('student.messages.create', ['booking_id' => $booking->id]) }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-blue-700 hover:to-blue-800 transition">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                                Start Conversation
+                            </a>
+                        @endif
                         @if($booking->isAwaitingPayment())
                             <a href="{{ route('student.bookings.pay', $booking) }}" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-emerald-700 hover:to-emerald-800 transform hover:scale-105 transition">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -284,6 +329,179 @@
                         </form>
                     </div>
                 </div>
+            @endif
+
+            <!-- Resources Section -->
+            @if($booking->resources->isNotEmpty())
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            Learning Resources
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            @foreach($booking->resources as $resource)
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl hover:bg-slate-100 transition">
+                                    <div class="flex items-start justify-between gap-3">
+                                        <div class="flex-1 min-w-0">
+                                            <h4 class="font-semibold text-gray-900 mb-1 truncate">{{ $resource->title }}</h4>
+                                            @if($resource->description)
+                                                <p class="text-sm text-gray-600 line-clamp-2 mb-2">{{ $resource->description }}</p>
+                                            @endif
+                                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                                <span>{{ $resource->file_name }}</span>
+                                                <span>•</span>
+                                                <span>{{ $resource->file_size_human }}</span>
+                                            </div>
+                                        </div>
+                                        <a href="{{ route('student.resources.download', $resource) }}" class="flex-shrink-0 inline-flex items-center px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                            </svg>
+                                            Download
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="mt-4">
+                            <a href="{{ route('student.resources.index', ['booking_id' => $booking->id]) }}" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">
+                                View All Resources →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <!-- Teacher Reviews Section -->
+            @php
+                $teacherReviews = $booking->teacher->reviews()
+                    ->where('is_approved', true)
+                    ->with('user')
+                    ->latest()
+                    ->limit(5)
+                    ->get();
+            @endphp
+            @if($teacherReviews->isNotEmpty())
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                            </svg>
+                            Teacher Reviews
+                        </h3>
+                        <div class="space-y-4">
+                            @foreach($teacherReviews as $review)
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <div class="flex items-center gap-1">
+                                                @for($i = 1; $i <= 5; $i++)
+                                                    <svg class="w-4 h-4 {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                                    </svg>
+                                                @endfor
+                                            </div>
+                                            <span class="text-sm font-semibold text-gray-900">{{ $review->user->name }}</span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">{{ $review->created_at->format('M j, Y') }}</span>
+                                    </div>
+                                    @if($review->comment)
+                                        <p class="text-sm text-gray-700 mt-2">{{ $review->comment }}</p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                        @if($booking->teacher->reviewsCount() > 5)
+                            <div class="mt-4 text-center">
+                                <a href="{{ route('student.subjects.show', $booking->subject) }}" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">
+                                    View All {{ $booking->teacher->reviewsCount() }} Reviews →
+                                </a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endif
+
+            <!-- Review Section -->
+            @if($booking->isCompleted())
+                @php
+                    $existingReview = $booking->reviews()->where('user_id', auth()->id())->first();
+                @endphp
+                @if(!$existingReview)
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                </svg>
+                                Rate This Lesson
+                            </h3>
+                            <form method="POST" action="{{ route('student.reviews.store') }}">
+                                @csrf
+                                <input type="hidden" name="reviewable_type" value="App\Models\Booking">
+                                <input type="hidden" name="reviewable_id" value="{{ $booking->id }}">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-semibold text-gray-900 mb-2">Rating</label>
+                                    <div class="flex items-center gap-2" id="rating-stars">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <button type="button" onclick="setRating({{ $i }})" class="star-rating text-3xl text-gray-300 hover:text-yellow-400 transition" data-rating="{{ $i }}">
+                                                ★
+                                            </button>
+                                        @endfor
+                                    </div>
+                                    <input type="hidden" name="rating" id="rating" value="5" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="comment" class="block text-sm font-semibold text-gray-900 mb-2">Your Review (optional)</label>
+                                    <textarea name="comment" id="comment" rows="4" class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 transition resize-none" placeholder="Share your experience..."></textarea>
+                                </div>
+                                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-emerald-700 hover:to-emerald-800 transition">
+                                    Submit Review
+                                </button>
+                            </form>
+                            <script>
+                                function setRating(rating) {
+                                    document.getElementById('rating').value = rating;
+                                    document.querySelectorAll('.star-rating').forEach((star, index) => {
+                                        if (index < rating) {
+                                            star.classList.remove('text-gray-300');
+                                            star.classList.add('text-yellow-400');
+                                        } else {
+                                            star.classList.remove('text-yellow-400');
+                                            star.classList.add('text-gray-300');
+                                        }
+                                    });
+                                }
+                            </script>
+                        </div>
+                    </div>
+                @else
+                    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                </svg>
+                                Your Review
+                            </h3>
+                            <div class="flex items-center gap-2 mb-2">
+                                @for($i = 1; $i <= 5; $i++)
+                                    <svg class="w-5 h-5 {{ $i <= $existingReview->rating ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                    </svg>
+                                @endfor
+                            </div>
+                            @if($existingReview->comment)
+                                <p class="text-sm text-gray-700">{{ $existingReview->comment }}</p>
+                            @endif
+                            <p class="text-xs text-gray-500 mt-2">{{ $existingReview->created_at->format('M j, Y') }}</p>
+                        </div>
+                    </div>
+                @endif
             @endif
 
             <!-- History -->

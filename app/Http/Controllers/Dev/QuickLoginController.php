@@ -6,57 +6,52 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class QuickLoginController extends Controller
 {
     public function admin(): RedirectResponse
     {
-        if (! app()->environment('local') && ! config('app.debug')) {
-            abort(404);
-        }
-
         $user = User::where('email', 'admin@example.com')->first();
 
         if (! $user) {
-            abort(404, 'Admin user not found. Please run seeders.');
+            Log::warning('Quick login attempted but admin user not found');
+            abort(404, 'Admin user not found. Please run: php artisan db:seed');
         }
 
         Auth::login($user);
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.dashboard')
+            ->with('success', 'Logged in as Admin');
     }
 
     public function teacher(): RedirectResponse
     {
-        if (! app()->environment('local') && ! config('app.debug')) {
-            abort(404);
-        }
-
         $user = User::where('email', 'teacher@example.com')->first();
 
         if (! $user) {
-            abort(404, 'Teacher user not found. Please run seeders.');
+            Log::warning('Quick login attempted but teacher user not found');
+            abort(404, 'Teacher user not found. Please run: php artisan db:seed');
         }
 
         Auth::login($user);
 
-        return redirect()->route('teacher.dashboard');
+        return redirect()->route('teacher.dashboard')
+            ->with('success', 'Logged in as Teacher');
     }
 
     public function student(): RedirectResponse
     {
-        if (! app()->environment('local') && ! config('app.debug')) {
-            abort(404);
-        }
-
         $user = User::where('email', 'student@example.com')->first();
 
         if (! $user) {
-            abort(404, 'Student user not found. Please run seeders.');
+            Log::warning('Quick login attempted but student user not found');
+            abort(404, 'Student user not found. Please run: php artisan db:seed');
         }
 
         Auth::login($user);
 
-        return redirect()->route('student.subjects.index');
+        return redirect()->route('student.dashboard')
+            ->with('success', 'Logged in as Student');
     }
 }

@@ -33,6 +33,12 @@
                         <x-nav-link :href="route('admin.teachers.index')" :active="request()->routeIs('admin.teachers.*')">
                             {{ __('Teachers') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')">
+                            {{ __('Reviews') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.support-tickets.index')" :active="request()->routeIs('admin.support-tickets.*')">
+                            {{ __('Support Tickets') }}
+                        </x-nav-link>
                     @elseif(auth()->user()->isTeacher())
                         <x-nav-link :href="route('teacher.dashboard')" :active="request()->routeIs('teacher.dashboard')">
                             {{ __('Dashboard') }}
@@ -52,6 +58,12 @@
                         <x-nav-link :href="route('teacher.bookings.index')" :active="request()->routeIs('teacher.bookings.*')">
                             {{ __('Bookings') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('teacher.messages.index')" :active="request()->routeIs('teacher.messages.*')">
+                            {{ __('Messages') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('teacher.resources.index')" :active="request()->routeIs('teacher.resources.*')">
+                            {{ __('Resources') }}
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
                             {{ __('Dashboard') }}
@@ -64,6 +76,15 @@
                         </x-nav-link>
                         <x-nav-link :href="route('student.bookings.index')" :active="request()->routeIs('student.bookings.*')">
                             {{ __('My Bookings') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('student.messages.index')" :active="request()->routeIs('student.messages.*')">
+                            {{ __('Messages') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('student.resources.index')" :active="request()->routeIs('student.resources.*')">
+                            {{ __('Resources') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('student.support-tickets.index')" :active="request()->routeIs('student.support-tickets.*')">
+                            {{ __('Support') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -134,12 +155,24 @@
                 <x-responsive-nav-link :href="route('admin.teachers.index')" :active="request()->routeIs('admin.teachers.*')">
                     {{ __('Teachers') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')">
+                    {{ __('Reviews') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.support-tickets.index')" :active="request()->routeIs('admin.support-tickets.*')">
+                    {{ __('Support Tickets') }}
+                </x-responsive-nav-link>
             @elseif(auth()->user()->isTeacher())
                 <x-responsive-nav-link :href="route('teacher.dashboard')" :active="request()->routeIs('teacher.*')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('teacher.courses.index')" :active="request()->routeIs('teacher.courses.*') || request()->routeIs('teacher.lessons.*')">
                     {{ __('Courses') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('teacher.messages.index')" :active="request()->routeIs('teacher.messages.*')">
+                    {{ __('Messages') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('teacher.resources.index')" :active="request()->routeIs('teacher.resources.*')">
+                    {{ __('Resources') }}
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
@@ -153,6 +186,15 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('student.bookings.index')" :active="request()->routeIs('student.bookings.*')">
                     {{ __('My Bookings') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('student.messages.index')" :active="request()->routeIs('student.messages.*')">
+                    {{ __('Messages') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('student.resources.index')" :active="request()->routeIs('student.resources.*')">
+                    {{ __('Resources') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('student.support-tickets.index')" :active="request()->routeIs('student.support-tickets.*')">
+                    {{ __('Support') }}
                 </x-responsive-nav-link>
             @endif
         </div>

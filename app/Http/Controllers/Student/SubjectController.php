@@ -22,7 +22,9 @@ class SubjectController extends Controller
     {
         $teachers = $subject->teachers()
             ->where('is_active', true)
-            ->with('user')
+            ->with(['user', 'reviews' => function ($query) {
+                $query->where('is_approved', true);
+            }])
             ->get();
 
         return view('student.subjects.show', compact('subject', 'teachers'));

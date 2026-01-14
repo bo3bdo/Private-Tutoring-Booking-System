@@ -103,4 +103,21 @@ class Booking extends Model
     {
         return $this->status === BookingStatus::Completed;
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'reviewable_id')
+            ->where('reviewable_type', self::class);
+    }
+
+    public function resources(): HasMany
+    {
+        return $this->hasMany(Resource::class, 'resourceable_id')
+            ->where('resourceable_type', self::class);
+    }
+
+    public function conversation(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Conversation::class);
+    }
 }
