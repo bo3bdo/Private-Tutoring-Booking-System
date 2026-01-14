@@ -32,5 +32,8 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <!-- Laravel Notify Component -->
+        <x-notify::notify />
     </body>
 </html>

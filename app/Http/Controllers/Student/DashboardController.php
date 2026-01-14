@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Enums\BookingStatus;
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -85,6 +86,9 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
+        // Check for completed bookings without reviews and show notifications
+        $this->checkAndNotifyUnreviewedBookings($student);
+
         return view('student.dashboard', compact(
             'totalPaid',
             'monthPaid',
@@ -149,5 +153,41 @@ class DashboardController extends Controller
         }
 
         return $total;
+    }
+
+    private function checkAndNotifyUnreviewedBookings($student): void
+    {
+        // Get completed bookings that don't have reviews from this student
+        $unreviewedBookings = Booking::where('student_id', $student->id)
+            ->where('status', BookingStatus::Completed->value)
+            ->whereDoesntHave('reviews', function ($query) use ($student) {
+                $query->where('user_id', $student->id);
+            })
+            ->with(['teacher.user', 'subject'])
+            ->orderBy('completed_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        if ($unreviewedBookings->isEmpty()) {
+            return;
+        }
+
+        // Show notification for each unreviewed booking
+        foreach ($unreviewedBookings as $booking) {
+            $teacherName = $booking->teacher->user->name ?? 'المعلم';
+            $subjectName = $booking->subject->name ?? 'الدرس';
+
+            notify()
+                ->info()
+                ->title('الرجاء تقييم الدرس')
+                ->message("لديك حجز مكتمل مع {$teacherName} في {$subjectName} - يرجى تقييم الدرس")
+                ->duration(10000) // 10 seconds
+                ->actions([
+                    \Mckenziearts\Notify\Action\NotifyAction::make()
+                        ->label('عرض الحجز')
+                        ->url(route('student.bookings.show', $booking)),
+                ])
+                ->send();
+        }
     }
 }
