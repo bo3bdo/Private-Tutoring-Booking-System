@@ -45,7 +45,7 @@ class SupportTicket extends Model
 
     public function replies(): HasMany
     {
-        return $this->hasMany(SupportTicketReply::class, 'ticket_id')->orderBy('created_at');
+        return $this->hasMany(SupportTicketReply::class, 'ticket_id')->latest('created_at');
     }
 
     public function isOpen(): bool

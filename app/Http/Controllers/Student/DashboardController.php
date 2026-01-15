@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $student = auth()->user();
 
         // Get all bookings with payments
-        $bookings = $student->bookings()->with(['payment', 'teacher.user', 'subject']);
+        $bookings = $student->bookings()->with(['payment', 'teacher.user', 'subject'])->latest();
 
         // Calculate payment statistics
         $allBookingsList = $bookings->get();
@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $pendingPayments = $this->calculatePendingPayments($allBookingsList);
 
         // Count bookings
-        $allBookings = $student->bookings();
+        $allBookings = $student->bookings()->latest();
         $allBookingsList = $allBookings->get();
         $totalBookings = $allBookingsList->count();
         $upcomingBookings = $allBookingsList

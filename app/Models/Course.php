@@ -51,12 +51,12 @@ class Course extends Model
 
     public function enrollments(): HasMany
     {
-        return $this->hasMany(CourseEnrollment::class);
+        return $this->hasMany(CourseEnrollment::class)->latest('enrolled_at');
     }
 
     public function purchases(): HasMany
     {
-        return $this->hasMany(CoursePurchase::class);
+        return $this->hasMany(CoursePurchase::class)->latest('purchased_at');
     }
 
     public function isPublished(): bool
@@ -102,13 +102,15 @@ class Course extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class, 'reviewable_id')
-            ->where('reviewable_type', self::class);
+            ->where('reviewable_type', self::class)
+            ->latest('created_at');
     }
 
     public function resources(): HasMany
     {
         return $this->hasMany(Resource::class, 'resourceable_id')
-            ->where('resourceable_type', self::class);
+            ->where('resourceable_type', self::class)
+            ->latest('created_at');
     }
 
     public function averageRating(): float

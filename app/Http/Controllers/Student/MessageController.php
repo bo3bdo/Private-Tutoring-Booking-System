@@ -36,7 +36,7 @@ class MessageController extends Controller
         }
 
         $otherUser = $conversation->getOtherUser($user);
-        $messages = $conversation->messages()->with(['sender', 'attachments'])->orderBy('created_at')->get();
+        $messages = $conversation->messages()->with(['sender', 'attachments'])->latest('created_at')->get();
 
         // Mark messages as read
         $conversation->markAsReadFor($user);

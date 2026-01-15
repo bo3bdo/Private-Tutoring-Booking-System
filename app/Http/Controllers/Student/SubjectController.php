@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Subject;
 use App\Models\TeacherProfile;
-use App\Models\TimeSlot;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -14,7 +13,8 @@ class SubjectController extends Controller
 {
     public function index(): View
     {
-        $subjects = Subject::where('is_active', true)->get();
+        $subjects = Subject::where('is_active', true)->latest()->get();
+
         return view('student.subjects.index', compact('subjects'));
     }
 
@@ -25,6 +25,7 @@ class SubjectController extends Controller
             ->with(['user', 'reviews' => function ($query) {
                 $query->where('is_approved', true);
             }])
+            ->latest()
             ->get();
 
         return view('student.subjects.show', compact('subject', 'teachers'));

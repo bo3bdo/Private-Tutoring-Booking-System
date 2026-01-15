@@ -81,7 +81,7 @@ class Booking extends Model
 
     public function histories(): HasMany
     {
-        return $this->hasMany(BookingHistory::class);
+        return $this->hasMany(BookingHistory::class)->latest('created_at');
     }
 
     public function isAwaitingPayment(): bool
@@ -107,13 +107,15 @@ class Booking extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class, 'reviewable_id')
-            ->where('reviewable_type', self::class);
+            ->where('reviewable_type', self::class)
+            ->latest('created_at');
     }
 
     public function resources(): HasMany
     {
         return $this->hasMany(Resource::class, 'resourceable_id')
-            ->where('resourceable_type', self::class);
+            ->where('resourceable_type', self::class)
+            ->latest('created_at');
     }
 
     public function conversation(): \Illuminate\Database\Eloquent\Relations\HasOne
