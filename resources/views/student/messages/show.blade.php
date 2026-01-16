@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-2">
-            <a href="{{ route('student.messages.index') }}" class="text-gray-500 hover:text-gray-700 transition">
+            <a href="{{ route('student.messages.index') }}" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
@@ -10,7 +10,7 @@
                 <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center text-white font-bold shadow-md">
                     {{ substr($otherUser->name, 0, 1) }}
                 </div>
-                <h2 class="font-semibold text-2xl text-gray-900 leading-tight">
+                <h2 class="font-semibold text-2xl text-gray-900 dark:text-white leading-tight">
                     {{ $otherUser->name }}
                 </h2>
             </div>
@@ -19,22 +19,22 @@
 
     <div class="py-8">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <!-- Messages -->
-                <div class="h-96 overflow-y-auto p-6 space-y-4 bg-slate-50">
+                <div class="h-96 overflow-y-auto p-6 space-y-4 bg-slate-50 dark:bg-gray-900">
                     @foreach($messages as $message)
                         <div class="flex {{ $message->sender_id === auth()->id() ? 'justify-end' : 'justify-start' }}">
                             <div class="max-w-md">
                                 <div class="flex items-center gap-2 mb-1 {{ $message->sender_id === auth()->id() ? 'justify-end' : 'justify-start' }}">
-                                    <span class="text-xs font-semibold text-gray-600">{{ $message->sender->name }}</span>
-                                    <span class="text-xs text-gray-500">{{ $message->created_at->format('g:i A') }}</span>
+                                    <span class="text-xs font-semibold text-gray-600 dark:text-gray-400">{{ $message->sender->name }}</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-500">{{ $message->created_at->format('g:i A') }}</span>
                                 </div>
-                                <div class="p-4 rounded-2xl {{ $message->sender_id === auth()->id() ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-200 text-gray-900' }}">
+                                <div class="p-4 rounded-2xl {{ $message->sender_id === auth()->id() ? 'bg-emerald-600 text-white' : 'bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 text-gray-900 dark:text-white' }}">
                                     <p class="text-sm whitespace-pre-wrap">{{ $message->body }}</p>
                                     @if($message->attachments->isNotEmpty())
                                         <div class="mt-3 space-y-2">
                                             @foreach($message->attachments as $attachment)
-                                                <a href="{{ route('student.message-attachments.download', $attachment) }}" target="_blank" class="flex items-center gap-2 text-sm {{ $message->sender_id === auth()->id() ? 'text-emerald-100 hover:text-white' : 'text-blue-600 hover:text-blue-700' }}">
+                                                <a href="{{ route('student.message-attachments.download', $attachment) }}" target="_blank" class="flex items-center gap-2 text-sm {{ $message->sender_id === auth()->id() ? 'text-emerald-100 hover:text-white' : 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300' }}">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
                                                     </svg>
@@ -50,19 +50,19 @@
                 </div>
 
                 <!-- Message Form -->
-                <div class="p-6 border-t border-slate-200 bg-white">
+                <div class="p-6 border-t border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800">
                     <form method="POST" action="{{ route('student.messages.store') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="conversation_id" value="{{ $conversation->id }}">
                         <div class="mb-4">
-                            <textarea name="body" rows="3" required placeholder="{{ __('common.Type your message...') }}" class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 transition resize-none"></textarea>
+                            <textarea name="body" rows="3" required placeholder="{{ __('common.Type your message...') }}" class="w-full rounded-xl border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-emerald-400 dark:focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400 dark:focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition resize-none"></textarea>
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">{{ __('common.Attachments (optional)') }}</label>
-                            <input type="file" name="attachments[]" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" class="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
-                            <p class="text-xs text-gray-500 mt-1">{{ __('common.Max 5 files, 10MB each') }}</p>
+                            <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('common.Attachments (optional)') }}</label>
+                            <input type="file" name="attachments[]" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" class="w-full text-sm text-gray-600 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 dark:file:bg-emerald-900/30 file:text-emerald-700 dark:file:text-emerald-300 hover:file:bg-emerald-100 dark:hover:file:bg-emerald-900/50">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('common.Max 5 files, 10MB each') }}</p>
                         </div>
-                        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-emerald-700 hover:to-emerald-800 transition">
+                        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 dark:from-emerald-700 dark:to-emerald-600 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-emerald-700 hover:to-emerald-800 dark:hover:from-emerald-600 dark:hover:to-emerald-500 transition">
                             {{ __('common.Send Message') }}
                         </button>
                     </form>

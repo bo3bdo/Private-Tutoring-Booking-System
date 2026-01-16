@@ -1,10 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-emerald-600 to-purple-600 p-8 mb-8">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-emerald-600 to-purple-600 dark:from-blue-800 dark:via-emerald-800 dark:to-purple-800 p-8 mb-8">
             <!-- Background Image -->
             <div class="absolute inset-0 z-0">
-                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-emerald-900/80 to-purple-900/80 z-10"></div>
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center bg-no-repeat"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-emerald-900/80 to-purple-900/80 dark:from-blue-950/90 dark:via-emerald-950/90 dark:to-purple-950/90 z-10"></div>
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center bg-no-repeat opacity-50 dark:opacity-30"></div>
             </div>
             
             <!-- Content -->
@@ -13,10 +13,10 @@
                     <h2 class="font-semibold text-3xl text-white leading-tight drop-shadow-lg">
                         {{ __('common.Student Dashboard') }}
                     </h2>
-                    <p class="text-sm text-gray-100 mt-2 drop-shadow-md">{{ __('common.Track your learning progress and bookings') }}</p>
+                    <p class="text-sm text-gray-100 dark:text-gray-200 mt-2 drop-shadow-md">{{ __('common.Track your learning progress and bookings') }}</p>
                 </div>
                 <div class="hidden md:block">
-                    <div class="w-24 h-24 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 shadow-lg">
+                    <div class="w-24 h-24 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 dark:border-white/20 shadow-lg">
                         <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                         </svg>
@@ -31,7 +31,7 @@
             <!-- Payment Statistics -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Total Paid -->
-                <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl shadow-lg border-2 border-emerald-200 p-6">
+                <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 rounded-2xl shadow-lg border-2 border-emerald-200 dark:border-emerald-700/50 p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -39,12 +39,12 @@
                             </svg>
                         </div>
                     </div>
-                    <h3 class="text-sm font-semibold text-emerald-700 uppercase tracking-wide mb-1">{{ __('common.Total Paid') }}</h3>
-                    <p class="text-2xl font-bold text-gray-900">{{ number_format($totalPaid, 2) }} BHD</p>
+                    <h3 class="text-sm font-semibold text-emerald-700 dark:text-emerald-300 uppercase tracking-wide mb-1">{{ __('common.Total Paid') }}</h3>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ number_format($totalPaid, 2) }} BHD</p>
                 </div>
 
                 <!-- This Month -->
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl shadow-lg border-2 border-blue-200 p-6">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 rounded-2xl shadow-lg border-2 border-blue-200 dark:border-blue-700/50 p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,12 +52,12 @@
                             </svg>
                         </div>
                     </div>
-                    <h3 class="text-sm font-semibold text-blue-700 uppercase tracking-wide mb-1">{{ __('common.This Month') }}</h3>
-                    <p class="text-2xl font-bold text-gray-900">{{ number_format($monthPaid, 2) }} BHD</p>
+                    <h3 class="text-sm font-semibold text-blue-700 dark:text-blue-300 uppercase tracking-wide mb-1">{{ __('common.This Month') }}</h3>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ number_format($monthPaid, 2) }} BHD</p>
                 </div>
 
                 <!-- This Week -->
-                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl shadow-lg border-2 border-purple-200 p-6">
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 rounded-2xl shadow-lg border-2 border-purple-200 dark:border-purple-700/50 p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,12 +65,12 @@
                             </svg>
                         </div>
                     </div>
-                    <h3 class="text-sm font-semibold text-purple-700 uppercase tracking-wide mb-1">{{ __('common.This Week') }}</h3>
-                    <p class="text-2xl font-bold text-gray-900">{{ number_format($weekPaid, 2) }} BHD</p>
+                    <h3 class="text-sm font-semibold text-purple-700 dark:text-purple-300 uppercase tracking-wide mb-1">{{ __('common.This Week') }}</h3>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ number_format($weekPaid, 2) }} BHD</p>
                 </div>
 
                 <!-- Pending Payments -->
-                <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl shadow-lg border-2 border-amber-200 p-6">
+                <div class="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/30 rounded-2xl shadow-lg border-2 border-amber-200 dark:border-amber-700/50 p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-12 h-12 bg-amber-600 rounded-xl flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,65 +78,65 @@
                             </svg>
                         </div>
                     </div>
-                    <h3 class="text-sm font-semibold text-amber-700 uppercase tracking-wide mb-1">{{ __('common.Pending') }}</h3>
-                    <p class="text-2xl font-bold text-gray-900">{{ number_format($pendingPayments, 2) }} BHD</p>
+                    <h3 class="text-sm font-semibold text-amber-700 dark:text-amber-300 uppercase tracking-wide mb-1">{{ __('common.Pending') }}</h3>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ number_format($pendingPayments, 2) }} BHD</p>
                 </div>
             </div>
 
             <!-- Booking Statistics -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('common.Total Bookings') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 mt-1">{{ $totalBookings }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Total Bookings') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $totalBookings }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('common.Upcoming') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 mt-1">{{ $upcomingBookings }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Upcoming') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $upcomingBookings }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('common.Completed') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 mt-1">{{ $completedBookings }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Completed') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $completedBookings }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-red-100 dark:bg-red-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('common.Cancelled') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 mt-1">{{ $cancelledBookings }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Cancelled') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $cancelledBookings }}</p>
                         </div>
                     </div>
                 </div>
@@ -145,61 +145,61 @@
             <!-- Learning Statistics -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Total Learning Hours -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-cyan-100 dark:bg-cyan-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-cyan-600 dark:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('common.Learning Hours') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 mt-1">{{ number_format($totalHours, 1) }}h</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Learning Hours') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ number_format($totalHours, 1) }}h</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Subjects Studied -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('common.Subjects') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 mt-1">{{ $subjectsStudied }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Subjects') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $subjectsStudied }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Teachers -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('common.Teachers') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 mt-1">{{ $uniqueTeachers }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Teachers') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $uniqueTeachers }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Average Duration -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('Avg Duration') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 mt-1">{{ round($averageDuration) }} min</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('Avg Duration') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ round($averageDuration) }} min</p>
                         </div>
                     </div>
                 </div>
@@ -208,49 +208,49 @@
             <!-- Additional Statistics -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Most Studied Subject -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('common.Top Subject') }}</p>
-                            <p class="text-lg font-bold text-gray-900 mt-1 truncate">{{ $mostStudiedSubjectName }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Top Subject') }}</p>
+                            <p class="text-lg font-bold text-gray-900 dark:text-white mt-1 truncate">{{ $mostStudiedSubjectName }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- New Bookings This Month -->
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
                     <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/50 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
                         </div>
                         <div>
-                            <p class="text-sm font-semibold text-gray-600 uppercase tracking-wide">{{ __('common.New This Month') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 mt-1">{{ $newBookingsThisMonth }}</p>
+                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.New This Month') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $newBookingsThisMonth }}</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Quick Actions -->
-                <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl shadow-lg border-2 border-slate-200 p-6">
-                    <h3 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-3">{{ __('common.Quick Actions') }}</h3>
+                <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl shadow-lg border-2 border-slate-200 dark:border-gray-600 p-6">
+                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-3">{{ __('common.Quick Actions') }}</h3>
                     <div class="grid grid-cols-2 gap-2">
-                        <a href="{{ route('student.subjects.index') }}" class="px-4 py-2 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:bg-slate-800 transition text-center">
+                        <a href="{{ route('student.subjects.index') }}" class="px-4 py-2 bg-slate-900 dark:bg-slate-700 text-white rounded-xl text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-600 transition text-center">
                             {{ __('common.Browse Subjects') }}
                         </a>
-                        <a href="{{ route('student.bookings.index') }}" class="px-4 py-2 bg-white border-2 border-slate-300 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-50 transition text-center">
+                        <a href="{{ route('student.bookings.index') }}" class="px-4 py-2 bg-white dark:bg-gray-800 border-2 border-slate-300 dark:border-gray-600 text-slate-700 dark:text-gray-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-gray-700 transition text-center">
                             {{ __('common.My Bookings') }}
                         </a>
-                        <a href="{{ route('student.messages.index') }}" class="px-4 py-2 bg-white border-2 border-slate-300 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-50 transition text-center">
+                        <a href="{{ route('student.messages.index') }}" class="px-4 py-2 bg-white dark:bg-gray-800 border-2 border-slate-300 dark:border-gray-600 text-slate-700 dark:text-gray-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-gray-700 transition text-center">
                             {{ __('common.Messages') }}
                         </a>
-                        <a href="{{ route('student.resources.index') }}" class="px-4 py-2 bg-white border-2 border-slate-300 text-slate-700 rounded-xl text-sm font-semibold hover:bg-slate-50 transition text-center">
+                        <a href="{{ route('student.resources.index') }}" class="px-4 py-2 bg-white dark:bg-gray-800 border-2 border-slate-300 dark:border-gray-600 text-slate-700 dark:text-gray-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-gray-700 transition text-center">
                             {{ __('common.Resources') }}
                         </a>
                     </div>
@@ -259,21 +259,21 @@
 
             <!-- Upcoming Bookings -->
             @if($upcomingBookingsList->isNotEmpty())
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-                    <div class="p-6 border-b border-slate-200">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                    <div class="p-6 border-b border-slate-200 dark:border-gray-700">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                                     </svg>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg font-bold text-gray-900">{{ __('common.Upcoming Bookings') }}</h3>
-                                    <p class="text-sm text-gray-600">{{ __('common.Your next scheduled lessons') }}</p>
+                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Upcoming Bookings') }}</h3>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('common.Your next scheduled lessons') }}</p>
                                 </div>
                             </div>
-                            <a href="{{ route('student.bookings.index') }}" class="text-sm font-semibold text-blue-600 hover:text-blue-700">
+                            <a href="{{ route('student.bookings.index') }}" class="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
                                 {{ __('common.View All') }}
                             </a>
                         </div>
@@ -281,7 +281,7 @@
                     <div class="p-6">
                         <div class="space-y-4">
                             @foreach($upcomingBookingsList as $booking)
-                                <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-transparent rounded-xl border border-blue-100 hover:border-blue-200 transition">
+                                <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-900/20 dark:to-transparent rounded-xl border border-blue-100 dark:border-blue-800/50 hover:border-blue-200 dark:hover:border-blue-700 transition">
                                     <div class="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -289,15 +289,15 @@
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-center gap-2 mb-1">
-                                            <h4 class="font-semibold text-gray-900">{{ $booking->subject->name }}</h4>
-                                            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-green-100 text-green-800">
+                                            <h4 class="font-semibold text-gray-900 dark:text-white">{{ $booking->subject->name }}</h4>
+                                            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300">
                                                 {{ __('common.Confirmed') }}
                                             </span>
                                         </div>
-                                        <p class="text-sm text-gray-600 mb-1">{{ $booking->start_at->format('l, F j, Y \a\t g:i A') }}</p>
-                                        <p class="text-sm text-gray-600">{{ __('common.Teacher') }}: <span class="font-semibold">{{ $booking->teacher->user->name }}</span></p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ $booking->start_at->format('l, F j, Y \a\t g:i A') }}</p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('common.Teacher') }}: <span class="font-semibold">{{ $booking->teacher->user->name }}</span></p>
                                     </div>
-                                    <a href="{{ route('student.bookings.show', $booking) }}" class="flex-shrink-0 text-blue-600 hover:text-blue-700">
+                                    <a href="{{ route('student.bookings.show', $booking) }}" class="flex-shrink-0 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                         </svg>

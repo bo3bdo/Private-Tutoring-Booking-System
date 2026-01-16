@@ -20,31 +20,95 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
-    <body class="font-sans antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-        <div class="min-h-screen flex flex-col">
-            <!-- Fixed Header -->
-            <header class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-                @include('layouts.navigation')
-            </header>
+    <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+        <div class="min-h-screen flex">
+            <!-- Sidebar -->
+            @include('layouts.sidebar')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <div class="pt-16 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                        {{ $header }}
+            <!-- Main Content Area -->
+            <div class="flex-1 flex flex-col lg:ms-64">
+                <!-- Top Bar -->
+                <header class="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+                        <!-- Left Side -->
+                        <div class="flex items-center gap-4">
+                            <!-- Mobile Menu Button -->
+                            <button @click="$dispatch('sidebar-toggle')" class="lg:hidden p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-dark-blue-500">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            </button>
+
+                            <!-- Page Title (Mobile) -->
+                            <div class="flex-1 lg:hidden">
+                                <h1 class="text-lg font-semibold text-gray-900 dark:text-white">
+                                    @isset($header)
+                                        {{ $header }}
+                                    @else
+                                        {{ config('app.name', 'Laravel') }}
+                                    @endisset
+                                </h1>
+                            </div>
+                        </div>
+
+                        <!-- Right Side Actions -->
+                        <div class="flex items-center gap-4">
+                            <!-- Dark Mode Toggle -->
+                            <button @click="$dispatch('toggle-dark-mode')" class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-dark-blue-500 focus:ring-offset-2 transition-colors" aria-label="Toggle dark mode">
+                                <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                </svg>
+                                <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </button>
+
+                            <!-- User Menu (Desktop) -->
+                            <div class="hidden sm:block">
+                                <x-dropdown align="right" width="48">
+                                    <x-slot name="trigger">
+                                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-lg text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-dark-blue-600 to-dark-blue-800 flex items-center justify-center text-white font-semibold text-sm">
+                                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                            </div>
+                                            <span class="ms-2 hidden md:block">{{ Auth::user()->name }}</span>
+                                            <div class="ms-1">
+                                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        </button>
+                                    </x-slot>
+
+                                    <x-slot name="content">
+                                        <x-dropdown-link :href="route('profile.edit')">
+                                            {{ __('common.Profile') }}
+                                        </x-dropdown-link>
+
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <x-dropdown-link :href="route('logout')"
+                                                    onclick="event.preventDefault();
+                                                                this.closest('form').submit();">
+                                                {{ __('common.Log Out') }}
+                                            </x-dropdown-link>
+                                        </form>
+                                    </x-slot>
+                                </x-dropdown>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            @endisset
+                </header>
 
-            <!-- Page Content -->
-            <main class="flex-1 pt-16 @if(isset($header)) @else mt-0 @endif">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    {{ $slot }}
-                </div>
-            </main>
+                <!-- Page Content -->
+                <main class="flex-1 overflow-y-auto">
+                    <div class="px-4 sm:px-6 lg:px-8 py-8">
+                        {{ $slot }}
+                    </div>
+                </main>
 
-            <!-- Footer -->
-            <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
+                <!-- Footer -->
+                <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <!-- Brand Section -->
@@ -124,7 +188,8 @@
                         </p>
                     </div>
                 </div>
-            </footer>
+                </footer>
+            </div>
         </div>
 
         <!-- Laravel Notify Component -->

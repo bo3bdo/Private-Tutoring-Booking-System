@@ -30,6 +30,7 @@ return [
     'My Bookings' => 'حجوزاتي',
     'Support' => 'الدعم',
     'Profile' => 'الملف الشخصي',
+    'Settings' => 'الإعدادات',
     'Log Out' => 'تسجيل الخروج',
 
     // Auth Pages
@@ -212,6 +213,7 @@ return [
     'All' => 'الكل',
     'Past' => 'السابقة',
     'View' => 'عرض',
+    'View Booking' => 'عرض الحجز',
     'No bookings found.' => 'لم يتم العثور على حجوزات.',
     'Cancel Booking' => 'إلغاء الحجز',
     'Are you sure you want to cancel this booking? Please provide a reason for cancellation.' => 'هل أنت متأكد أنك تريد إلغاء هذا الحجز؟ يرجى تقديم سبب الإلغاء.',
@@ -261,6 +263,7 @@ return [
     'Choose' => 'اختر',
     'Required' => 'مطلوب',
     'Optional' => 'اختياري',
+    'Dark Mode' => 'الوضع الداكن',
     'Confirm Cancellation' => 'تأكيد الإلغاء',
 
     // Booking Status Labels (will be handled by Enum, but adding common ones)

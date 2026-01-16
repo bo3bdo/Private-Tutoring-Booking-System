@@ -30,6 +30,7 @@ return [
     'My Bookings' => 'My Bookings',
     'Support' => 'Support',
     'Profile' => 'Profile',
+    'Settings' => 'Settings',
     'Log Out' => 'Log Out',
 
     // Auth Pages
@@ -213,6 +214,7 @@ return [
     'All' => 'All',
     'Past' => 'Past',
     'View' => 'View',
+    'View Booking' => 'View Booking',
     'No bookings found.' => 'No bookings found.',
     'Cancel Booking' => 'Cancel Booking',
     'Are you sure you want to cancel this booking? Please provide a reason for cancellation.' => 'Are you sure you want to cancel this booking? Please provide a reason for cancellation.',
@@ -262,6 +264,7 @@ return [
     'Choose' => 'Choose',
     'Required' => 'Required',
     'Optional' => 'Optional',
+    'Dark Mode' => 'Dark Mode',
     'Confirm Cancellation' => 'Confirm Cancellation',
 
     // Booking Status Labels (will be handled by Enum, but adding common ones)
