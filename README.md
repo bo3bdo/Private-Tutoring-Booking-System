@@ -62,6 +62,14 @@ A complete production-ready private tutoring booking system built with Laravel 1
 - **Quick Actions**: Easy access to common tasks
 - **Recent Activity**: Display recent bookings, messages, and updates
 
+### Internationalization (i18n)
+- **Multi-language Support**: Full support for English and Arabic
+- **RTL Support**: Complete right-to-left layout for Arabic language
+- **Language Switcher**: Easy language switching with session persistence
+- **Localized Content**: All UI elements, notifications, and messages are translated
+- **Font Support**: Cairo font for Arabic, Figtree for English
+- **Dynamic Layout**: Automatic direction switching based on selected language
+
 ## 📋 Requirements
 
 - **PHP**: 8.4.11+
@@ -276,6 +284,28 @@ AWS_BUCKET=
 AWS_USE_PATH_STYLE_ENDPOINT=false
 ```
 
+### Language Configuration
+
+The application supports multiple languages (English and Arabic). Configure in `.env`:
+
+```env
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=en_US
+```
+
+Users can switch languages using the language switcher in the navigation bar. The selected language is stored in the session and persists across requests.
+
+**Supported Languages:**
+- English (en) - Default
+- Arabic (ar) - Full RTL support
+
+**Translation Files:**
+- `lang/en/common.php` - English translations
+- `lang/ar/common.php` - Arabic translations
+
+All UI elements, notifications, and messages are fully translated.
+
 ## 🎯 Quick Start (Development)
 
 ### Quick Login
@@ -294,6 +324,14 @@ All demo accounts use password: `password`
 - **Admin**: admin@example.com
 - **Teacher**: teacher@example.com
 - **Student**: student@example.com
+
+### Language Switching
+
+Users can switch between English and Arabic using the language switcher in the navigation bar:
+- Click the language dropdown in the top navigation
+- Select your preferred language (English/Arabic)
+- The interface will automatically switch with RTL support for Arabic
+- Your language preference is saved in the session
 
 ## 🧪 Testing
 
@@ -321,14 +359,24 @@ php artisan test --filter=BookingService
 
 ### Test Coverage
 
-The project includes comprehensive tests for:
+The project includes comprehensive tests with **165 tests** and **387 assertions**, all passing:
+
 - ✅ Authentication & Authorization
 - ✅ Booking Management (including concurrency safety)
+- ✅ Student Booking Flow
+- ✅ Teacher Booking Management
 - ✅ Course Management
-- ✅ Payment Processing
+- ✅ Payment Processing & Webhooks
 - ✅ Reviews & Ratings
 - ✅ Messaging System
 - ✅ Support Tickets
+- ✅ Notifications
+- ✅ Dashboard Statistics
+- ✅ Admin CRUD Operations
+- ✅ Slot Generation
+- ✅ Teacher Availability Management
+
+**Test Status**: All tests passing ✅
 
 ## 🎨 Code Quality
 
@@ -557,6 +605,29 @@ For issues, questions, or feature requests, please contact the development team 
 - **PROJECT_STATUS.md**: Current project status and completed features
 - **TEST_COVERAGE_REPORT.md**: Test coverage report
 - **AGENTS.md**: Development guidelines and best practices
+
+## 🆕 Recent Updates
+
+### Internationalization (i18n)
+- ✅ Full Arabic language support with RTL layout
+- ✅ Language switcher with session persistence
+- ✅ All UI elements translated (English & Arabic)
+- ✅ Localized notifications and messages
+- ✅ Dynamic font loading (Cairo for Arabic, Figtree for English)
+
+### Testing
+- ✅ Comprehensive test suite with 165 tests
+- ✅ All tests passing (387 assertions)
+- ✅ Full coverage of core features
+- ✅ Payment webhook testing
+- ✅ Booking concurrency testing
+- ✅ Authorization policy testing
+
+### Code Quality
+- ✅ Laravel Pint code formatting
+- ✅ PSR-12 compliance
+- ✅ Type hints for all methods
+- ✅ PHPDoc documentation
 
 ---
 
