@@ -172,6 +172,7 @@ return [
     'Create Free Account' => 'Create Free Account',
     'Your trusted platform for private tutoring and online learning.' => 'Your trusted platform for private tutoring and online learning.',
     'Quick Links' => 'Quick Links',
+    'Follow Us' => 'Follow Us',
     'Features' => 'Features',
     'Support' => 'Support',
     'Help Center' => 'Help Center',

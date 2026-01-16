@@ -10,3 +10,23 @@
 [dir="ltr"] {
     direction: ltr;
 }
+
+/* Custom Button Styles */
+@layer components {
+    .btn-primary {
+        @apply inline-flex items-center px-6 py-3 bg-dark-blue-600 border border-transparent rounded-button font-medium text-sm text-white tracking-wide hover:bg-dark-blue-700 focus:bg-dark-blue-700 active:bg-dark-blue-800 focus:outline-none focus:ring-2 focus:ring-dark-blue-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center px-6 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-button font-medium text-sm text-gray-700 dark:text-gray-200 tracking-wide shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-dark-blue-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out;
+    }
+
+    .btn-danger {
+        @apply inline-flex items-center px-6 py-3 bg-red-600 border border-transparent rounded-button font-medium text-sm text-white tracking-wide hover:bg-red-700 active:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md;
+    }
+}
+
+/* Smooth transitions for dark mode */
+* {
+    @apply transition-colors duration-200;
+}
