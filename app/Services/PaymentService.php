@@ -19,8 +19,8 @@ class PaymentService
     public function __construct()
     {
         $this->gateways = [
-            PaymentProvider::Stripe->value => new StripeGateway,
-            PaymentProvider::BenefitPay->value => new BenefitPayGateway,
+            PaymentProvider::Stripe->value => app(StripeGateway::class),
+            PaymentProvider::BenefitPay->value => app(BenefitPayGateway::class),
         ];
     }
 

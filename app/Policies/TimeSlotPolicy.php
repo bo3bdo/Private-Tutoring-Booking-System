@@ -88,4 +88,23 @@ class TimeSlotPolicy
 
         return false;
     }
+
+    public function book(User $user, TimeSlot $timeSlot): bool
+    {
+        if (! $user->isStudent()) {
+            return false;
+        }
+
+        // Check if slot is available
+        if (! $timeSlot->isAvailable()) {
+            return false;
+        }
+
+        // Check if slot is not in the past
+        if ($timeSlot->start_at < now()) {
+            return false;
+        }
+
+        return true;
+    }
 }

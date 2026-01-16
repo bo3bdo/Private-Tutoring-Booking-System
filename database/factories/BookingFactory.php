@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\BookingStatus;
+use App\Enums\LessonMode;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class BookingFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'status' => BookingStatus::Confirmed,
+            'lesson_mode' => LessonMode::Online,
+            'start_at' => now()->addDay(),
+            'end_at' => now()->addDay()->addHour(),
         ];
     }
 }

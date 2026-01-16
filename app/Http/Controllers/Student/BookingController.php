@@ -52,6 +52,8 @@ class BookingController extends Controller
     {
         $slot = TimeSlot::findOrFail($request->time_slot_id);
 
+        $this->authorize('book', $slot);
+
         try {
             $booking = $this->bookingService->createBooking(
                 student: auth()->user(),

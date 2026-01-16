@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\PaymentProvider;
+use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class PaymentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'provider' => PaymentProvider::Stripe,
+            'status' => PaymentStatus::Pending,
+            'amount' => fake()->randomFloat(2, 10, 100),
+            'currency' => 'BHD',
         ];
     }
 }

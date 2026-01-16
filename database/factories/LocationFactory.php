@@ -17,7 +17,10 @@ class LocationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company().' Office',
+            'address' => fake()->address(),
+            'map_url' => 'https://maps.google.com/?q='.urlencode(fake()->address()),
+            'is_active' => true,
         ];
     }
 }
