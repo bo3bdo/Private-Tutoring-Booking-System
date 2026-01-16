@@ -26,12 +26,12 @@ class CourseEnrolledToTeacherNotification extends Notification implements Should
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject("New student enrolled: {$this->student->name}")
-            ->greeting("Hello {$notifiable->name},")
-            ->line("A new student has enrolled in your course **{$this->course->title}**.")
-            ->line("**Student:** {$this->student->name} ({$this->student->email})")
-            ->line("**Subject:** {$this->course->subject->name}")
-            ->action('View Course Sales', route('teacher.courses.sales', $this->course))
-            ->line('Thank you for sharing your knowledge!');
+            ->subject(__('common.New student enrolled: :student', ['student' => $this->student->name]))
+            ->greeting(__('common.Hello :name,', ['name' => $notifiable->name]))
+            ->line(__('common.A new student has enrolled in your course **:course**.', ['course' => $this->course->title]))
+            ->line(__('common.Student:')." {$this->student->name} ({$this->student->email})")
+            ->line(__('common.Subject:')." {$this->course->subject->name}")
+            ->action(__('common.View Course Sales'), route('teacher.courses.sales', $this->course))
+            ->line(__('common.Thank you for sharing your knowledge!'));
     }
 }

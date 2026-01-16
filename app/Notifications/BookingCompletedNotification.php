@@ -24,12 +24,12 @@ class BookingCompletedNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Lesson Completed')
-            ->greeting("Hello {$notifiable->name},")
-            ->line('Your lesson has been marked as completed.')
-            ->line("**Subject:** {$this->booking->subject->name}")
-            ->line("**Teacher:** {$this->booking->teacher->user->name}")
-            ->line("**Date & Time:** {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
-            ->line('Thank you for your participation!');
+            ->subject(__('common.Lesson Completed'))
+            ->greeting(__('common.Hello :name,', ['name' => $notifiable->name]))
+            ->line(__('common.Your lesson has been marked as completed.'))
+            ->line(__('common.Subject:')." {$this->booking->subject->name}")
+            ->line(__('common.Teacher:')." {$this->booking->teacher->user->name}")
+            ->line(__('common.Date & Time:')." {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
+            ->line(__('common.Thank you for your participation!'));
     }
 }

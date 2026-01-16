@@ -174,17 +174,20 @@ class DashboardController extends Controller
 
         // Show notification for each unreviewed booking
         foreach ($unreviewedBookings as $booking) {
-            $teacherName = $booking->teacher->user->name ?? 'المعلم';
-            $subjectName = $booking->subject->name ?? 'الدرس';
+            $teacherName = $booking->teacher->user->name ?? __('common.Teacher');
+            $subjectName = $booking->subject->name ?? __('common.Subject');
 
             notify()
                 ->info()
-                ->title('الرجاء تقييم الدرس')
-                ->message("لديك حجز مكتمل مع {$teacherName} في {$subjectName} - يرجى تقييم الدرس")
+                ->title(__('common.Please rate the lesson'))
+                ->message(__('common.You have a completed booking with :teacher in :subject - Please rate the lesson', [
+                    'teacher' => $teacherName,
+                    'subject' => $subjectName,
+                ]))
                 ->duration(10000) // 10 seconds
                 ->actions([
                     \Mckenziearts\Notify\Action\NotifyAction::make()
-                        ->label('عرض الحجز')
+                        ->label(__('common.View Booking'))
                         ->url(route('student.bookings.show', $booking)),
                 ])
                 ->send();

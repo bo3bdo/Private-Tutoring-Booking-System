@@ -22,8 +22,8 @@ class QuickLoginController extends Controller
         Auth::login($user);
 
         notify()->success()
-            ->title('تم تسجيل الدخول')
-            ->message('تم تسجيل الدخول كمدير')
+            ->title(__('common.Logged in'))
+            ->message(__('common.Logged in as admin'))
             ->send();
 
         return redirect()->route('admin.dashboard');
@@ -41,8 +41,8 @@ class QuickLoginController extends Controller
         Auth::login($user);
 
         notify()->success()
-            ->title('تم تسجيل الدخول')
-            ->message('تم تسجيل الدخول كمعلم')
+            ->title(__('common.Logged in'))
+            ->message(__('common.Logged in as teacher'))
             ->send();
 
         return redirect()->route('teacher.dashboard');
@@ -60,8 +60,8 @@ class QuickLoginController extends Controller
         Auth::login($user);
 
         notify()->success()
-            ->title('تم تسجيل الدخول')
-            ->message('تم تسجيل الدخول كطالب')
+            ->title(__('common.Logged in'))
+            ->message(__('common.Logged in as student'))
             ->send();
 
         return redirect()->route('student.dashboard');

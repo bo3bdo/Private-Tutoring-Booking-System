@@ -24,24 +24,24 @@ class BookingReminderNotification extends Notification implements ShouldQueue
 
     public function toMail(object $notifiable): MailMessage
     {
-        $timeText = $this->hoursBefore === 1 ? '1 hour' : "{$this->hoursBefore} hours";
+        $timeText = $this->hoursBefore === 1 ? __('common.1 hour') : "{$this->hoursBefore} ".__('common.hours');
 
         $message = (new MailMessage)
-            ->subject("Reminder: Lesson in {$timeText}")
-            ->greeting("Hello {$notifiable->name},")
-            ->line("This is a reminder that you have a lesson in {$timeText}.")
-            ->line("**Subject:** {$this->booking->subject->name}")
-            ->line("**Teacher:** {$this->booking->teacher->user->name}")
-            ->line("**Date & Time:** {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
-            ->line("**Duration:** {$this->booking->start_at->diffInMinutes($this->booking->end_at)} minutes")
-            ->line("**Mode:** {$this->booking->lesson_mode->label()}");
+            ->subject(__('common.Reminder: Lesson in :time', ['time' => $timeText]))
+            ->greeting(__('common.Hello :name,', ['name' => $notifiable->name]))
+            ->line(__('common.This is a reminder that you have a lesson in :time.', ['time' => $timeText]))
+            ->line(__('common.Subject:')." {$this->booking->subject->name}")
+            ->line(__('common.Teacher:')." {$this->booking->teacher->user->name}")
+            ->line(__('common.Date & Time:')." {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
+            ->line(__('common.Duration:')." {$this->booking->start_at->diffInMinutes($this->booking->end_at)} ".__('common.minutes'))
+            ->line(__('common.Mode:')." {$this->booking->lesson_mode->label()}");
 
         if ($this->booking->lesson_mode->value === 'online' && $this->booking->meeting_url) {
-            $message->action('Join Meeting', $this->booking->meeting_url);
+            $message->action(__('common.Join Meeting'), $this->booking->meeting_url);
         }
 
         if ($this->booking->location) {
-            $message->line("**Location:** {$this->booking->location->name}");
+            $message->line(__('common.Location:')." {$this->booking->location->name}");
         }
 
         return $message;

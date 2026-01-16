@@ -25,31 +25,31 @@ class BookingCreatedNotification extends Notification implements ShouldQueue
     {
         $isStudent = $notifiable->id === $this->booking->student_id;
         $subject = $isStudent
-            ? 'Your booking has been created'
-            : 'New booking received';
+            ? __('common.Your booking has been created')
+            : __('common.New booking received');
 
         $message = (new MailMessage)
             ->subject($subject)
-            ->greeting("Hello {$notifiable->name},")
+            ->greeting(__('common.Hello :name,', ['name' => $notifiable->name]))
             ->line($isStudent
-                ? 'Your booking has been successfully created.'
-                : 'You have received a new booking request.');
+                ? __('common.Your booking has been successfully created.')
+                : __('common.You have received a new booking request.'));
 
-        $message->line("**Subject:** {$this->booking->subject->name}")
-            ->line("**Teacher:** {$this->booking->teacher->user->name}")
-            ->line("**Date & Time:** {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
-            ->line("**Duration:** {$this->booking->start_at->diffInMinutes($this->booking->end_at)} minutes")
-            ->line("**Mode:** {$this->booking->lesson_mode->label()}");
+        $message->line(__('common.Subject:')." {$this->booking->subject->name}")
+            ->line(__('common.Teacher:')." {$this->booking->teacher->user->name}")
+            ->line(__('common.Date & Time:')." {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
+            ->line(__('common.Duration:')." {$this->booking->start_at->diffInMinutes($this->booking->end_at)} ".__('common.minutes'))
+            ->line(__('common.Mode:')." {$this->booking->lesson_mode->label()}");
 
         if ($this->booking->isAwaitingPayment()) {
-            $message->line('**Status:** Awaiting Payment')
-                ->action('Complete Payment', route('student.bookings.pay', $this->booking));
+            $message->line(__('common.Status:').' '.__('common.Awaiting Payment'))
+                ->action(__('common.Complete Payment'), route('student.bookings.pay', $this->booking));
         } else {
-            $message->line("**Status:** {$this->booking->status->label()}");
+            $message->line(__('common.Status:')." {$this->booking->status->label()}");
         }
 
         if ($this->booking->location) {
-            $message->line("**Location:** {$this->booking->location->name}");
+            $message->line(__('common.Location:')." {$this->booking->location->name}");
         }
 
         return $message;

@@ -24,12 +24,12 @@ class BookingNoShowNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('No Show - Lesson Missed')
-            ->greeting("Hello {$notifiable->name},")
-            ->line("Your lesson has been marked as 'No Show'.")
-            ->line("**Subject:** {$this->booking->subject->name}")
-            ->line("**Teacher:** {$this->booking->teacher->user->name}")
-            ->line("**Date & Time:** {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
-            ->line('If you have any questions, please contact us.');
+            ->subject(__('common.No Show - Lesson Missed'))
+            ->greeting(__('common.Hello :name,', ['name' => $notifiable->name]))
+            ->line(__('common.Your lesson has been marked as \'No Show\'.'))
+            ->line(__('common.Subject:')." {$this->booking->subject->name}")
+            ->line(__('common.Teacher:')." {$this->booking->teacher->user->name}")
+            ->line(__('common.Date & Time:')." {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
+            ->line(__('common.If you have any questions, please contact us.'));
     }
 }

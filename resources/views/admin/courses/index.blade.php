@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Courses Management
+            {{ __('common.Courses Management') }}
         </h2>
     </x-slot>
 
@@ -13,12 +13,12 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Teacher</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('common.Courses') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('common.Teacher') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('common.Subject') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('common.Price') }}</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('common.Status') }}</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('common.Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -35,17 +35,17 @@
                                                 @if($course->is_published) bg-green-100 text-green-800
                                                 @else bg-gray-100 text-gray-800
                                                 @endif">
-                                                {{ $course->is_published ? 'Published' : 'Draft' }}
+                                                {{ $course->is_published ? __('common.Published') : __('common.Draft') }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 text-right text-sm font-medium">
                                             <div class="flex items-center justify-end gap-2">
-                                                <a href="{{ route('admin.courses.show', $course) }}" class="text-blue-600 hover:text-blue-900">View</a>
+                                                <a href="{{ route('admin.courses.show', $course) }}" class="text-blue-600 hover:text-blue-900">{{ __('common.View') }}</a>
                                                 <form method="POST" action="{{ route('admin.courses.toggle-publish', $course) }}" class="inline-block">
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="submit" class="text-indigo-600 hover:text-indigo-900">
-                                                        {{ $course->is_published ? 'Unpublish' : 'Publish' }}
+                                                        {{ $course->is_published ? __('common.Unpublish') : __('common.Published') }}
                                                     </button>
                                                 </form>
                                             </div>
@@ -53,7 +53,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">No courses found.</td>
+                                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">{{ __('common.No courses found.') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>

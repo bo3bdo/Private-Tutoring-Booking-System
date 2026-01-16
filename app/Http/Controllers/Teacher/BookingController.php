@@ -60,8 +60,8 @@ class BookingController extends Controller
         $this->bookingService->updateStatus($booking, $status, auth()->user());
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث حالة الحجز بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Booking status updated successfully'))
             ->send();
 
         return back();
@@ -81,14 +81,14 @@ class BookingController extends Controller
             $this->bookingService->rescheduleBooking($booking, $newSlot, auth()->user());
 
             notify()->success()
-                ->title('تم إعادة الجدولة')
-                ->message('تم إعادة جدولة الحجز بنجاح')
+                ->title(__('common.Rescheduled'))
+                ->message(__('common.Booking rescheduled successfully'))
                 ->send();
 
             return back();
         } catch (\Exception $e) {
             notify()->error()
-                ->title('خطأ')
+                ->title(__('common.Error'))
                 ->message($e->getMessage())
                 ->send();
 
@@ -120,8 +120,8 @@ class BookingController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث رابط الاجتماع بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Meeting URL updated successfully'))
             ->send();
 
         return back();
@@ -151,8 +151,8 @@ class BookingController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث الموقع بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Location updated successfully'))
             ->send();
 
         return back();
@@ -170,14 +170,14 @@ class BookingController extends Controller
             $this->bookingService->cancelBooking($booking, auth()->user(), $request->cancellation_reason);
 
             notify()->success()
-                ->title('تم الإلغاء')
-                ->message('تم إلغاء الحجز بنجاح')
+                ->title(__('common.Cancelled'))
+                ->message(__('common.Booking cancelled successfully'))
                 ->send();
 
             return back();
         } catch (\Exception $e) {
             notify()->error()
-                ->title('خطأ')
+                ->title(__('common.Error'))
                 ->message($e->getMessage())
                 ->send();
 

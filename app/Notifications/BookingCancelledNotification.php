@@ -26,12 +26,12 @@ class BookingCancelledNotification extends Notification implements ShouldQueue
         $isStudent = $notifiable->id === $this->booking->student_id;
 
         return (new MailMessage)
-            ->subject('Booking Cancelled')
-            ->greeting("Hello {$notifiable->name},")
-            ->line('Your booking has been cancelled.')
-            ->line("**Subject:** {$this->booking->subject->name}")
-            ->line("**Teacher:** {$this->booking->teacher->user->name}")
-            ->line("**Date & Time:** {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
-            ->line('If you have any questions, please contact us.');
+            ->subject(__('common.Booking Cancelled'))
+            ->greeting(__('common.Hello :name,', ['name' => $notifiable->name]))
+            ->line(__('common.Your booking has been cancelled.'))
+            ->line(__('common.Subject:')." {$this->booking->subject->name}")
+            ->line(__('common.Teacher:')." {$this->booking->teacher->user->name}")
+            ->line(__('common.Date & Time:')." {$this->booking->start_at->format('l, F j, Y \a\t g:i A')}")
+            ->line(__('common.If you have any questions, please contact us.'));
     }
 }
