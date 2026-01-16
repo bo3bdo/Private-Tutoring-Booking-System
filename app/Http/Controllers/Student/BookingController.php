@@ -80,7 +80,7 @@ class BookingController extends Controller
             return redirect()->route('student.bookings.show', $booking);
         } catch (\Exception $e) {
             notify()->error()
-                ->title('خطأ')
+                ->title(__('common.Error'))
                 ->message($e->getMessage())
                 ->send();
 
@@ -116,7 +116,7 @@ class BookingController extends Controller
             return redirect()->route('student.bookings.index');
         } catch (\Exception $e) {
             notify()->error()
-                ->title('خطأ')
+                ->title(__('common.Error'))
                 ->message($e->getMessage())
                 ->send();
 

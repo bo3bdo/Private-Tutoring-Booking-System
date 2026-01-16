@@ -56,7 +56,7 @@ it('allows student to create review for booking', function () {
         'reviewable_type' => 'App\Models\Booking',
         'reviewable_id' => $booking->id,
         'rating' => 5,
-        'is_approved' => false,
+        'is_approved' => true, // Auto-approve reviews
     ]);
 });
 

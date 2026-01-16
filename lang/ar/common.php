@@ -707,6 +707,7 @@ return [
     'Message sent successfully' => 'تم إرسال الرسالة بنجاح',
     'Sent' => 'تم الإرسال',
     'Subjects updated successfully' => 'تم تحديث المواد بنجاح',
+    'Time slots generated successfully' => 'تم إنشاء الفترات الزمنية بنجاح',
     'Generated :count time slots successfully' => 'تم إنشاء :count فترات زمنية بنجاح',
     'Blocked' => 'تم الحظر',
     'Time slot blocked successfully' => 'تم حظر الفترة الزمنية بنجاح',

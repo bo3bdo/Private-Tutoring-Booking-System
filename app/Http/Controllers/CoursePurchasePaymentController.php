@@ -45,7 +45,7 @@ class CoursePurchasePaymentController extends Controller
             return redirect($payment->checkout_url);
         } catch (\Exception $e) {
             notify()->error()
-                ->title('خطأ')
+                ->title(__('common.Error'))
                 ->message($e->getMessage())
                 ->send();
 

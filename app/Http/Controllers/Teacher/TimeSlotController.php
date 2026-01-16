@@ -54,7 +54,7 @@ class TimeSlotController extends Controller
 
         notify()->success()
             ->title(__('common.Created'))
-            ->message(__('common.Generated :count time slots successfully', ['count' => $generated]))
+            ->message(__('common.Time slots generated successfully'))
             ->send();
 
         return redirect()->route('teacher.slots.index');

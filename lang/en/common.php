@@ -704,6 +704,7 @@ return [
     'Message sent successfully' => 'Message sent successfully',
     'Sent' => 'Sent',
     'Subjects updated successfully' => 'Subjects updated successfully',
+    'Time slots generated successfully' => 'Time slots generated successfully',
     'Generated :count time slots successfully' => 'Generated :count time slots successfully',
     'Blocked' => 'Blocked',
     'Time slot blocked successfully' => 'Time slot blocked successfully',
