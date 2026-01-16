@@ -61,8 +61,8 @@ class CourseController extends Controller
         }
 
         notify()->success()
-            ->title('تم الإنشاء')
-            ->message('تم إنشاء الكورس بنجاح')
+            ->title(__('common.Created'))
+            ->message(__('common.Course created successfully'))
             ->send();
 
         return redirect()->route('teacher.courses.index');
@@ -113,8 +113,8 @@ class CourseController extends Controller
         }
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث الكورس بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Course updated successfully'))
             ->send();
 
         return redirect()->route('teacher.courses.index');
@@ -126,8 +126,8 @@ class CourseController extends Controller
 
         if ($course->enrollments()->exists()) {
             notify()->error()
-                ->title('خطأ')
-                ->message('لا يمكن حذف الكورس الذي يحتوي على تسجيلات')
+                ->title(__('common.Error'))
+                ->message(__('common.Cannot delete course with enrollments'))
                 ->send();
 
             return back();
@@ -140,8 +140,8 @@ class CourseController extends Controller
         $course->delete();
 
         notify()->success()
-            ->title('تم الحذف')
-            ->message('تم حذف الكورس بنجاح')
+            ->title(__('common.Deleted'))
+            ->message(__('common.Course deleted successfully'))
             ->send();
 
         return redirect()->route('teacher.courses.index');
@@ -154,8 +154,8 @@ class CourseController extends Controller
         $this->courseService->publish($course);
 
         notify()->success()
-            ->title('تم النشر')
-            ->message('تم نشر الكورس بنجاح')
+            ->title(__('common.Published'))
+            ->message(__('common.Course published successfully'))
             ->send();
 
         return back();
@@ -168,8 +168,8 @@ class CourseController extends Controller
         $this->courseService->unpublish($course);
 
         notify()->success()
-            ->title('تم إلغاء النشر')
-            ->message('تم إلغاء نشر الكورس بنجاح')
+            ->title(__('common.Unpublished'))
+            ->message(__('common.Course unpublished successfully'))
             ->send();
 
         return back();

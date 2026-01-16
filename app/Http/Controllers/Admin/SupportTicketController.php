@@ -64,8 +64,8 @@ class SupportTicketController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم التعيين')
-            ->message('تم تعيين التذكرة بنجاح')
+            ->title(__('common.Assigned'))
+            ->message(__('common.Ticket assigned successfully'))
             ->send();
 
         return back();
@@ -86,8 +86,8 @@ class SupportTicketController extends Controller
         }
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث حالة التذكرة بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Ticket status updated successfully'))
             ->send();
 
         return back();
@@ -102,8 +102,8 @@ class SupportTicketController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم الإرسال')
-            ->message('تم إرسال الرد بنجاح')
+            ->title(__('common.Sent'))
+            ->message(__('common.Reply sent successfully'))
             ->send();
 
         return back();

@@ -21,8 +21,8 @@ class ReviewController extends Controller
 
         if (! $reviewable) {
             notify()->error()
-                ->title('خطأ')
-                ->message('عنصر التقييم غير صحيح')
+                ->title(__('common.Error'))
+                ->message(__('common.Invalid review item'))
                 ->send();
 
             return back();
@@ -36,8 +36,8 @@ class ReviewController extends Controller
 
         if ($existingReview) {
             notify()->warning()
-                ->title('تم التقييم مسبقاً')
-                ->message('لقد قمت بتقييم هذا العنصر من قبل')
+                ->title(__('common.Already reviewed'))
+                ->message(__('common.You have already reviewed this item'))
                 ->send();
 
             return back();
@@ -54,8 +54,8 @@ class ReviewController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم إرسال التقييم')
-            ->message('تم إرسال التقييم بنجاح')
+            ->title(__('common.Sent'))
+            ->message(__('common.Review submitted successfully'))
             ->send();
 
         return back();

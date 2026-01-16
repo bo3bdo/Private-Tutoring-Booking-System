@@ -71,8 +71,8 @@ class MessageController extends Controller
         $conversation->update(['last_message_at' => now()]);
 
         notify()->success()
-            ->title('تم الإرسال')
-            ->message('تم إرسال الرسالة بنجاح')
+            ->title(__('common.Sent'))
+            ->message(__('common.Message sent successfully'))
             ->send();
 
         return redirect()->route('teacher.messages.show', $conversation);

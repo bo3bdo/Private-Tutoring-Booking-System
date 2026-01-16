@@ -33,8 +33,8 @@ class CoursesController extends Controller
             ]);
 
             notify()->success()
-                ->title('تم إلغاء النشر')
-                ->message('تم إلغاء نشر الكورس بنجاح')
+                ->title(__('common.Unpublished'))
+                ->message(__('common.Course unpublished successfully'))
                 ->send();
 
             return back();
@@ -46,8 +46,8 @@ class CoursesController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم النشر')
-            ->message('تم نشر الكورس بنجاح')
+            ->title(__('common.Published'))
+            ->message(__('common.Course published successfully'))
             ->send();
 
         return back();

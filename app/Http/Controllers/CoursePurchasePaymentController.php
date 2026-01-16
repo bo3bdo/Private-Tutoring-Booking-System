@@ -21,8 +21,8 @@ class CoursePurchasePaymentController extends Controller
         // Check if course is published
         if (! $course->is_published) {
             notify()->error()
-                ->title('غير متاح')
-                ->message('هذا الكورس غير متاح للشراء')
+                ->title(__('common.Not available'))
+                ->message(__('common.This course is not available for purchase'))
                 ->send();
 
             return back();
@@ -31,8 +31,8 @@ class CoursePurchasePaymentController extends Controller
         // Check if already enrolled
         if ($course->isEnrolledBy($student)) {
             notify()->info()
-                ->title('مسجل مسبقاً')
-                ->message('أنت مسجل في هذا الكورس بالفعل')
+                ->title(__('common.Already enrolled'))
+                ->message(__('common.You are already enrolled in this course'))
                 ->send();
 
             return redirect()->route('student.my-courses.learn', $course->slug);

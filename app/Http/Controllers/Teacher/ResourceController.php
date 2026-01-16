@@ -84,8 +84,8 @@ class ResourceController extends Controller
 
         if (! $resourceable) {
             notify()->error()
-                ->title('خطأ')
-                ->message('عنصر المورد غير صحيح')
+                ->title(__('common.Error'))
+                ->message(__('common.Invalid resource item'))
                 ->send();
 
             return back();
@@ -108,8 +108,8 @@ class ResourceController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم الرفع')
-            ->message('تم رفع المورد بنجاح')
+            ->title(__('common.Uploaded'))
+            ->message(__('common.Resource uploaded successfully'))
             ->send();
 
         return back();
@@ -126,8 +126,8 @@ class ResourceController extends Controller
         $resource->delete();
 
         notify()->success()
-            ->title('تم الحذف')
-            ->message('تم حذف المورد بنجاح')
+            ->title(__('common.Deleted'))
+            ->message(__('common.Resource deleted successfully'))
             ->send();
 
         return back();

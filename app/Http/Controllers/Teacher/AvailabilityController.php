@@ -37,8 +37,8 @@ class AvailabilityController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم الإضافة')
-            ->message('تم إضافة التوفر بنجاح')
+            ->title(__('common.Added'))
+            ->message(__('common.Availability added successfully'))
             ->send();
 
         return redirect()->route('teacher.availability.index');
@@ -51,8 +51,8 @@ class AvailabilityController extends Controller
         $availability->delete();
 
         notify()->success()
-            ->title('تم الحذف')
-            ->message('تم حذف التوفر بنجاح')
+            ->title(__('common.Deleted'))
+            ->message(__('common.Availability deleted successfully'))
             ->send();
 
         return redirect()->route('teacher.availability.index');

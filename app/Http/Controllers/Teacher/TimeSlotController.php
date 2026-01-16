@@ -53,8 +53,8 @@ class TimeSlotController extends Controller
         );
 
         notify()->success()
-            ->title('تم الإنشاء')
-            ->message("تم إنشاء {$generated} فترات زمنية بنجاح")
+            ->title(__('common.Created'))
+            ->message(__('common.Generated :count time slots successfully', ['count' => $generated]))
             ->send();
 
         return redirect()->route('teacher.slots.index');
@@ -67,8 +67,8 @@ class TimeSlotController extends Controller
         $slot->update(['status' => \App\Enums\SlotStatus::Blocked]);
 
         notify()->success()
-            ->title('تم الحظر')
-            ->message('تم حظر الفترة الزمنية بنجاح')
+            ->title(__('common.Blocked'))
+            ->message(__('common.Time slot blocked successfully'))
             ->send();
 
         return back();
@@ -81,8 +81,8 @@ class TimeSlotController extends Controller
         $slot->update(['status' => \App\Enums\SlotStatus::Available]);
 
         notify()->success()
-            ->title('تم إلغاء الحظر')
-            ->message('تم إلغاء حظر الفترة الزمنية بنجاح')
+            ->title(__('common.Unblocked'))
+            ->message(__('common.Time slot unblocked successfully'))
             ->send();
 
         return back();

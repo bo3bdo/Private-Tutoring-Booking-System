@@ -58,8 +58,8 @@ class TeacherController extends Controller
         }
 
         notify()->success()
-            ->title('تم الإنشاء')
-            ->message('تم إنشاء المعلم بنجاح')
+            ->title(__('common.Created'))
+            ->message(__('common.Teacher created successfully'))
             ->send();
 
         return redirect()->route('admin.teachers.index');
@@ -114,8 +114,8 @@ class TeacherController extends Controller
         }
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث المعلم بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Teacher updated successfully'))
             ->send();
 
         return redirect()->route('admin.teachers.index');
@@ -125,8 +125,8 @@ class TeacherController extends Controller
     {
         if ($teacher->bookings()->exists()) {
             notify()->error()
-                ->title('خطأ')
-                ->message('لا يمكن حذف المعلم الذي لديه حجوزات')
+                ->title(__('common.Error'))
+                ->message(__('common.Cannot delete teacher with bookings'))
                 ->send();
 
             return back();
@@ -137,8 +137,8 @@ class TeacherController extends Controller
         $user->delete();
 
         notify()->success()
-            ->title('تم الحذف')
-            ->message('تم حذف المعلم بنجاح')
+            ->title(__('common.Deleted'))
+            ->message(__('common.Teacher deleted successfully'))
             ->send();
 
         return redirect()->route('admin.teachers.index');

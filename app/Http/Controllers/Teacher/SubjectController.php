@@ -30,8 +30,8 @@ class SubjectController extends Controller
         $teacher->subjects()->sync($request->subjects ?? []);
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث المواد بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Subjects updated successfully'))
             ->send();
 
         return redirect()->route('teacher.subjects.index');

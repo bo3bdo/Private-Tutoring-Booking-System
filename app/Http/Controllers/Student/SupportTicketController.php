@@ -51,8 +51,8 @@ class SupportTicketController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم إنشاء تذكرة الدعم')
-            ->message('تم إنشاء تذكرة الدعم بنجاح. رقم التذكرة: '.$ticket->ticket_number)
+            ->title(__('common.Support ticket created'))
+            ->message(__('common.Support ticket created successfully. Ticket number: :number', ['number' => $ticket->ticket_number]))
             ->send();
 
         return redirect()->route('student.support-tickets.show', $ticket);
@@ -83,8 +83,8 @@ class SupportTicketController extends Controller
         }
 
         notify()->success()
-            ->title('تم الإرسال')
-            ->message('تم إرسال الرد بنجاح')
+            ->title(__('common.Sent'))
+            ->message(__('common.Reply sent successfully'))
             ->send();
 
         return back();

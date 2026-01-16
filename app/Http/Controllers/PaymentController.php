@@ -33,16 +33,16 @@ class PaymentController extends Controller
     {
         if ($payment->isSucceeded()) {
             notify()->success()
-                ->title('تم الدفع بنجاح')
-                ->message('تم تأكيد الحجز بنجاح')
+                ->title(__('common.Payment successful'))
+                ->message(__('common.Booking confirmed successfully'))
                 ->send();
 
             return redirect()->route('student.bookings.show', $payment->booking);
         }
 
         notify()->warning()
-            ->title('قيد المعالجة')
-            ->message('الدفع لا يزال قيد المعالجة')
+            ->title(__('common.Processing'))
+            ->message(__('common.Payment is still processing'))
             ->send();
 
         return redirect()->route('student.bookings.pay', $payment->booking);
@@ -51,8 +51,8 @@ class PaymentController extends Controller
     public function stripeCancel(Payment $payment): RedirectResponse
     {
         notify()->error()
-            ->title('تم الإلغاء')
-            ->message('تم إلغاء عملية الدفع')
+            ->title(__('common.Payment cancelled'))
+            ->message(__('common.Payment cancelled'))
             ->send();
 
         return redirect()->route('student.bookings.pay', $payment->booking);
@@ -95,8 +95,8 @@ class PaymentController extends Controller
 
         if (! $booking->isAwaitingPayment()) {
             notify()->warning()
-                ->title('لا يتطلب الدفع')
-                ->message('هذا الحجز لا يتطلب دفع')
+                ->title(__('common.Payment not required'))
+                ->message(__('common.This booking does not require payment'))
                 ->send();
 
             return redirect()->route('student.bookings.show', $booking);
@@ -121,8 +121,8 @@ class PaymentController extends Controller
         $this->paymentService->confirmPayment($payment);
 
         notify()->success()
-            ->title('تم الدفع')
-            ->message('تم إتمام الدفع بنجاح! (وضع الاختبار)')
+            ->title(__('common.Payment successful'))
+            ->message(__('common.Payment completed successfully! (Test Mode)'))
             ->send();
 
         return redirect()->route('student.bookings.show', $booking);

@@ -49,8 +49,8 @@ class LessonController extends Controller
         CourseLesson::create($data);
 
         notify()->success()
-            ->title('تم الإنشاء')
-            ->message('تم إنشاء الدرس بنجاح')
+            ->title(__('common.Created'))
+            ->message(__('common.Lesson created successfully'))
             ->send();
 
         return redirect()->route('teacher.courses.lessons', $course);
@@ -63,8 +63,8 @@ class LessonController extends Controller
         $lesson->update($request->validated());
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث الدرس بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Lesson updated successfully'))
             ->send();
 
         return back();
@@ -78,8 +78,8 @@ class LessonController extends Controller
         $lesson->delete();
 
         notify()->success()
-            ->title('تم الحذف')
-            ->message('تم حذف الدرس بنجاح')
+            ->title(__('common.Deleted'))
+            ->message(__('common.Lesson deleted successfully'))
             ->send();
 
         return redirect()->route('teacher.courses.lessons', $course);

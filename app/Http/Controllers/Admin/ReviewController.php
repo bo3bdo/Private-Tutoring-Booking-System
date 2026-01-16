@@ -32,8 +32,8 @@ class ReviewController extends Controller
         $review->approve();
 
         notify()->success()
-            ->title('تم الموافقة')
-            ->message('تم الموافقة على التقييم بنجاح')
+            ->title(__('common.Approved'))
+            ->message(__('common.Review approved successfully'))
             ->send();
 
         return back();
@@ -44,8 +44,8 @@ class ReviewController extends Controller
         $review->delete();
 
         notify()->success()
-            ->title('تم الحذف')
-            ->message('تم حذف التقييم بنجاح')
+            ->title(__('common.Deleted'))
+            ->message(__('common.Review deleted successfully'))
             ->send();
 
         return back();

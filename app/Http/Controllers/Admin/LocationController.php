@@ -34,8 +34,8 @@ class LocationController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم الإنشاء')
-            ->message('تم إنشاء الموقع بنجاح')
+            ->title(__('common.Created'))
+            ->message(__('common.Location created successfully'))
             ->send();
 
         return redirect()->route('admin.locations.index');
@@ -64,8 +64,8 @@ class LocationController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث الموقع بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Location updated successfully'))
             ->send();
 
         return redirect()->route('admin.locations.index');
@@ -75,8 +75,8 @@ class LocationController extends Controller
     {
         if ($location->bookings()->exists()) {
             notify()->error()
-                ->title('خطأ')
-                ->message('لا يمكن حذف الموقع الذي لديه حجوزات')
+                ->title(__('common.Error'))
+                ->message(__('common.Cannot delete location with bookings'))
                 ->send();
 
             return back();
@@ -85,8 +85,8 @@ class LocationController extends Controller
         $location->delete();
 
         notify()->success()
-            ->title('تم الحذف')
-            ->message('تم حذف الموقع بنجاح')
+            ->title(__('common.Deleted'))
+            ->message(__('common.Location deleted successfully'))
             ->send();
 
         return redirect()->route('admin.locations.index');

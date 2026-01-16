@@ -32,8 +32,8 @@ class SubjectController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم الإنشاء')
-            ->message('تم إنشاء المادة بنجاح')
+            ->title(__('common.Created'))
+            ->message(__('common.Subject created successfully'))
             ->send();
 
         return redirect()->route('admin.subjects.index');
@@ -60,8 +60,8 @@ class SubjectController extends Controller
         ]);
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث المادة بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Subject updated successfully'))
             ->send();
 
         return redirect()->route('admin.subjects.index');
@@ -71,8 +71,8 @@ class SubjectController extends Controller
     {
         if ($subject->bookings()->exists()) {
             notify()->error()
-                ->title('خطأ')
-                ->message('لا يمكن حذف المادة التي لديها حجوزات')
+                ->title(__('common.Error'))
+                ->message(__('common.Cannot delete subject with bookings'))
                 ->send();
 
             return back();
@@ -81,8 +81,8 @@ class SubjectController extends Controller
         $subject->delete();
 
         notify()->success()
-            ->title('تم الحذف')
-            ->message('تم حذف المادة بنجاح')
+            ->title(__('common.Deleted'))
+            ->message(__('common.Subject deleted successfully'))
             ->send();
 
         return redirect()->route('admin.subjects.index');

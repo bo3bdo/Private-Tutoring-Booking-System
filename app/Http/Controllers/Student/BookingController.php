@@ -65,16 +65,16 @@ class BookingController extends Controller
 
             if ($booking->isAwaitingPayment()) {
                 notify()->info()
-                    ->title('تم إنشاء الحجز')
-                    ->message('يرجى إتمام عملية الدفع')
+                    ->title(__('common.Booking created'))
+                    ->message(__('common.Please complete the payment process'))
                     ->send();
 
                 return redirect()->route('student.bookings.pay', $booking);
             }
 
             notify()->success()
-                ->title('تم تأكيد الحجز')
-                ->message('تم إنشاء الحجز بنجاح')
+                ->title(__('common.Booking confirmed'))
+                ->message(__('common.Booking created successfully'))
                 ->send();
 
             return redirect()->route('student.bookings.show', $booking);
@@ -109,8 +109,8 @@ class BookingController extends Controller
             $this->bookingService->cancelBooking($booking, auth()->user(), $request->cancellation_reason);
 
             notify()->success()
-                ->title('تم إلغاء الحجز')
-                ->message('تم إلغاء الحجز بنجاح')
+                ->title(__('common.Cancelled'))
+                ->message(__('common.Booking cancelled successfully'))
                 ->send();
 
             return redirect()->route('student.bookings.index');

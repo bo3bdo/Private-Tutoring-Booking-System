@@ -37,8 +37,8 @@ class LessonProgressController extends Controller
         }
 
         notify()->success()
-            ->title('تم التحديث')
-            ->message('تم تحديث التقدم بنجاح')
+            ->title(__('common.Updated'))
+            ->message(__('common.Progress updated successfully'))
             ->send();
 
         return back();
@@ -56,8 +56,8 @@ class LessonProgressController extends Controller
         $this->progressService->markCompleted($lesson, $student);
 
         notify()->success()
-            ->title('تم الإكمال')
-            ->message('تم تحديد الدرس كمكتمل')
+            ->title(__('common.Completed'))
+            ->message(__('common.Lesson marked as completed'))
             ->send();
 
         return back();
