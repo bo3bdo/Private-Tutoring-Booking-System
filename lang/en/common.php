@@ -815,4 +815,23 @@ return [
     'Total Amount' => 'Total Amount',
     'Failed' => 'Failed',
 
+    // Dashboard Additional Stats
+    'Total Revenue' => 'Total Revenue',
+    'Total Courses' => 'Total Courses',
+    'Pending Reviews' => 'Pending Reviews',
+    'Open Support Tickets' => 'Open Support Tickets',
+
+    // Teacher Dashboard Quick Actions
+    'View Bookings' => 'View Bookings',
+    'Manage your bookings' => 'Manage your bookings',
+    'Create and manage time slots' => 'Create and manage time slots',
+    'Manage your courses' => 'Manage your courses',
+    'Set your availability' => 'Set your availability',
+
+    // Student Dashboard Quick Actions
+    'Explore available subjects' => 'Explore available subjects',
+    'View all your bookings' => 'View all your bookings',
+    'Chat with teachers' => 'Chat with teachers',
+    'Access learning materials' => 'Access learning materials',
+
 ];

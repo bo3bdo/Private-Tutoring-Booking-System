@@ -824,4 +824,23 @@ return [
     'Total Amount' => 'إجمالي المبلغ',
     'Failed' => 'فاشل',
 
+    // Dashboard Additional Stats
+    'Total Revenue' => 'إجمالي الإيرادات',
+    'Total Courses' => 'إجمالي الدورات',
+    'Pending Reviews' => 'التقييمات المعلقة',
+    'Open Support Tickets' => 'تذاكر الدعم المفتوحة',
+
+    // Teacher Dashboard Quick Actions
+    'View Bookings' => 'عرض الحجوزات',
+    'Manage your bookings' => 'إدارة حجوزاتك',
+    'Create and manage time slots' => 'إنشاء وإدارة المواعيد',
+    'Manage your courses' => 'إدارة دوراتك',
+    'Set your availability' => 'تعيين توفرك',
+
+    // Student Dashboard Quick Actions
+    'Explore available subjects' => 'استكشف المواد المتاحة',
+    'View all your bookings' => 'عرض جميع حجوزاتك',
+    'Chat with teachers' => 'التواصل مع المعلمين',
+    'Access learning materials' => 'الوصول إلى المواد التعليمية',
+
 ];

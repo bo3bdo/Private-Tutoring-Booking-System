@@ -70,76 +70,99 @@
                 </div>
 
                 <!-- Pending Payments -->
-                <div class="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/30 rounded-2xl shadow-lg border-2 border-amber-200 dark:border-amber-700/50 p-6">
+                <a href="{{ route('student.bookings.index', ['filter' => 'pending']) }}" class="bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/30 rounded-2xl shadow-lg border-2 border-amber-200 dark:border-amber-700/50 p-6 hover:border-amber-300 dark:hover:border-amber-600 hover:shadow-xl transition cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-amber-600 rounded-xl flex items-center justify-center shadow-md">
+                        <div class="w-12 h-12 bg-amber-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
+                        <svg class="w-5 h-5 text-amber-700 dark:text-amber-300 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
                     <h3 class="text-sm font-semibold text-amber-700 dark:text-amber-300 uppercase tracking-wide mb-1">{{ __('common.Pending') }}</h3>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ number_format($pendingPayments, 2) }} BHD</p>
-                </div>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-amber-800 dark:group-hover:text-amber-200 transition">{{ number_format($pendingPayments, 2) }} BHD</p>
+                </a>
             </div>
 
             <!-- Booking Statistics -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                            </svg>
+                <a href="{{ route('student.bookings.index') }}" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                                <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Total Bookings') }}</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1 group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ $totalBookings }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Total Bookings') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $totalBookings }}</p>
-                        </div>
+                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
-                </div>
+                </a>
 
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/50 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+                <a href="{{ route('student.bookings.index', ['filter' => 'upcoming']) }}" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6 hover:border-amber-300 dark:hover:border-amber-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/50 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                                <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Upcoming') }}</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition">{{ $upcomingBookings }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Upcoming') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $upcomingBookings }}</p>
-                        </div>
+                        <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
-                </div>
+                </a>
 
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+                <a href="{{ route('student.bookings.index', ['filter' => 'completed']) }}" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6 hover:border-green-300 dark:hover:border-green-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                                <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Completed') }}</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1 group-hover:text-green-700 dark:group-hover:text-green-400 transition">{{ $completedBookings }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Completed') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $completedBookings }}</p>
-                        </div>
+                        <svg class="w-5 h-5 text-green-600 dark:text-green-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
-                </div>
+                </a>
 
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-red-100 dark:bg-red-900/50 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
+                <a href="{{ route('student.bookings.index', ['filter' => 'cancelled']) }}" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6 hover:border-red-300 dark:hover:border-red-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-red-100 dark:bg-red-900/50 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                                <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Cancelled') }}</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1 group-hover:text-red-700 dark:group-hover:text-red-400 transition">{{ $cancelledBookings }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Cancelled') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $cancelledBookings }}</p>
-                        </div>
+                        <svg class="w-5 h-5 text-red-600 dark:text-red-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
-                </div>
+                </a>
             </div>
 
             <!-- Learning Statistics -->
@@ -160,19 +183,24 @@
                 </div>
 
                 <!-- Subjects Studied -->
-                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                            </svg>
+                <a href="{{ route('student.subjects.index') }}" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6 hover:border-indigo-300 dark:hover:border-indigo-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/50 rounded-xl flex items-center justify-center group-hover:scale-110 transition">
+                                <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Subjects') }}</p>
+                                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1 group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition">{{ $subjectsStudied }}</p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">{{ __('common.Subjects') }}</p>
-                            <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ $subjectsStudied }}</p>
-                        </div>
+                        <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
-                </div>
+                </a>
 
                 <!-- Teachers -->
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
@@ -236,22 +264,81 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Quick Actions -->
-                <div class="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl shadow-lg border-2 border-slate-200 dark:border-gray-600 p-6">
-                    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide mb-3">{{ __('common.Quick Actions') }}</h3>
-                    <div class="grid grid-cols-2 gap-2">
-                        <a href="{{ route('student.subjects.index') }}" class="px-4 py-2 bg-slate-900 dark:bg-slate-700 text-white rounded-xl text-sm font-semibold hover:bg-slate-800 dark:hover:bg-slate-600 transition text-center">
-                            {{ __('common.Browse Subjects') }}
+            <!-- Quick Actions -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                <div class="p-6 border-b border-slate-200 dark:border-gray-700">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Quick Actions') }}</h3>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <a href="{{ route('student.subjects.index') }}" class="group flex flex-col gap-3 p-4 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-900/20 dark:to-transparent rounded-xl border-2 border-blue-200 dark:border-blue-700/50 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="font-semibold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ __('common.Browse Subjects') }}</p>
+                                </div>
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 pl-15">{{ __('common.Explore available subjects') }}</p>
                         </a>
-                        <a href="{{ route('student.bookings.index') }}" class="px-4 py-2 bg-white dark:bg-gray-800 border-2 border-slate-300 dark:border-gray-600 text-slate-700 dark:text-gray-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-gray-700 transition text-center">
-                            {{ __('common.My Bookings') }}
+
+                        <a href="{{ route('student.bookings.index') }}" class="group flex flex-col gap-3 p-4 bg-gradient-to-r from-emerald-50 to-transparent dark:from-emerald-900/20 dark:to-transparent rounded-xl border-2 border-emerald-200 dark:border-emerald-700/50 hover:border-emerald-300 dark:hover:border-emerald-600 hover:shadow-md transition">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="font-semibold text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">{{ __('common.My Bookings') }}</p>
+                                </div>
+                                <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 pl-15">{{ __('common.View all your bookings') }}</p>
                         </a>
-                        <a href="{{ route('student.messages.index') }}" class="px-4 py-2 bg-white dark:bg-gray-800 border-2 border-slate-300 dark:border-gray-600 text-slate-700 dark:text-gray-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-gray-700 transition text-center">
-                            {{ __('common.Messages') }}
+
+                        <a href="{{ route('student.messages.index') }}" class="group flex flex-col gap-3 p-4 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-900/20 dark:to-transparent rounded-xl border-2 border-purple-200 dark:border-purple-700/50 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-md transition">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="font-semibold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-400 transition">{{ __('common.Messages') }}</p>
+                                </div>
+                                <svg class="w-5 h-5 text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 pl-15">{{ __('common.Chat with teachers') }}</p>
                         </a>
-                        <a href="{{ route('student.resources.index') }}" class="px-4 py-2 bg-white dark:bg-gray-800 border-2 border-slate-300 dark:border-gray-600 text-slate-700 dark:text-gray-300 rounded-xl text-sm font-semibold hover:bg-slate-50 dark:hover:bg-gray-700 transition text-center">
-                            {{ __('common.Resources') }}
+
+                        <a href="{{ route('student.resources.index') }}" class="group flex flex-col gap-3 p-4 bg-gradient-to-r from-indigo-50 to-transparent dark:from-indigo-900/20 dark:to-transparent rounded-xl border-2 border-indigo-200 dark:border-indigo-700/50 hover:border-indigo-300 dark:hover:border-indigo-600 hover:shadow-md transition">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <p class="font-semibold text-gray-900 dark:text-white group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition">{{ __('common.Resources') }}</p>
+                                </div>
+                                <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 pl-15">{{ __('common.Access learning materials') }}</p>
                         </a>
                     </div>
                 </div>
@@ -273,7 +360,7 @@
                                     <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('common.Your next scheduled lessons') }}</p>
                                 </div>
                             </div>
-                            <a href="{{ route('student.bookings.index') }}" class="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
+                            <a href="{{ route('student.bookings.index', ['filter' => 'upcoming']) }}" class="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
                                 {{ __('common.View All') }}
                             </a>
                         </div>
@@ -281,15 +368,15 @@
                     <div class="p-6">
                         <div class="space-y-4">
                             @foreach($upcomingBookingsList as $booking)
-                                <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-900/20 dark:to-transparent rounded-xl border border-blue-100 dark:border-blue-800/50 hover:border-blue-200 dark:hover:border-blue-700 transition">
-                                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
+                                <a href="{{ route('student.bookings.show', $booking) }}" class="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-900/20 dark:to-transparent rounded-xl border border-blue-100 dark:border-blue-800/50 hover:border-blue-200 dark:hover:border-blue-700 hover:shadow-md transition cursor-pointer group">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
                                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-center gap-2 mb-1">
-                                            <h4 class="font-semibold text-gray-900 dark:text-white">{{ $booking->subject->name }}</h4>
+                                            <h4 class="font-semibold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ $booking->subject->name }}</h4>
                                             <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300">
                                                 {{ __('common.Confirmed') }}
                                             </span>
@@ -297,12 +384,10 @@
                                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ $booking->start_at->format('l, F j, Y \a\t g:i A') }}</p>
                                         <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('common.Teacher') }}: <span class="font-semibold">{{ $booking->teacher->user->name }}</span></p>
                                     </div>
-                                    <a href="{{ route('student.bookings.show', $booking) }}" class="flex-shrink-0 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </a>
-                                </div>
+                                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
                             @endforeach
                         </div>
                     </div>

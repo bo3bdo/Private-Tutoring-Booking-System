@@ -91,6 +91,69 @@
                 </a>
             </div>
 
+            <!-- Additional Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <a href="{{ route('admin.payments.index', ['filter' => 'succeeded']) }}" class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 rounded-2xl shadow-lg border-2 border-green-200 dark:border-green-700/50 p-6 hover:border-green-300 dark:hover:border-green-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <svg class="w-5 h-5 text-green-600 dark:text-green-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Total Revenue') }}</p>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-400 transition">{{ number_format($stats['total_revenue'], 2) }} BHD</p>
+                </a>
+
+                <a href="{{ route('admin.courses.index') }}" class="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/30 dark:to-indigo-800/30 rounded-2xl shadow-lg border-2 border-indigo-200 dark:border-indigo-700/50 p-6 hover:border-indigo-300 dark:hover:border-indigo-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Total Courses') }}</p>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition">{{ $stats['total_courses'] }}</p>
+                </a>
+
+                <a href="{{ route('admin.reviews.index') }}" class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30 rounded-2xl shadow-lg border-2 border-orange-200 dark:border-orange-700/50 p-6 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                            </svg>
+                        </div>
+                        <svg class="w-5 h-5 text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Pending Reviews') }}</p>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-orange-700 dark:group-hover:text-orange-400 transition">{{ $stats['pending_reviews'] }}</p>
+                </a>
+
+                <a href="{{ route('admin.support-tickets.index') }}" class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 rounded-2xl shadow-lg border-2 border-red-200 dark:border-red-700/50 p-6 hover:border-red-300 dark:hover:border-red-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <svg class="w-5 h-5 text-red-600 dark:text-red-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Open Support Tickets') }}</p>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-red-700 dark:group-hover:text-red-400 transition">{{ $stats['open_support_tickets'] }}</p>
+                </a>
+            </div>
+
             <!-- Quick Actions -->
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-6 border-b border-slate-200 dark:border-gray-700">
