@@ -147,6 +147,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('subjects', \App\Http\Controllers\Admin\SubjectController::class);
     Route::resource('locations', \App\Http\Controllers\Admin\LocationController::class);
     Route::resource('teachers', \App\Http\Controllers\Admin\TeacherController::class);
+    Route::get('/students', [\App\Http\Controllers\Admin\StudentController::class, 'index'])->name('students.index');
+    Route::get('/students/{student}', [\App\Http\Controllers\Admin\StudentController::class, 'show'])->name('students.show');
+    Route::get('/bookings', [\App\Http\Controllers\Admin\BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/{booking}', [\App\Http\Controllers\Admin\BookingController::class, 'show'])->name('bookings.show');
+    Route::get('/payments', [\App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('payments.index');
+    Route::get('/payments/{payment}', [\App\Http\Controllers\Admin\PaymentController::class, 'show'])->name('payments.show');
     Route::get('/courses', [\App\Http\Controllers\Admin\CoursesController::class, 'index'])->name('courses.index');
     Route::get('/courses/{course}', [\App\Http\Controllers\Admin\CoursesController::class, 'show'])->name('courses.show');
     Route::put('/courses/{course}/toggle-publish', [\App\Http\Controllers\Admin\CoursesController::class, 'togglePublish'])->name('courses.toggle-publish');

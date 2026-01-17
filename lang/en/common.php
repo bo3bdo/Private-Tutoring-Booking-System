@@ -790,4 +790,29 @@ return [
     'Internal note (not visible to user)' => 'Internal note (not visible to user)',
     'User' => 'User',
 
+    // Admin Students
+    'Students Management' => 'Students Management',
+    'View and manage all students' => 'View and manage all students',
+    'Total Bookings' => 'Total Bookings',
+    'Courses Enrolled' => 'Courses Enrolled',
+    'Registered At' => 'Registered At',
+    'View Details' => 'View Details',
+    'No students found.' => 'No students found.',
+    'Member Since' => 'Member Since',
+    'Total Spent' => 'Total Spent',
+    'Enrolled Courses' => 'Enrolled Courses',
+    'Enrolled on' => 'Enrolled on',
+
+    // Admin Bookings
+    'Bookings Management' => 'Bookings Management',
+    'View and manage all bookings' => 'View and manage all bookings',
+    'No bookings found.' => 'No bookings found.',
+
+    // Admin Payments
+    'Payments Management' => 'Payments Management',
+    'View and manage all payments' => 'View and manage all payments',
+    'No payments found.' => 'No payments found.',
+    'Total Amount' => 'Total Amount',
+    'Failed' => 'Failed',
+
 ];

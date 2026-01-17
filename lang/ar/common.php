@@ -799,4 +799,29 @@ return [
     'Internal note (not visible to user)' => 'ملاحظة داخلية (غير مرئية للمستخدم)',
     'User' => 'المستخدم',
 
+    // Admin Students
+    'Students Management' => 'إدارة الطلاب',
+    'View and manage all students' => 'عرض وإدارة جميع الطلاب',
+    'Total Bookings' => 'إجمالي الحجوزات',
+    'Courses Enrolled' => 'الدورات المسجلة',
+    'Registered At' => 'تاريخ التسجيل',
+    'View Details' => 'عرض التفاصيل',
+    'No students found.' => 'لم يتم العثور على طلاب.',
+    'Member Since' => 'عضو منذ',
+    'Total Spent' => 'إجمالي المصروف',
+    'Enrolled Courses' => 'الدورات المسجلة',
+    'Enrolled on' => 'مسجل في',
+
+    // Admin Bookings
+    'Bookings Management' => 'إدارة الحجوزات',
+    'View and manage all bookings' => 'عرض وإدارة جميع الحجوزات',
+    'No bookings found.' => 'لم يتم العثور على حجوزات.',
+
+    // Admin Payments
+    'Payments Management' => 'إدارة المدفوعات',
+    'View and manage all payments' => 'عرض وإدارة جميع المدفوعات',
+    'No payments found.' => 'لم يتم العثور على مدفوعات.',
+    'Total Amount' => 'إجمالي المبلغ',
+    'Failed' => 'فاشل',
+
 ];

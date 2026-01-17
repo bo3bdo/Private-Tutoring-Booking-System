@@ -30,53 +30,65 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <!-- Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 rounded-2xl shadow-lg border-2 border-blue-200 dark:border-blue-700/50 p-6">
+                <a href="{{ route('admin.bookings.index') }}" class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 rounded-2xl shadow-lg border-2 border-blue-200 dark:border-blue-700/50 p-6 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-xl transition cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
+                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                             </svg>
                         </div>
+                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
                     <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Total Bookings') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $stats['total_bookings'] }}</p>
-                </div>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ $stats['total_bookings'] }}</p>
+                </a>
 
-                <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-2xl shadow-lg border-2 border-yellow-200 dark:border-yellow-700/50 p-6">
+                <a href="{{ route('admin.payments.index') }}" class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-2xl shadow-lg border-2 border-yellow-200 dark:border-yellow-700/50 p-6 hover:border-yellow-300 dark:hover:border-yellow-600 hover:shadow-xl transition cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center shadow-md">
+                        <div class="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
+                        <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
                     <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Pending Payments') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $stats['pending_payments'] }}</p>
-                </div>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-yellow-700 dark:group-hover:text-yellow-400 transition">{{ $stats['pending_payments'] }}</p>
+                </a>
 
-                <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 rounded-2xl shadow-lg border-2 border-emerald-200 dark:border-emerald-700/50 p-6">
+                <a href="{{ route('admin.teachers.index') }}" class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 rounded-2xl shadow-lg border-2 border-emerald-200 dark:border-emerald-700/50 p-6 hover:border-emerald-300 dark:hover:border-emerald-600 hover:shadow-xl transition cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md">
+                        <div class="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg>
                         </div>
+                        <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
                     <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Active Teachers') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $stats['active_teachers'] }}</p>
-                </div>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">{{ $stats['active_teachers'] }}</p>
+                </a>
 
-                <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 rounded-2xl shadow-lg border-2 border-purple-200 dark:border-purple-700/50 p-6">
+                <a href="{{ route('admin.students.index') }}" class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 rounded-2xl shadow-lg border-2 border-purple-200 dark:border-purple-700/50 p-6 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-xl transition cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                        <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                             </svg>
                         </div>
+                        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
                     </div>
                     <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Active Students') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $stats['active_students'] }}</p>
-                </div>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-400 transition">{{ $stats['active_students'] }}</p>
+                </a>
             </div>
 
             <!-- Quick Actions -->
