@@ -64,6 +64,7 @@ class BookingController extends Controller
                 meetingUrl: null, // Meeting URL will be set by teacher/admin
                 notes: $request->notes
             );
+            // dd($booking);
 
             if ($booking->isAwaitingPayment()) {
                 notify()->info()
