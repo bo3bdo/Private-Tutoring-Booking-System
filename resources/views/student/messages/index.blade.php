@@ -68,8 +68,10 @@
                                         <div class="w-14 h-14 bg-gradient-to-br {{ $isTeacher ? 'from-purple-500 to-purple-600' : 'from-blue-500 to-blue-600' }} rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition">
                                             {{ strtoupper(substr($otherUser->name, 0, 1)) }}
                                         </div>
-                                        @if($isTeacher && $otherUser->teacherProfile?->is_active)
-                                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></div>
+                                        @if($otherUser->isOnline())
+                                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full" title="{{ __('common.Online') }}"></div>
+                                        @else
+                                            <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-gray-400 border-2 border-white dark:border-gray-800 rounded-full" title="{{ __('common.Offline') }}"></div>
                                         @endif
                                     </div>
                                     <div class="flex-1 min-w-0">
@@ -90,7 +92,7 @@
                                             <div class="flex items-center gap-2">
                                                 <p class="text-sm text-gray-600 dark:text-gray-400 truncate flex-1">
                                                     @if($latestMessage->sender_id === auth()->id())
-                                                        <span class="text-gray-500 dark:text-gray-500">{{ __('common.You') }}: </span>
+                                                        <span class="text-gray-500 dark:text-gray-500">{{ __('common.You:') }}</span>
                                                     @endif
                                                     {{ $latestMessage->body }}
                                                 </p>
@@ -127,4 +129,52 @@
             @endif
         </div>
     </div>
+
+    <script>
+        // Function to update online status
+        function updateOnlineStatus() {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+            if (!csrfToken) {
+                console.error('CSRF token not found');
+                return;
+            }
+
+            fetch('/api/user/online-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Online status updated:', data);
+            })
+            .catch(error => {
+                console.error('Error updating online status:', error);
+            });
+        }
+
+        // Update online status immediately on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateOnlineStatus();
+        });
+
+        // Update online status every 20 seconds to keep user online
+        setInterval(function() {
+            updateOnlineStatus();
+        }, 20000);
+
+        // Update online status indicators every 30 seconds
+        setInterval(function() {
+            location.reload();
+        }, 30000);
+    </script>
 </x-app-layout>

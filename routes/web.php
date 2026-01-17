@@ -141,6 +141,34 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::get('/message-attachments/{attachment}/download', [\App\Http\Controllers\Teacher\ResourceController::class, 'downloadAttachment'])->name('message-attachments.download');
 });
 
+// API Routes
+Route::middleware(['auth'])->prefix('api')->group(function () {
+    Route::post('/user/online-status', function () {
+        try {
+            $user = auth()->user();
+
+            if (! $user) {
+                return response()->json(['error' => 'Unauthenticated'], 401);
+            }
+
+            // Update last_seen_at directly
+            $user->last_seen_at = now();
+            $user->saveQuietly();
+
+            // Get fresh instance to ensure we have the updated value
+            $user = $user->fresh();
+
+            return response()->json([
+                'status' => 'updated',
+                'is_online' => $user->isOnline(),
+                'last_seen_at' => $user->last_seen_at?->toIso8601String(),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    });
+});
+
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');

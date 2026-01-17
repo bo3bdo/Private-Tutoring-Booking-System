@@ -514,6 +514,7 @@ return [
     'Available Teachers' => 'Available Teachers',
     'No reviews yet' => 'No reviews yet',
     'Online' => 'Online',
+    'Offline' => 'Offline',
     'In Person' => 'In Person',
     'View Available Slots' => 'View Available Slots',
     'No teachers available' => 'No teachers available',

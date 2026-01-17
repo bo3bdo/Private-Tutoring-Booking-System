@@ -44,6 +44,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'last_seen_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
@@ -229,5 +230,17 @@ class User extends Authenticatable
         }
 
         return 0;
+    }
+
+    public function isOnline(): bool
+    {
+        if (! $this->last_seen_at) {
+            return false;
+        }
+
+        // Consider user online if they were active in the last 90 seconds
+        // This gives a buffer for the 30-second update interval
+        // Use abs() to ensure positive value regardless of order
+        return abs($this->last_seen_at->diffInSeconds(now())) <= 90;
     }
 }

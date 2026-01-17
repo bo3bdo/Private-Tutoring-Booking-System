@@ -45,6 +45,9 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
+        // Update last_seen_at immediately on login
+        $user->updateQuietly(['last_seen_at' => now()]);
+
         // Redirect based on user role
         $dashboardRoute = match (true) {
             $user->isAdmin() => 'admin.dashboard',

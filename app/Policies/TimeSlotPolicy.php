@@ -19,7 +19,9 @@ class TimeSlotPolicy
         }
 
         if ($user->isStudent()) {
-            return $timeSlot->isAvailable();
+            // Students can view slots to see details, even if booked
+            // The 'book' method will check if it's available for booking
+            return true;
         }
 
         if ($user->isTeacher()) {
