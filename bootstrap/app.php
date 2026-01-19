@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\UpdateUserLastSeen::class,
+            \App\Http\Middleware\RestrictUploads::class,
         ]);
 
         $middleware->alias([

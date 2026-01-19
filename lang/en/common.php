@@ -844,4 +844,8 @@ return [
     // General
     'Start' => 'Start',
 
+    // Demo Mode
+    'Demo Mode' => 'Demo Mode',
+    'You cannot upload files. This is a demo version.' => 'You cannot upload files. This is a demo version.',
+
 ];

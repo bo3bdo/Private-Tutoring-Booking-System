@@ -853,4 +853,8 @@ return [
     // عام
     'Start' => 'ابدأ',
 
+    // وضع الديمو
+    'Demo Mode' => 'وضع التجربة',
+    'You cannot upload files. This is a demo version.' => 'لا تستطيع رفع الملفات. هذا البرنامج تجريبي.',
+
 ];
