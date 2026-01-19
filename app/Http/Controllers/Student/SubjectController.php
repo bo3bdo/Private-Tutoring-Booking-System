@@ -20,6 +20,11 @@ class SubjectController extends Controller
 
     public function show(Subject $subject): View
     {
+        // Ensure subject is active
+        if (! $subject->is_active) {
+            abort(404, 'Subject not found or inactive');
+        }
+
         $teachers = $subject->teachers()
             ->where('is_active', true)
             ->with(['user', 'reviews' => function ($query) {

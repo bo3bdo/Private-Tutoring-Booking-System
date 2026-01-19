@@ -51,6 +51,19 @@
 
                 <!-- Message Form -->
                 <div class="p-6 border-t border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                    <!-- Sending To Indicator -->
+                    <div class="mb-4 p-3 bg-gradient-to-r from-blue-50 to-emerald-50 dark:from-blue-900/20 dark:to-emerald-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+                        <div class="flex items-center gap-3">
+                            <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-emerald-600 rounded-lg flex items-center justify-center text-white font-bold shadow-md">
+                                {{ substr($otherUser->name, 0, 1) }}
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">{{ __('common.Sending message to:') }}</p>
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">{{ $otherUser->name }}</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <form method="POST" action="{{ route('student.messages.store') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="conversation_id" value="{{ $conversation->id }}">

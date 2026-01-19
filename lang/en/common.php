@@ -848,4 +848,13 @@ return [
     'Demo Mode' => 'Demo Mode',
     'You cannot upload files. This is a demo version.' => 'You cannot upload files. This is a demo version.',
 
+    // Teacher Profile
+    'Teacher Profile' => 'Teacher Profile',
+    'Subjects Taught' => 'Subjects Taught',
+    'Quick Info' => 'Quick Info',
+    'Completed Sessions' => 'Completed Sessions',
+    'Upcoming Available Slots' => 'Upcoming Available Slots',
+    'View All Slots' => 'View All Slots',
+    'Book' => 'Book',
+
 ];

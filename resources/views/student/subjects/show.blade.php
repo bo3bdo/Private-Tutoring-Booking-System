@@ -43,7 +43,12 @@
                             <div class="rounded-xl border border-slate-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm hover:shadow-md transition">
                                 <div class="flex items-start justify-between mb-3">
                                     <div class="flex-1">
-                                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ $teacher->user->name }}</h3>
+                                        <a href="{{ route('student.teachers.show', $teacher) }}" class="text-lg font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition cursor-pointer hover:underline inline-block">
+                                            {{ $teacher->user->name }}
+                                            <svg class="w-4 h-4 inline-block ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                        </a>
                                         @if($reviewsCount > 0)
                                                 <div class="flex items-center gap-2 mt-2">
                                                     <div class="flex items-center gap-1">

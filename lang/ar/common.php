@@ -857,4 +857,13 @@ return [
     'Demo Mode' => 'وضع التجربة',
     'You cannot upload files. This is a demo version.' => 'لا تستطيع رفع الملفات. هذا البرنامج تجريبي.',
 
+    // Teacher Profile
+    'Teacher Profile' => 'ملف المعلم',
+    'Subjects Taught' => 'المواد التي يدرسها',
+    'Quick Info' => 'معلومات سريعة',
+    'Completed Sessions' => 'الجلسات المكتملة',
+    'Upcoming Available Slots' => 'المواعيد المتاحة القادمة',
+    'View All Slots' => 'عرض جميع المواعيد',
+    'Book' => 'احجز',
+
 ];
