@@ -70,6 +70,7 @@ return [
     'Upcoming Bookings' => 'الحجوزات القادمة',
     'Your next scheduled lessons' => 'دروسك المجدولة القادمة',
     'View All' => 'عرض الكل',
+    'View Courses' => 'عرض الدورات',
     'Confirmed' => 'مؤكدة',
     'Teacher' => 'المعلم',
 
@@ -434,6 +435,7 @@ return [
     'Chat with your teachers' => 'تحدث مع معلميك',
     'Chat with your students' => 'تحدث مع طلابك',
     'Start a conversation with your teacher from a booking page' => 'ابدأ محادثة مع معلمك من صفحة الحجز',
+    'Start a conversation with your students' => 'ابدأ محادثة مع طلابك',
     'New Message' => 'رسالة جديدة',
     'Sending message to:' => 'إرسال رسالة إلى:',
     'Related to booking:' => 'متعلق بالحجز:',
@@ -847,5 +849,8 @@ return [
     'View all your bookings' => 'عرض جميع حجوزاتك',
     'Chat with teachers' => 'التواصل مع المعلمين',
     'Access learning materials' => 'الوصول إلى المواد التعليمية',
+
+    // عام
+    'Start' => 'ابدأ',
 
 ];

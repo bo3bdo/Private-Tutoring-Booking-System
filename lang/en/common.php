@@ -70,6 +70,7 @@ return [
     'Upcoming Bookings' => 'Upcoming Bookings',
     'Your next scheduled lessons' => 'Your next scheduled lessons',
     'View All' => 'View All',
+    'View Courses' => 'View Courses',
     'Confirmed' => 'Confirmed',
     'Teacher' => 'Teacher',
 
@@ -435,6 +436,7 @@ return [
     'Chat with your teachers' => 'Chat with your teachers',
     'Chat with your students' => 'Chat with your students',
     'Start a conversation with your teacher from a booking page' => 'Start a conversation with your teacher from a booking page',
+    'Start a conversation with your students' => 'Start a conversation with your students',
     'New Message' => 'New Message',
     'Sending message to:' => 'Sending message to:',
     'Related to booking:' => 'Related to booking:',
@@ -838,5 +840,8 @@ return [
     'View all your bookings' => 'View all your bookings',
     'Chat with teachers' => 'Chat with teachers',
     'Access learning materials' => 'Access learning materials',
+
+    // General
+    'Start' => 'Start',
 
 ];
