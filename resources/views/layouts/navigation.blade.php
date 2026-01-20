@@ -33,6 +33,9 @@
                         <x-nav-link :href="route('admin.teachers.index')" :active="request()->routeIs('admin.teachers.*')">
                             {{ __('common.Teachers') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                            {{ __('common.Users') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')" :badge="auth()->user()->pendingReviewsCount()">
                             {{ __('common.Reviews') }}
                         </x-nav-link>
@@ -191,6 +194,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.teachers.index')" :active="request()->routeIs('admin.teachers.*')">
                     {{ __('common.Teachers') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                    {{ __('common.Users') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.*')" :badge="auth()->user()->pendingReviewsCount()">
                     {{ __('common.Reviews') }}
