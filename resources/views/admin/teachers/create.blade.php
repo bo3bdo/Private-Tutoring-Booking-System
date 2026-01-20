@@ -1,29 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <a href="{{ route('admin.teachers.index') }}" class="text-gray-500 hover:text-gray-700 transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                    </svg>
-                </a>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Add New Teacher
+        <div class="flex items-center gap-2 min-w-0 flex-1">
+            <a href="{{ route('admin.teachers.index') }}" class="flex-shrink-0 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition p-1 -ml-1">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </a>
+            <div class="min-w-0 flex-1">
+                <h2 class="font-semibold text-lg sm:text-xl text-gray-800 dark:text-white leading-tight truncate">
+                    {{ __('common.Add New Teacher') }}
                 </h2>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-                <div class="p-6 md:p-8">
-                    <div class="mb-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Teacher Information</h3>
-                        <p class="text-sm text-gray-600">Create a new teacher account</p>
+    <div class="py-4 sm:py-6 lg:py-8">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                <div class="p-4 sm:p-6 md:p-8">
+                    <div class="mb-4 sm:mb-6">
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">{{ __('common.Teacher Information') }}</h3>
+                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Create a new teacher account</p>
                     </div>
 
-                    <form method="POST" action="{{ route('admin.teachers.store') }}" class="space-y-6">
+                    <form method="POST" action="{{ route('admin.teachers.store') }}" class="space-y-4 sm:space-y-6">
                         @csrf
 
                         <!-- Basic Information -->
@@ -35,7 +35,7 @@
                                     Full Name <span class="text-red-500">*</span>
                                 </label>
                                 <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                                    class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition @error('name') border-red-500 @enderror"
+                                    class="w-full rounded-lg sm:rounded-xl border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-sm placeholder-gray-400 focus:border-slate-400 dark:focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-gray-500 focus:ring-offset-2 transition @error('name') border-red-500 @enderror"
                                     placeholder="John Teacher">
                                 @error('name')
                                     <p class="mt-2 text-sm text-red-600 flex items-center gap-1">
@@ -77,7 +77,7 @@
                                         Password <span class="text-red-500">*</span>
                                     </label>
                                     <input type="password" name="password" id="password" required
-                                        class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition @error('password') border-red-500 @enderror"
+                                        class="w-full rounded-lg sm:rounded-xl border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-sm placeholder-gray-400 focus:border-slate-400 dark:focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-gray-500 focus:ring-offset-2 transition @error('password') border-red-500 @enderror"
                                         placeholder="••••••••">
                                     @error('password')
                                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -103,7 +103,7 @@
                                     Bio <span class="text-gray-400 font-normal">(Optional)</span>
                                 </label>
                                 <textarea name="bio" id="bio" rows="3"
-                                    class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition resize-none @error('bio') border-red-500 @enderror"
+                                    class="w-full rounded-lg sm:rounded-xl border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-sm placeholder-gray-400 focus:border-slate-400 dark:focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-gray-500 focus:ring-offset-2 transition resize-none @error('bio') border-red-500 @enderror"
                                     placeholder="Brief description about the teacher...">{{ old('bio') }}</textarea>
                                 @error('bio')
                                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -133,7 +133,7 @@
                                         Default Location <span class="text-gray-400 font-normal">(Optional)</span>
                                     </label>
                                     <select name="default_location_id" id="default_location_id"
-                                        class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition @error('default_location_id') border-red-500 @enderror">
+                                        class="w-full rounded-lg sm:rounded-xl border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-sm focus:border-slate-400 dark:focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-gray-500 focus:ring-offset-2 transition @error('default_location_id') border-red-500 @enderror">
                                         <option value="">Select a location</option>
                                         @foreach($locations as $location)
                                             <option value="{{ $location->id }}" {{ old('default_location_id') == $location->id ? 'selected' : '' }}>
@@ -152,7 +152,7 @@
                                     Default Meeting Provider <span class="text-gray-400 font-normal">(Optional)</span>
                                 </label>
                                 <select name="default_meeting_provider" id="default_meeting_provider"
-                                    class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 focus:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 transition @error('default_meeting_provider') border-red-500 @enderror">
+                                    class="w-full rounded-lg sm:rounded-xl border-2 border-slate-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-sm focus:border-slate-400 dark:focus:border-gray-500 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-gray-500 focus:ring-offset-2 transition @error('default_meeting_provider') border-red-500 @enderror">
                                     <option value="none" {{ old('default_meeting_provider', 'none') == 'none' ? 'selected' : '' }}>None</option>
                                     <option value="custom" {{ old('default_meeting_provider') == 'custom' ? 'selected' : '' }}>Custom URL</option>
                                     <option value="zoom" {{ old('default_meeting_provider') == 'zoom' ? 'selected' : '' }}>Zoom</option>

@@ -27,9 +27,40 @@
 
             <!-- Main Content Area -->
             <div class="flex-1 flex flex-col lg:ms-64">
+                <!-- Mobile Navigation Bar -->
+                <div class="lg:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
+                    <div class="flex items-center justify-between h-16 px-4">
+                        <div class="flex items-center gap-3">
+                            <button @click="$dispatch('sidebar-toggle')" class="inline-flex items-center justify-center p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition" aria-label="Toggle sidebar">
+                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                            </button>
+                            <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : (auth()->user()->isTeacher() ? route('teacher.dashboard') : route('student.dashboard')) }}" class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-gradient-to-br from-dark-blue-600 to-dark-blue-800 rounded-lg flex items-center justify-center shadow-lg">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-base font-bold text-gray-900 dark:text-white">{{ __('common.Tutoring System') }}</span>
+                            </a>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button @click="$dispatch('toggle-dark-mode')" class="inline-flex items-center justify-center p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition-colors" aria-label="Toggle dark mode">
+                                <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                                </svg>
+                                <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Page Content -->
                 <main class="flex-1 overflow-y-auto">
-                    <div class="px-4 sm:px-6 lg:px-8 py-8">
+                    <div class="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
                         {{ $slot }}
                     </div>
                 </main>

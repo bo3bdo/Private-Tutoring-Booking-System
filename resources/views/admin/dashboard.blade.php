@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 p-8 mb-8">
+        <div class="relative overflow-hidden rounded-xl sm:rounded-2xl bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 p-4 sm:p-6 lg:p-8 mb-4 sm:mb-6 lg:mb-8">
             <!-- Background Image -->
             <div class="absolute inset-0 z-0">
                 <div class="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-800/90 to-slate-900/90 dark:from-slate-950/95 dark:via-slate-950/95 dark:to-slate-950/95 z-10"></div>
@@ -9,15 +9,15 @@
             
             <!-- Content -->
             <div class="relative z-20 flex items-center justify-between">
-                <div>
-                    <h2 class="font-semibold text-3xl text-white leading-tight drop-shadow-lg">
+                <div class="min-w-0 flex-1">
+                    <h2 class="font-semibold text-xl sm:text-2xl lg:text-3xl text-white leading-tight drop-shadow-lg">
                         {{ __('common.Admin Dashboard') }}
                     </h2>
-                    <p class="text-sm text-gray-100 dark:text-gray-200 mt-2 drop-shadow-md">{{ __('common.Overview of your tutoring platform') }}</p>
+                    <p class="text-xs sm:text-sm text-gray-100 dark:text-gray-200 mt-1 sm:mt-2 drop-shadow-md">{{ __('common.Overview of your tutoring platform') }}</p>
                 </div>
-                <div class="hidden md:block">
-                    <div class="w-24 h-24 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 dark:border-white/20 shadow-lg">
-                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="hidden md:block flex-shrink-0 ml-4">
+                    <div class="w-16 h-16 lg:w-24 lg:h-24 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-xl lg:rounded-2xl flex items-center justify-center border border-white/30 dark:border-white/20 shadow-lg">
+                        <svg class="w-8 h-8 lg:w-12 lg:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                         </svg>
                     </div>
@@ -26,198 +26,198 @@
         </div>
     </x-slot>
 
-    <div class="py-8 -mt-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="py-4 sm:py-6 lg:py-8 -mt-4 sm:-mt-6 lg:-mt-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6">
             <!-- Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <a href="{{ route('admin.bookings.index') }}" class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 rounded-2xl shadow-lg border-2 border-blue-200 dark:border-blue-700/50 p-6 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-xl transition cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                <a href="{{ route('admin.bookings.index') }}" class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-blue-200 dark:border-blue-700/50 p-4 sm:p-6 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                             </svg>
                         </div>
-                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </div>
-                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Total Bookings') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ $stats['total_bookings'] }}</p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Total Bookings') }}</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ $stats['total_bookings'] }}</p>
                 </a>
 
-                <a href="{{ route('admin.payments.index') }}" class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-2xl shadow-lg border-2 border-yellow-200 dark:border-yellow-700/50 p-6 hover:border-yellow-300 dark:hover:border-yellow-600 hover:shadow-xl transition cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-yellow-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('admin.payments.index') }}" class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/30 dark:to-yellow-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-yellow-200 dark:border-yellow-700/50 p-4 sm:p-6 hover:border-yellow-300 dark:hover:border-yellow-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-yellow-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600 dark:text-yellow-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </div>
-                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Pending Payments') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-yellow-700 dark:group-hover:text-yellow-400 transition">{{ $stats['pending_payments'] }}</p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Pending Payments') }}</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-yellow-700 dark:group-hover:text-yellow-400 transition">{{ $stats['pending_payments'] }}</p>
                 </a>
 
-                <a href="{{ route('admin.teachers.index') }}" class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 rounded-2xl shadow-lg border-2 border-emerald-200 dark:border-emerald-700/50 p-6 hover:border-emerald-300 dark:hover:border-emerald-600 hover:shadow-xl transition cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('admin.teachers.index') }}" class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-emerald-200 dark:border-emerald-700/50 p-4 sm:p-6 hover:border-emerald-300 dark:hover:border-emerald-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg>
                         </div>
-                        <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </div>
-                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Active Teachers') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">{{ $stats['active_teachers'] }}</p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Active Teachers') }}</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">{{ $stats['active_teachers'] }}</p>
                 </a>
 
-                <a href="{{ route('admin.students.index') }}" class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 rounded-2xl shadow-lg border-2 border-purple-200 dark:border-purple-700/50 p-6 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-xl transition cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('admin.students.index') }}" class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-purple-200 dark:border-purple-700/50 p-4 sm:p-6 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                             </svg>
                         </div>
-                        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </div>
-                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Active Students') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-400 transition">{{ $stats['active_students'] }}</p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Active Students') }}</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-400 transition">{{ $stats['active_students'] }}</p>
                 </a>
             </div>
 
             <!-- Additional Stats Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <a href="{{ route('admin.payments.index', ['filter' => 'succeeded']) }}" class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 rounded-2xl shadow-lg border-2 border-green-200 dark:border-green-700/50 p-6 hover:border-green-300 dark:hover:border-green-600 hover:shadow-xl transition cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                <a href="{{ route('admin.payments.index', ['filter' => 'succeeded']) }}" class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-green-200 dark:border-green-700/50 p-4 sm:p-6 hover:border-green-300 dark:hover:border-green-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        <svg class="w-5 h-5 text-green-600 dark:text-green-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-green-600 dark:text-green-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </div>
-                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Total Revenue') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-400 transition">{{ number_format($stats['total_revenue'], 2) }} BHD</p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Total Revenue') }}</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-400 transition">{{ number_format($stats['total_revenue'], 2) }} BHD</p>
                 </a>
 
-                <a href="{{ route('admin.courses.index') }}" class="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/30 dark:to-indigo-800/30 rounded-2xl shadow-lg border-2 border-indigo-200 dark:border-indigo-700/50 p-6 hover:border-indigo-300 dark:hover:border-indigo-600 hover:shadow-xl transition cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('admin.courses.index') }}" class="bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-900/30 dark:to-indigo-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-indigo-200 dark:border-indigo-700/50 p-4 sm:p-6 hover:border-indigo-300 dark:hover:border-indigo-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                             </svg>
                         </div>
-                        <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </div>
-                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Total Courses') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition">{{ $stats['total_courses'] }}</p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Total Courses') }}</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition">{{ $stats['total_courses'] }}</p>
                 </a>
 
-                <a href="{{ route('admin.reviews.index') }}" class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30 rounded-2xl shadow-lg border-2 border-orange-200 dark:border-orange-700/50 p-6 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-xl transition cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-orange-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('admin.reviews.index') }}" class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-orange-200 dark:border-orange-700/50 p-4 sm:p-6 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-orange-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
                             </svg>
                         </div>
-                        <svg class="w-5 h-5 text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-orange-600 dark:text-orange-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </div>
-                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Pending Reviews') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-orange-700 dark:group-hover:text-orange-400 transition">{{ $stats['pending_reviews'] }}</p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Pending Reviews') }}</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-orange-700 dark:group-hover:text-orange-400 transition">{{ $stats['pending_reviews'] }}</p>
                 </a>
 
-                <a href="{{ route('admin.support-tickets.index') }}" class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 rounded-2xl shadow-lg border-2 border-red-200 dark:border-red-700/50 p-6 hover:border-red-300 dark:hover:border-red-600 hover:shadow-xl transition cursor-pointer group">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('admin.support-tickets.index') }}" class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/30 dark:to-red-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-red-200 dark:border-red-700/50 p-4 sm:p-6 hover:border-red-300 dark:hover:border-red-600 hover:shadow-xl transition cursor-pointer group">
+                    <div class="flex items-center justify-between mb-3 sm:mb-4">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-red-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                             </svg>
                         </div>
-                        <svg class="w-5 h-5 text-red-600 dark:text-red-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-red-600 dark:text-red-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </div>
-                    <p class="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Open Support Tickets') }}</p>
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-red-700 dark:group-hover:text-red-400 transition">{{ $stats['open_support_tickets'] }}</p>
+                    <p class="text-xs sm:text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.Open Support Tickets') }}</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-red-700 dark:group-hover:text-red-400 transition">{{ $stats['open_support_tickets'] }}</p>
                 </a>
             </div>
 
             <!-- Quick Actions -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
-                <div class="p-6 border-b border-slate-200 dark:border-gray-700">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Quick Actions') }}</h3>
+            <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
+                    <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Quick Actions') }}</h3>
                 </div>
-                <div class="p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <a href="{{ route('admin.subjects.index') }}" class="group flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-900/20 dark:to-transparent rounded-xl border-2 border-blue-200 dark:border-blue-700/50 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md transition">
-                            <div class="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="p-4 sm:p-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                        <a href="{{ route('admin.subjects.index') }}" class="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-900/20 dark:to-transparent rounded-lg sm:rounded-xl border-2 border-blue-200 dark:border-blue-700/50 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md transition">
+                            <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="font-semibold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ __('common.Manage Subjects') }}</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('common.Add, edit, or delete subjects') }}</p>
+                                <p class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ __('common.Manage Subjects') }}</p>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1 line-clamp-2">{{ __('common.Add, edit, or delete subjects') }}</p>
                             </div>
-                            <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </a>
 
-                        <a href="{{ route('admin.locations.index') }}" class="group flex items-center gap-4 p-4 bg-gradient-to-r from-emerald-50 to-transparent dark:from-emerald-900/20 dark:to-transparent rounded-xl border-2 border-emerald-200 dark:border-emerald-700/50 hover:border-emerald-300 dark:hover:border-emerald-600 hover:shadow-md transition">
-                            <div class="flex-shrink-0 w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('admin.locations.index') }}" class="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gradient-to-r from-emerald-50 to-transparent dark:from-emerald-900/20 dark:to-transparent rounded-lg sm:rounded-xl border-2 border-emerald-200 dark:border-emerald-700/50 hover:border-emerald-300 dark:hover:border-emerald-600 hover:shadow-md transition">
+                            <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-emerald-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="font-semibold text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">{{ __('common.Manage Locations') }}</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('common.Add, edit, or delete locations') }}</p>
+                                <p class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">{{ __('common.Manage Locations') }}</p>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1 line-clamp-2">{{ __('common.Add, edit, or delete locations') }}</p>
                             </div>
-                            <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </a>
 
-                        <a href="{{ route('admin.teachers.index') }}" class="group flex items-center gap-4 p-4 bg-gradient-to-r from-indigo-50 to-transparent dark:from-indigo-900/20 dark:to-transparent rounded-xl border-2 border-indigo-200 dark:border-indigo-700/50 hover:border-indigo-300 dark:hover:border-indigo-600 hover:shadow-md transition">
-                            <div class="flex-shrink-0 w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('admin.teachers.index') }}" class="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gradient-to-r from-indigo-50 to-transparent dark:from-indigo-900/20 dark:to-transparent rounded-lg sm:rounded-xl border-2 border-indigo-200 dark:border-indigo-700/50 hover:border-indigo-300 dark:hover:border-indigo-600 hover:shadow-md transition">
+                            <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-indigo-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="font-semibold text-gray-900 dark:text-white group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition">{{ __('common.Manage Teachers') }}</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('common.Add, edit, or delete teachers') }}</p>
+                                <p class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition">{{ __('common.Manage Teachers') }}</p>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1 line-clamp-2">{{ __('common.Add, edit, or delete teachers') }}</p>
                             </div>
-                            <svg class="w-5 h-5 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600 dark:text-indigo-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </a>
 
-                        <a href="{{ route('admin.users.index') }}" class="group flex items-center gap-4 p-4 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-900/20 dark:to-transparent rounded-xl border-2 border-purple-200 dark:border-purple-700/50 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-md transition">
-                            <div class="flex-shrink-0 w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <a href="{{ route('admin.users.index') }}" class="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-900/20 dark:to-transparent rounded-lg sm:rounded-xl border-2 border-purple-200 dark:border-purple-700/50 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-md transition">
+                            <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="font-semibold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-400 transition">{{ __('common.Manage Users') }}</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('common.View and manage all users') }}</p>
+                                <p class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-400 transition">{{ __('common.Manage Users') }}</p>
+                                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1 line-clamp-2">{{ __('common.View and manage all users') }}</p>
                             </div>
-                            <svg class="w-5 h-5 text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-1 transition hidden sm:block flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>
                         </a>
@@ -226,42 +226,42 @@
             </div>
 
             <!-- Recent Bookings -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
-                <div class="p-6 border-b border-slate-200 dark:border-gray-700">
+            <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Recent Bookings') }}</h3>
+                        <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Recent Bookings') }}</h3>
                     </div>
                 </div>
-                <div class="p-6">
+                <div class="p-4 sm:p-6">
                     @if($recentBookings->isEmpty())
-                        <div class="text-center py-8">
-                            <div class="flex justify-center mb-4">
-                                <div class="w-16 h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                                    <svg class="w-8 h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="text-center py-6 sm:py-8">
+                            <div class="flex justify-center mb-3 sm:mb-4">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                                     </svg>
                                 </div>
                             </div>
-                            <p class="text-gray-500 dark:text-gray-400">{{ __('common.No recent bookings.') }}</p>
+                            <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400">{{ __('common.No recent bookings.') }}</p>
                         </div>
                     @else
-                        <div class="space-y-4">
+                        <div class="space-y-3 sm:space-y-4">
                             @foreach($recentBookings as $booking)
-                                <div class="flex items-start gap-4 p-4 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-900/20 dark:to-transparent rounded-xl border border-blue-100 dark:border-blue-800/50 hover:border-blue-200 dark:hover:border-blue-700 transition">
-                                    <div class="flex-shrink-0 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-md">
-                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-900/20 dark:to-transparent rounded-lg sm:rounded-xl border border-blue-100 dark:border-blue-800/50 hover:border-blue-200 dark:hover:border-blue-700 transition">
+                                    <div class="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-md">
+                                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <div class="flex items-center gap-2 mb-1">
-                                            <h4 class="font-semibold text-gray-900 dark:text-white">{{ $booking->subject->name }}</h4>
-                                            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300">
+                                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                                            <h4 class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white truncate">{{ $booking->subject->name }}</h4>
+                                            <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 flex-shrink-0">
                                                 {{ $booking->status->label() }}
                                             </span>
                                         </div>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{{ $booking->start_at->format('M j, Y g:i A') }}</p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">{{ $booking->start_at->format('M j, Y g:i A') }}</p>
+                                        <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                                             <span class="font-semibold">{{ $booking->student->name }}</span> {{ __('common.with') }} 
                                             <span class="font-semibold">{{ $booking->teacher->user->name }}</span>
                                         </p>
