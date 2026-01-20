@@ -6,6 +6,7 @@ use App\Enums\BookingStatus;
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\TeacherRequest;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -89,6 +90,11 @@ class DashboardController extends Controller
         // Check for completed bookings without reviews and show notifications
         $this->checkAndNotifyUnreviewedBookings($student);
 
+        // Check if user has a teacher request
+        $teacherRequest = TeacherRequest::where('user_id', $student->id)
+            ->latest()
+            ->first();
+
         return view('student.dashboard', compact(
             'totalPaid',
             'monthPaid',
@@ -105,7 +111,8 @@ class DashboardController extends Controller
             'newBookingsThisMonth',
             'averageDuration',
             'upcomingBookingsList',
-            'recentBookings'
+            'recentBookings',
+            'teacherRequest'
         ));
     }
 

@@ -42,6 +42,9 @@
                         <x-nav-link :href="route('admin.support-tickets.index')" :active="request()->routeIs('admin.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                             {{ __('common.Support Tickets') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.teacher-requests.index')" :active="request()->routeIs('admin.teacher-requests.*')" :badge="\App\Models\TeacherRequest::where('status', 'pending')->count()">
+                            {{ __('common.Teacher Requests') }}
+                        </x-nav-link>
                     @elseif(auth()->user()->isTeacher())
                         <x-nav-link :href="route('teacher.dashboard')" :active="request()->routeIs('teacher.dashboard')">
                             {{ __('common.Dashboard') }}
@@ -218,6 +221,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.support-tickets.index')" :active="request()->routeIs('admin.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                     {{ __('common.Support Tickets') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.teacher-requests.index')" :active="request()->routeIs('admin.teacher-requests.*')" :badge="\App\Models\TeacherRequest::where('status', 'pending')->count()">
+                    {{ __('common.Teacher Requests') }}
                 </x-responsive-nav-link>
             @elseif(auth()->user()->isTeacher())
                 <x-responsive-nav-link :href="route('teacher.dashboard')" :active="request()->routeIs('teacher.*')">

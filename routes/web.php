@@ -97,6 +97,11 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
 
     // Payment History Routes
     Route::get('/payment-history', [\App\Http\Controllers\Student\PaymentHistoryController::class, 'index'])->name('payment-history.index');
+
+    // Teacher Request Routes
+    Route::get('/become-teacher', [\App\Http\Controllers\Student\TeacherRequestController::class, 'create'])->name('teacher-request.create');
+    Route::post('/become-teacher', [\App\Http\Controllers\Student\TeacherRequestController::class, 'store'])->name('teacher-request.store');
+    Route::get('/teacher-request', [\App\Http\Controllers\Student\TeacherRequestController::class, 'show'])->name('teacher-request.show');
 });
 
 // Teacher Routes
@@ -225,6 +230,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/support-tickets/{supportTicket}/assign', [\App\Http\Controllers\Admin\SupportTicketController::class, 'assign'])->name('support-tickets.assign');
     Route::post('/support-tickets/{supportTicket}/status', [\App\Http\Controllers\Admin\SupportTicketController::class, 'updateStatus'])->name('support-tickets.update-status');
     Route::post('/support-tickets/{supportTicket}/reply', [\App\Http\Controllers\Admin\SupportTicketController::class, 'reply'])->name('support-tickets.reply');
+
+    // Teacher Request Routes
+    Route::get('/teacher-requests', [\App\Http\Controllers\Admin\TeacherRequestController::class, 'index'])->name('teacher-requests.index');
+    Route::get('/teacher-requests/{teacherRequest}', [\App\Http\Controllers\Admin\TeacherRequestController::class, 'show'])->name('teacher-requests.show');
+    Route::post('/teacher-requests/{teacherRequest}/approve', [\App\Http\Controllers\Admin\TeacherRequestController::class, 'approve'])->name('teacher-requests.approve');
+    Route::post('/teacher-requests/{teacherRequest}/reject', [\App\Http\Controllers\Admin\TeacherRequestController::class, 'reject'])->name('teacher-requests.reject');
 });
 
 // Payment Routes

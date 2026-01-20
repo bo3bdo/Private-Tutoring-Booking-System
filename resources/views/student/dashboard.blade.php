@@ -345,6 +345,57 @@
             </div>
 
             <!-- Upcoming Bookings -->
+            <!-- Become a Teacher Section -->
+            @if(!auth()->user()->isTeacher() && (!$teacherRequest || $teacherRequest->isRejected()))
+                <div class="bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 dark:from-purple-900/30 dark:via-indigo-900/30 dark:to-blue-900/30 rounded-2xl shadow-lg border-2 border-purple-200 dark:border-purple-700/50 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('common.Become a Teacher') }}</h3>
+                                <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">{{ __('common.Share your knowledge and earn money by teaching students. Apply now to become a teacher on our platform.') }}</p>
+                                <a href="{{ route('student.teacher-request.create') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-purple-700 hover:to-indigo-700 transition">
+                                    {{ __('common.Apply Now') }}
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @elseif($teacherRequest && $teacherRequest->isPending())
+                <div class="bg-amber-50 dark:bg-amber-900/30 rounded-2xl shadow-lg border-2 border-amber-200 dark:border-amber-700/50 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-16 h-16 bg-amber-500 rounded-xl flex items-center justify-center shadow-lg">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ __('common.Teacher Request Pending') }}</h3>
+                                <p class="text-sm text-gray-700 dark:text-gray-300 mb-4">{{ __('common.Your teacher request is currently under review. We will notify you once a decision has been made.') }}</p>
+                                <a href="{{ route('student.teacher-request.show') }}" class="inline-flex items-center px-6 py-3 bg-amber-600 rounded-xl text-sm font-semibold text-white shadow-lg hover:bg-amber-700 transition">
+                                    {{ __('common.View Request') }}
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             @if($upcomingBookingsList->isNotEmpty())
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                     <div class="p-6 border-b border-slate-200 dark:border-gray-700">
