@@ -50,7 +50,18 @@
                     </div>
                     <div>
                         <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">{{ __('common.User') }}</p>
-                        <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $supportTicket->user->name }}</p>
+                        <div class="flex items-center gap-2 mb-1">
+                            <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $supportTicket->user->name }}</p>
+                            @if($supportTicket->user->isTeacher())
+                                <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300">
+                                    {{ __('common.Teacher') }}
+                                </span>
+                            @else
+                                <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300">
+                                    {{ __('common.Student') }}
+                                </span>
+                            @endif
+                        </div>
                         <p class="text-xs text-gray-500 dark:text-gray-400">{{ $supportTicket->user->email }}</p>
                     </div>
                     <div>

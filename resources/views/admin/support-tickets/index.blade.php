@@ -99,7 +99,18 @@
                                         <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">{{ $ticket->subject }}</h3>
                                         <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">{{ $ticket->description }}</p>
                                         <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                                            <span>{{ __('common.By:') }} {{ $ticket->user->name }}</span>
+                                            <span class="flex items-center gap-2">
+                                                {{ __('common.By:') }} {{ $ticket->user->name }}
+                                                @if($ticket->user->isTeacher())
+                                                    <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300">
+                                                        {{ __('common.Teacher') }}
+                                                    </span>
+                                                @else
+                                                    <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300">
+                                                        {{ __('common.Student') }}
+                                                    </span>
+                                                @endif
+                                            </span>
                                             <span>{{ $ticket->created_at->format('M j, Y g:i A') }}</span>
                                             @if($ticket->assignedTo)
                                                 <span>{{ __('common.Assigned To') }}: {{ $ticket->assignedTo->name }}</span>
