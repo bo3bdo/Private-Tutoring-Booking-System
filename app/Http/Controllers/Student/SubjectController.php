@@ -42,9 +42,15 @@ class SubjectController extends Controller
         $view = $request->get('view', 'list');
         $startDate = $request->get('start') ? Carbon::parse($request->get('start')) : Carbon::now()->startOfWeek();
 
+        // Ensure startDate is not in the past
+        if ($startDate->isPast()) {
+            $startDate = Carbon::now()->startOfWeek();
+        }
+
         $query = $teacher->timeSlots()
             ->where('start_at', '>=', $startDate)
             ->where('start_at', '<', $startDate->copy()->addWeek())
+            ->where('end_at', '>', now()) // Only show slots that haven't ended yet
             ->where('status', 'available');
 
         if ($subjectId) {

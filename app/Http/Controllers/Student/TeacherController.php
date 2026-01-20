@@ -35,6 +35,7 @@ class TeacherController extends Controller
         $upcomingSlots = $teacher->timeSlots()
             ->where('status', 'available')
             ->where('start_at', '>=', now())
+            ->where('end_at', '>', now()) // Only show slots that haven't ended yet
             ->orderBy('start_at')
             ->limit(10)
             ->get();
