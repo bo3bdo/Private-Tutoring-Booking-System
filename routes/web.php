@@ -99,6 +99,9 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/profile', [\App\Http\Controllers\Teacher\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [\App\Http\Controllers\Teacher\ProfileController::class, 'update'])->name('profile.update');
+
     Route::get('/subjects', [\App\Http\Controllers\Teacher\SubjectController::class, 'index'])->name('subjects.index');
     Route::put('/subjects', [\App\Http\Controllers\Teacher\SubjectController::class, 'update'])->name('subjects.update');
 

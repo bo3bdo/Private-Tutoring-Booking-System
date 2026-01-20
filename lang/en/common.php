@@ -871,6 +871,14 @@ return [
 
     // Teacher Profile
     'Teacher Profile' => 'Teacher Profile',
+    'My Profile' => 'My Profile',
+    'Profile Information' => 'Profile Information',
+    'Update your teaching profile and settings' => 'Update your teaching profile and settings',
+    'Manage your teaching profile, hourly rate, and preferences' => 'Manage your teaching profile, hourly rate, and preferences',
+    'Update Profile' => 'Update Profile',
+    'Update your profile and hourly rate' => 'Update your profile and hourly rate',
+    'This is the rate students will pay per hour for your lessons' => 'This is the rate students will pay per hour for your lessons',
+    'Profile updated successfully' => 'Profile updated successfully',
     'Bio' => 'Bio',
     'Default Location' => 'Default Location',
     'Subjects Taught' => 'Subjects Taught',
@@ -879,5 +887,8 @@ return [
     'Upcoming Available Slots' => 'Upcoming Available Slots',
     'View All Slots' => 'View All Slots',
     'Book' => 'Book',
+    'Teaching Options' => 'Teaching Options',
+    'Select a location' => 'Select a location',
+    'Select at least one subject you teach' => 'Select at least one subject you teach',
 
 ];

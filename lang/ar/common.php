@@ -876,6 +876,14 @@ return [
 
     // Teacher Profile
     'Teacher Profile' => 'ملف المعلم',
+    'My Profile' => 'ملفي الشخصي',
+    'Profile Information' => 'معلومات الملف الشخصي',
+    'Update your teaching profile and settings' => 'تحديث ملفك التعليمي والإعدادات',
+    'Manage your teaching profile, hourly rate, and preferences' => 'إدارة ملفك التعليمي وسعر الساعة والتفضيلات',
+    'Update Profile' => 'تحديث الملف الشخصي',
+    'Update your profile and hourly rate' => 'تحديث ملفك الشخصي وسعر الساعة',
+    'This is the rate students will pay per hour for your lessons' => 'هذا هو السعر الذي سيدفعه الطلاب لكل ساعة من دروسك',
+    'Profile updated successfully' => 'تم تحديث الملف الشخصي بنجاح',
     'Bio' => 'السيرة الذاتية',
     'Default Location' => 'الموقع الافتراضي',
     'Subjects Taught' => 'المواد التي يدرسها',
@@ -884,5 +892,8 @@ return [
     'Upcoming Available Slots' => 'المواعيد المتاحة القادمة',
     'View All Slots' => 'عرض جميع المواعيد',
     'Book' => 'احجز',
+    'Teaching Options' => 'خيارات التدريس',
+    'Select a location' => 'اختر موقعاً',
+    'Select at least one subject you teach' => 'اختر مادة واحدة على الأقل تدرسها',
 
 ];
