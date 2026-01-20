@@ -150,6 +150,12 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::post('/support-tickets', [\App\Http\Controllers\Teacher\SupportTicketController::class, 'store'])->name('support-tickets.store');
     Route::get('/support-tickets/{supportTicket}', [\App\Http\Controllers\Teacher\SupportTicketController::class, 'show'])->name('support-tickets.show');
     Route::post('/support-tickets/{supportTicket}/reply', [\App\Http\Controllers\Teacher\SupportTicketController::class, 'reply'])->name('support-tickets.reply');
+
+    // Review Routes
+    Route::get('/reviews', [\App\Http\Controllers\Teacher\ReviewController::class, 'index'])->name('reviews.index');
+
+    // Earnings Routes
+    Route::get('/earnings', [\App\Http\Controllers\Teacher\EarningsController::class, 'index'])->name('earnings.index');
 });
 
 // API Routes

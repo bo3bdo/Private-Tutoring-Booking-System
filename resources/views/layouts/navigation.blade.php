@@ -70,6 +70,12 @@
                         <x-nav-link :href="route('teacher.support-tickets.index')" :active="request()->routeIs('teacher.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                             {{ __('common.Support Tickets') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('teacher.reviews.index')" :active="request()->routeIs('teacher.reviews.*')">
+                            {{ __('common.My Reviews') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('teacher.earnings.index')" :active="request()->routeIs('teacher.earnings.*')">
+                            {{ __('common.Earnings') }}
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
                             {{ __('common.Dashboard') }}
