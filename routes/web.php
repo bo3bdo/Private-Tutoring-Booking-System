@@ -143,6 +143,13 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
     Route::post('/resources', [\App\Http\Controllers\Teacher\ResourceController::class, 'store'])->name('resources.store');
     Route::delete('/resources/{resource}', [\App\Http\Controllers\Teacher\ResourceController::class, 'destroy'])->name('resources.destroy');
     Route::get('/message-attachments/{attachment}/download', [\App\Http\Controllers\Teacher\ResourceController::class, 'downloadAttachment'])->name('message-attachments.download');
+
+    // Support Ticket Routes
+    Route::get('/support-tickets', [\App\Http\Controllers\Teacher\SupportTicketController::class, 'index'])->name('support-tickets.index');
+    Route::get('/support-tickets/create', [\App\Http\Controllers\Teacher\SupportTicketController::class, 'create'])->name('support-tickets.create');
+    Route::post('/support-tickets', [\App\Http\Controllers\Teacher\SupportTicketController::class, 'store'])->name('support-tickets.store');
+    Route::get('/support-tickets/{supportTicket}', [\App\Http\Controllers\Teacher\SupportTicketController::class, 'show'])->name('support-tickets.show');
+    Route::post('/support-tickets/{supportTicket}/reply', [\App\Http\Controllers\Teacher\SupportTicketController::class, 'reply'])->name('support-tickets.reply');
 });
 
 // API Routes

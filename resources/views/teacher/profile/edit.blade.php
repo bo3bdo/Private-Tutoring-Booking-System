@@ -23,6 +23,22 @@
                         @csrf
                         @method('PUT')
 
+                        <!-- Basic Information -->
+                        <div class="space-y-3 sm:space-y-4 pb-4 sm:pb-6 border-b border-slate-200 dark:border-gray-700">
+                            <h4 class="text-xs sm:text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">{{ __('common.Basic Information') }}</h4>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">{{ __('common.To update your name or email, please visit') }} <a href="{{ route('profile.edit') }}" class="text-blue-600 dark:text-blue-400 hover:underline font-medium">{{ __('common.Account Settings') }}</a></p>
+                            <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 sm:p-4 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{{ __('common.Name') }}:</span>
+                                    <span class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">{{ auth()->user()->name }}</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{{ __('common.Email') }}:</span>
+                                    <span class="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">{{ auth()->user()->email }}</span>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Bio -->
                         <div>
                             <label for="bio" class="block text-sm font-semibold text-gray-900 dark:text-white mb-1.5 sm:mb-2">

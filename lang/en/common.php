@@ -890,5 +890,12 @@ return [
     'Teaching Options' => 'Teaching Options',
     'Select a location' => 'Select a location',
     'Select at least one subject you teach' => 'Select at least one subject you teach',
+    'Account Settings' => 'Account Settings',
+    'To update your name or email, please visit' => 'To update your name or email, please visit',
+    'Complete Your Profile' => 'Complete Your Profile',
+    'Your profile is incomplete. Please update your hourly rate and select at least one subject to start receiving bookings.' => 'Your profile is incomplete. Please update your hourly rate and select at least one subject to start receiving bookings.',
+    'Profile Summary' => 'Profile Summary',
+    'Edit Profile' => 'Edit Profile',
+    'Not Set' => 'Not Set',
 
 ];

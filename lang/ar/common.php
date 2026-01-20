@@ -895,5 +895,12 @@ return [
     'Teaching Options' => 'خيارات التدريس',
     'Select a location' => 'اختر موقعاً',
     'Select at least one subject you teach' => 'اختر مادة واحدة على الأقل تدرسها',
+    'Account Settings' => 'إعدادات الحساب',
+    'To update your name or email, please visit' => 'لتحديث اسمك أو بريدك الإلكتروني، يرجى زيارة',
+    'Complete Your Profile' => 'أكمل ملفك الشخصي',
+    'Your profile is incomplete. Please update your hourly rate and select at least one subject to start receiving bookings.' => 'ملفك الشخصي غير مكتمل. يرجى تحديث سعر الساعة واختيار مادة واحدة على الأقل لبدء تلقي الحجوزات.',
+    'Profile Summary' => 'ملخص الملف الشخصي',
+    'Edit Profile' => 'تعديل الملف الشخصي',
+    'Not Set' => 'غير محدد',
 
 ];

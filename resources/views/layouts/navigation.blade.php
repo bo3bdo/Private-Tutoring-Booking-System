@@ -67,6 +67,9 @@
                         <x-nav-link :href="route('teacher.resources.index')" :active="request()->routeIs('teacher.resources.*')">
                             {{ __('common.Resources') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('teacher.support-tickets.index')" :active="request()->routeIs('teacher.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
+                            {{ __('common.Support Tickets') }}
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
                             {{ __('common.Dashboard') }}

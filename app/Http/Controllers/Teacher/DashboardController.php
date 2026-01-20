@@ -101,6 +101,9 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
+        // Check if profile is incomplete
+        $isProfileIncomplete = $teacher->hourly_rate == 0 || $teacher->subjects()->count() == 0;
+
         return view('teacher.dashboard', compact(
             'todayEarnings',
             'weekEarnings',
@@ -121,7 +124,9 @@ class DashboardController extends Controller
             'monthGrowth',
             'newBookingsThisMonth',
             'upcomingBookings',
-            'recentBookings'
+            'recentBookings',
+            'isProfileIncomplete',
+            'teacher'
         ));
     }
 
