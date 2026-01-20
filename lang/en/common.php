@@ -934,4 +934,11 @@ return [
     'Actions' => 'Actions',
     'View' => 'View',
     'Clear' => 'Clear',
+
+    // Student Reviews & Payment History
+    'View all reviews you have written' => 'View all reviews you have written',
+    'Your reviews will appear here once you rate bookings, courses, or teachers' => 'Your reviews will appear here once you rate bookings, courses, or teachers',
+    'Payment History' => 'Payment History',
+    'View all your payment transactions' => 'View all your payment transactions',
+    'Your payment history will appear here once you make payments' => 'Your payment history will appear here once you make payments',
 ];

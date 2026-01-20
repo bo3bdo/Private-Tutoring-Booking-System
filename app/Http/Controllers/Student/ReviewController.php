@@ -7,10 +7,49 @@ use App\Http\Requests\StoreReviewRequest;
 use App\Models\Booking;
 use App\Models\Course;
 use App\Models\Review;
+use App\Models\TeacherProfile;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
+    public function index(Request $request): View
+    {
+        $student = auth()->user();
+
+        // Get all reviews written by this student
+        $query = $student->reviews()->with('reviewable');
+
+        // Filter by review type
+        if ($request->has('type') && $request->type !== '') {
+            $type = $request->type;
+            $query->where(function ($q) use ($type) {
+                if ($type === 'booking') {
+                    $q->where('reviewable_type', Booking::class);
+                } elseif ($type === 'course') {
+                    $q->where('reviewable_type', Course::class);
+                } elseif ($type === 'teacher') {
+                    $q->where('reviewable_type', TeacherProfile::class);
+                }
+            });
+        }
+
+        // Search in comments
+        if ($request->has('search') && $request->search !== '') {
+            $search = $request->search;
+            $query->where('comment', 'like', "%{$search}%");
+        }
+
+        $reviews = $query->latest()->paginate(15);
+
+        // Calculate statistics
+        $totalReviews = $student->reviews()->count();
+        $averageRating = $student->reviews()->avg('rating') ?? 0;
+
+        return view('student.reviews.index', compact('reviews', 'totalReviews', 'averageRating'));
+    }
+
     public function store(StoreReviewRequest $request): RedirectResponse
     {
         $reviewable = match ($request->reviewable_type) {

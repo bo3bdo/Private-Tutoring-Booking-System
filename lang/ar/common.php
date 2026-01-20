@@ -939,4 +939,11 @@ return [
     'Actions' => 'الإجراءات',
     'View' => 'عرض',
     'Clear' => 'مسح',
+
+    // Student Reviews & Payment History
+    'View all reviews you have written' => 'عرض جميع المراجعات التي كتبتها',
+    'Your reviews will appear here once you rate bookings, courses, or teachers' => 'ستظهر مراجعاتك هنا بمجرد تقييمك للحجوزات أو الكورسات أو المدرسين',
+    'Payment History' => 'سجل المدفوعات',
+    'View all your payment transactions' => 'عرض جميع معاملاتك المالية',
+    'Your payment history will appear here once you make payments' => 'سيظهر سجل المدفوعات هنا بمجرد قيامك بالدفع',
 ];

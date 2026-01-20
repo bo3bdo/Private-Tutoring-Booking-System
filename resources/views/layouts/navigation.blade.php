@@ -98,6 +98,12 @@
                         <x-nav-link :href="route('student.support-tickets.index')" :active="request()->routeIs('student.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                             {{ __('common.Support') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('student.reviews.index')" :active="request()->routeIs('student.reviews.*')">
+                            {{ __('common.My Reviews') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('student.payment-history.index')" :active="request()->routeIs('student.payment-history.*')">
+                            {{ __('common.Payment History') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -250,6 +256,12 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('student.support-tickets.index')" :active="request()->routeIs('student.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                     {{ __('common.Support') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('student.reviews.index')" :active="request()->routeIs('student.reviews.*')">
+                    {{ __('common.My Reviews') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('student.payment-history.index')" :active="request()->routeIs('student.payment-history.*')">
+                    {{ __('common.Payment History') }}
                 </x-responsive-nav-link>
             @endif
         </div>

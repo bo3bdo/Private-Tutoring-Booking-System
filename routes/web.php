@@ -71,6 +71,7 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     Route::post('/lessons/{lesson}/complete', [\App\Http\Controllers\Student\LessonProgressController::class, 'complete'])->name('lessons.complete');
 
     // Review Routes
+    Route::get('/reviews', [\App\Http\Controllers\Student\ReviewController::class, 'index'])->name('reviews.index');
     Route::post('/reviews', [\App\Http\Controllers\Student\ReviewController::class, 'store'])->name('reviews.store');
     Route::get('/teachers/{teacher}', [\App\Http\Controllers\Student\TeacherController::class, 'show'])->name('teachers.show');
     Route::get('/teachers/{teacher}/reviews', [\App\Http\Controllers\Student\TeacherController::class, 'reviews'])->name('teachers.reviews');
@@ -93,6 +94,9 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     Route::post('/support-tickets', [\App\Http\Controllers\Student\SupportTicketController::class, 'store'])->name('support-tickets.store');
     Route::get('/support-tickets/{supportTicket}', [\App\Http\Controllers\Student\SupportTicketController::class, 'show'])->name('support-tickets.show');
     Route::post('/support-tickets/{supportTicket}/reply', [\App\Http\Controllers\Student\SupportTicketController::class, 'reply'])->name('support-tickets.reply');
+
+    // Payment History Routes
+    Route::get('/payment-history', [\App\Http\Controllers\Student\PaymentHistoryController::class, 'index'])->name('payment-history.index');
 });
 
 // Teacher Routes
