@@ -225,11 +225,89 @@
                 </div>
             </div>
 
+            <!-- Monthly Statistics -->
+            @if(isset($monthlyStats))
+            <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
+                    <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Monthly Statistics') }}</h3>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('common.Bookings') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $monthlyStats['current_month']['bookings'] }}</p>
+                            <p class="text-xs mt-1 {{ $monthlyStats['growth']['bookings'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $monthlyStats['growth']['bookings'] >= 0 ? '+' : '' }}{{ $monthlyStats['growth']['bookings'] }}%
+                            </p>
+                        </div>
+                        <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('common.Revenue') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ number_format($monthlyStats['current_month']['revenue'], 2) }} BHD</p>
+                            <p class="text-xs mt-1 {{ $monthlyStats['growth']['revenue'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $monthlyStats['growth']['revenue'] >= 0 ? '+' : '' }}{{ $monthlyStats['growth']['revenue'] }}%
+                            </p>
+                        </div>
+                        <div class="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('common.Students') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $monthlyStats['current_month']['students'] }}</p>
+                            <p class="text-xs mt-1 {{ $monthlyStats['growth']['students'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $monthlyStats['growth']['students'] >= 0 ? '+' : '' }}{{ $monthlyStats['growth']['students'] }}%
+                            </p>
+                        </div>
+                        <div class="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('common.Teachers') }}</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $monthlyStats['current_month']['teachers'] }}</p>
+                            <p class="text-xs mt-1 {{ $monthlyStats['growth']['teachers'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $monthlyStats['growth']['teachers'] >= 0 ? '+' : '' }}{{ $monthlyStats['growth']['teachers'] }}%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            <!-- Revenue Chart -->
+            @if(isset($revenueReport))
+            <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
+                    <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Revenue Chart') }}</h3>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <canvas id="revenueChart" height="100"></canvas>
+                </div>
+            </div>
+            @endif
+
+            <!-- Today's Activity -->
+            @if(isset($todayBookings) && $todayBookings->isNotEmpty())
+            <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
+                    <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Today\'s Bookings') }}</h3>
+                </div>
+                <div class="p-4 sm:p-6">
+                    <div class="space-y-3">
+                        @foreach($todayBookings as $booking)
+                        <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-900 dark:text-white">{{ $booking->subject->name }}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ $booking->start_at->format('g:i A') }} - {{ $booking->end_at->format('g:i A') }}</p>
+                            </div>
+                            <span class="px-2 py-1 text-xs rounded-full {{ $booking->status->value === 'confirmed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                {{ $booking->status->label() }}
+                            </span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            @endif
+
             <!-- Recent Bookings -->
             <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
                     <div class="flex items-center justify-between">
                         <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Recent Bookings') }}</h3>
+                        <a href="{{ route('admin.bookings.index') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">{{ __('common.View All') }}</a>
                     </div>
                 </div>
                 <div class="p-4 sm:p-6">
@@ -274,4 +352,45 @@
             </div>
         </div>
     </div>
+
+    @if(isset($revenueReport))
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const ctx = document.getElementById('revenueChart');
+                if (ctx) {
+                    const data = @json($revenueReport['daily_data']);
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.map(item => item.date),
+                            datasets: [{
+                                label: '{{ __("common.Revenue") }}',
+                                data: data.map(item => item.total),
+                                borderColor: 'rgb(59, 130, 246)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+    @endpush
+    @endif
 </x-app-layout>

@@ -16,6 +16,9 @@ A complete production-ready private tutoring booking system built with Laravel 1
 
 ### Reviews & Ratings System
 - **Multi-Entity Reviews**: Rate teachers, bookings, and courses
+- **Advanced Rating Categories**: Detailed ratings for teaching style, communication, and punctuality
+- **Review Images**: Upload images with reviews for better feedback
+- **Teacher Responses**: Teachers can respond to student reviews
 - **Review Approval**: Admin approval workflow for reviews
 - **Rating Aggregation**: Automatic calculation of average ratings and review counts
 - **Review Badges**: Visual indicators for bookings that need review or have been reviewed
@@ -52,15 +55,51 @@ A complete production-ready private tutoring booking system built with Laravel 1
 
 ### Notification System
 - **Laravel Notify Integration**: Modern notification system with toast notifications
+- **Real-time Broadcasting**: Laravel Broadcasting for instant notifications
+- **Real-time Notifications**: Live updates for booking events and system notifications
 - **Flash Messages**: Replaced old session-based messages with modern notifications
 - **Notification Badges**: Navigation bar badges for unread messages, pending bookings, and support tickets
 - **Review Reminders**: Automatic notifications for unreviewed completed bookings
+- **Email Notifications**: Queued email notifications for all booking events
 
 ### Dashboard Features
 - **Role-Specific Dashboards**: Customized dashboards for Admin, Teacher, and Student
 - **Statistics**: Booking counts, revenue, upcoming lessons, etc.
+- **Admin Dashboard Enhancements**: 
+  - Monthly statistics with revenue charts
+  - Today's bookings overview
+  - Interactive charts using Chart.js
+  - Revenue tracking and growth metrics
 - **Quick Actions**: Easy access to common tasks
 - **Recent Activity**: Display recent bookings, messages, and updates
+
+### Calendar System
+- **Advanced Calendar View**: Interactive calendar using FullCalendar.js
+- **Multi-View Support**: Month, week, and day views
+- **Role-Based Events**: Different calendar views for Admin, Teacher, and Student
+- **Booking Display**: Visual representation of all bookings and time slots
+- **Event Click Navigation**: Direct navigation to booking details
+- **Dark Mode Support**: Full dark mode compatibility
+- **RTL Support**: Right-to-left layout for Arabic language
+
+### Discounts & Promotions System
+- **Discount Codes**: Create and manage discount codes
+- **Multiple Discount Types**: Percentage and fixed amount discounts
+- **Usage Limits**: Set maximum uses per code and per user
+- **Validity Periods**: Start and expiration dates for discounts
+- **Minimum Amount Requirements**: Set minimum purchase amounts
+- **Max Discount Caps**: Limit maximum discount amounts
+- **Status Management**: Activate/deactivate discounts
+- **Usage Tracking**: Track discount usage by users
+
+### Analytics & Reports System
+- **Revenue Reports**: Track revenue over time with interactive charts
+- **Teacher Performance Reports**: Analyze teacher performance metrics
+- **Student Progress Reports**: Track student progress and completion rates
+- **Monthly Statistics**: Comprehensive monthly analytics
+- **Interactive Charts**: Chart.js integration for data visualization
+- **Date Range Filtering**: Filter reports by custom date ranges
+- **Export Capabilities**: Export report data for further analysis
 
 ### Internationalization (i18n)
 - **Multi-language Support**: Full support for English and Arabic
@@ -203,6 +242,29 @@ BENEFITPAY_API_URL=https://api.benefitpay.com
 BENEFITPAY_MERCHANT_ID=your_merchant_id
 BENEFITPAY_API_KEY=your_api_key
 BENEFITPAY_WEBHOOK_SECRET=your_webhook_secret
+```
+
+### Broadcasting Configuration
+
+For real-time notifications, configure broadcasting in `.env`:
+
+```env
+BROADCAST_DRIVER=pusher
+# or for local development
+BROADCAST_DRIVER=log
+
+# If using Pusher
+PUSHER_APP_ID=your_app_id
+PUSHER_APP_KEY=your_app_key
+PUSHER_APP_SECRET=your_app_secret
+PUSHER_APP_CLUSTER=mt1
+```
+
+Install broadcasting dependencies:
+
+```bash
+composer require pusher/pusher-php-server
+# or for local development, use log driver
 ```
 
 ### Queue Configuration
@@ -405,18 +467,30 @@ app/
 ├── Console/
 │   └── Commands/          # Scheduled commands (reminders, etc.)
 ├── Enums/                 # PHP enums (BookingStatus, PaymentStatus, etc.)
+├── Events/                # Event classes (BookingCreated, etc.)
 ├── Http/
 │   ├── Controllers/       # Controllers organized by role
 │   │   ├── Admin/        # Admin controllers
+│   │   │   ├── DiscountController.php
+│   │   │   └── ReportController.php
+│   │   ├── Api/          # API controllers
+│   │   │   └── CalendarApiController.php
 │   │   ├── Student/      # Student controllers
 │   │   ├── Teacher/      # Teacher controllers
+│   │   │   └── ReviewController.php (with response functionality)
+│   │   ├── CalendarController.php
 │   │   └── Dev/          # Development-only controllers
 │   ├── Middleware/        # Custom middleware
 │   └── Requests/         # Form request validation
 ├── Models/                # Eloquent models
-├── Notifications/         # Email notifications
+│   ├── Discount.php
+│   └── DiscountUsage.php
+├── Notifications/         # Email and broadcast notifications
+│   └── RealTimeNotification.php
 ├── Policies/              # Authorization policies
 └── Services/              # Business logic services
+    ├── DiscountService.php
+    ├── ReportService.php
     └── Gateways/         # Payment gateway implementations
 
 database/
@@ -430,9 +504,12 @@ resources/
 └── views/                # Blade templates
     ├── layouts/          # Layout files
     ├── components/       # Reusable components
+    ├── calendar/         # Calendar views
     ├── student/          # Student views
     ├── teacher/          # Teacher views
     └── admin/            # Admin views
+        ├── discounts/   # Discount management views
+        └── reports/     # Reports and analytics views
 
 routes/
 ├── web.php               # Web routes
@@ -490,12 +567,18 @@ Teachers set weekly availability (e.g., Monday 9am-5pm). The system generates in
 ### Notification System
 
 - **Laravel Notify**: Modern toast notifications
+- **Laravel Broadcasting**: Real-time notifications via WebSockets
 - **Email Notifications**: Queued email notifications for:
   - Booking created
   - Payment confirmed
   - Booking cancelled
   - Booking rescheduled
   - Reminders (24h and 1h before)
+- **Real-time Updates**: Live notification updates for:
+  - New bookings
+  - Booking status changes
+  - Payment confirmations
+  - System announcements
 - **Navigation Badges**: Real-time badge counts for:
   - Unread messages
   - Pending bookings
@@ -509,6 +592,12 @@ Teachers set weekly availability (e.g., Monday 9am-5pm). The system generates in
 - `POST /webhooks/stripe` - Stripe payment webhook
 - `POST /webhooks/benefitpay` - BenefitPay payment webhook
 
+### Calendar API
+
+- `GET /api/calendar/events` - Get calendar events (bookings and time slots)
+  - Query parameters: `start` (ISO date), `end` (ISO date)
+  - Returns: JSON array of calendar events formatted for FullCalendar
+
 ### Authentication
 
 - `GET /login` - Login page
@@ -516,6 +605,16 @@ Teachers set weekly availability (e.g., Monday 9am-5pm). The system generates in
 - `POST /logout` - Logout user
 - `GET /register` - Registration page
 - `POST /register` - Register new user
+
+### Admin Routes
+
+- `GET /admin/discounts` - List all discounts
+- `POST /admin/discounts` - Create new discount
+- `GET /admin/discounts/create` - Discount creation form
+- `GET /admin/discounts/{id}/edit` - Edit discount form
+- `PUT /admin/discounts/{id}` - Update discount
+- `DELETE /admin/discounts/{id}` - Delete discount
+- `GET /admin/reports` - View analytics and reports
 
 ## 🐛 Troubleshooting
 
@@ -591,6 +690,8 @@ php artisan migrate:status
 - **alpinejs**: ^3.4.2 - Lightweight JavaScript framework
 - **vite**: ^7.0.7 - Build tool
 - **axios**: ^1.11.0 - HTTP client
+- **fullcalendar**: ^6.1.15 - Calendar component (via CDN)
+- **chart.js**: Chart library for analytics (via CDN)
 
 ## 📝 License
 
@@ -608,12 +709,49 @@ For issues, questions, or feature requests, please contact the development team 
 
 ## 🆕 Recent Updates
 
+### Advanced Features (Latest)
+- ✅ **Calendar System**: Interactive calendar with FullCalendar.js integration
+  - Multi-view support (month, week, day)
+  - Role-based event display
+  - Dark mode and RTL support
+  - Direct navigation to booking details
+
+- ✅ **Real-time Notifications**: Laravel Broadcasting integration
+  - Live notification updates
+  - Broadcast events for booking changes
+  - Real-time notification badges
+
+- ✅ **Advanced Reviews**: Enhanced review system
+  - Detailed rating categories (teaching style, communication, punctuality)
+  - Image uploads in reviews
+  - Teacher response functionality
+  - Enhanced review display
+
+- ✅ **Discounts System**: Complete discount management
+  - Discount code creation and management
+  - Multiple discount types (percentage/fixed)
+  - Usage limits and tracking
+  - Validity period management
+
+- ✅ **Analytics & Reports**: Comprehensive reporting system
+  - Revenue reports with charts
+  - Teacher performance analytics
+  - Student progress tracking
+  - Monthly statistics dashboard
+
+- ✅ **Admin Dashboard Improvements**: Enhanced admin interface
+  - Monthly statistics cards
+  - Interactive revenue charts
+  - Today's bookings overview
+  - Growth metrics and KPIs
+
 ### Internationalization (i18n)
 - ✅ Full Arabic language support with RTL layout
 - ✅ Language switcher with session persistence
 - ✅ All UI elements translated (English & Arabic)
 - ✅ Localized notifications and messages
 - ✅ Dynamic font loading (Cairo for Arabic, Figtree for English)
+- ✅ Translations for all new features (Calendar, Discounts, Reports, etc.)
 
 ### Testing
 - ✅ Comprehensive test suite with 165 tests

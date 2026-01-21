@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\BookingStatus;
 use App\Enums\SlotStatus;
+use App\Events\BookingCreated;
 use App\Models\Booking;
 use App\Models\BookingHistory;
 use App\Models\Setting;
@@ -88,6 +89,8 @@ class BookingService
             } else {
                 $this->notificationService->sendBookingAwaitingPayment($booking);
             }
+
+            event(new BookingCreated($booking));
 
             return $booking;
         });

@@ -17,8 +17,27 @@
         </button>
     </div>
 
+    <!-- Search Bar (Optional - can be toggled) -->
+    <div class="px-3 pb-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0" x-data="{ showSearch: false }">
+        <button 
+            @click="showSearch = !showSearch"
+            class="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
+            aria-label="{{ __('common.Search') }}"
+            data-search-toggle
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <span class="flex-1 text-start">{{ __('common.Search') }}</span>
+            <kbd class="hidden sm:inline-flex items-center px-2 py-0.5 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded">Ctrl+K</kbd>
+        </button>
+        <div x-show="showSearch" x-transition class="mt-2">
+            <x-search-bar :placeholder="__('common.Search...')" />
+        </div>
+    </div>
+
     <!-- Navigation Links -->
-    <nav class="flex-1 overflow-y-auto py-4 px-3">
+    <nav class="flex-1 overflow-y-auto py-4 px-3" aria-label="{{ __('common.Main navigation') }}">
         <div class="space-y-1">
             @if(auth()->user()->isAdmin())
                 <x-sidebar-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
@@ -93,6 +112,30 @@
                         </svg>
                     </x-slot>
                     {{ __('common.Teacher Requests') }}
+                </x-sidebar-link>
+                <x-sidebar-link :href="route('admin.discounts.index')" :active="request()->routeIs('admin.discounts.*')">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </x-slot>
+                    {{ __('common.Discounts') }}
+                </x-sidebar-link>
+                <x-sidebar-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </x-slot>
+                    {{ __('common.Reports') }}
+                </x-sidebar-link>
+                <x-sidebar-link :href="route('admin.calendar.index')" :active="request()->routeIs('admin.calendar.*')">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </x-slot>
+                    {{ __('common.Calendar') }}
                 </x-sidebar-link>
             @elseif(auth()->user()->isTeacher())
                 <x-sidebar-link :href="route('teacher.dashboard')" :active="request()->routeIs('teacher.dashboard')">
@@ -191,6 +234,14 @@
                     </x-slot>
                     {{ __('common.Profile') }}
                 </x-sidebar-link>
+                <x-sidebar-link :href="route('teacher.calendar.index')" :active="request()->routeIs('teacher.calendar.*')">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </x-slot>
+                    {{ __('common.Calendar') }}
+                </x-sidebar-link>
             @else
                 <x-sidebar-link :href="route('student.dashboard')" :active="request()->routeIs('student.dashboard')">
                     <x-slot name="icon">
@@ -264,12 +315,20 @@
                     </x-slot>
                     {{ __('common.Payment History') }}
                 </x-sidebar-link>
+                <x-sidebar-link :href="route('student.calendar.index')" :active="request()->routeIs('student.calendar.*')">
+                    <x-slot name="icon">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                    </x-slot>
+                    {{ __('common.Calendar') }}
+                </x-sidebar-link>
             @endif
         </div>
     </nav>
 
     <!-- Sidebar Footer -->
-    <div class="border-t border-gray-200 dark:border-gray-700 p-4 space-y-3">
+    <div class="border-t border-gray-200 dark:border-gray-700 p-4 space-y-3 flex-shrink-0 mt-auto">
         <!-- User Info -->
         <div class="flex items-center gap-3 px-2">
             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-dark-blue-600 to-dark-blue-800 flex items-center justify-center text-white font-semibold flex-shrink-0">
@@ -282,21 +341,48 @@
         </div>
 
         <!-- Settings Dropdown -->
-        <div x-data="{ open: false }" class="relative">
-            <button @click="open = !open" class="w-full flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-150 ease-in-out">
+        <div x-data="{ open: false }" class="relative z-50" @click.stop>
+            <button 
+                @click="open = !open" 
+                type="button"
+                class="w-full flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-dark-blue-500"
+                aria-label="{{ __('common.Settings') }}"
+                aria-expanded="false"
+                :aria-expanded="open"
+            >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <span class="flex-1 text-start">{{ __('common.Settings') }}</span>
-                <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
 
-            <div x-show="open" @click.outside="open = false" x-transition class="absolute bottom-full mb-2 left-0 right-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div 
+                x-show="open" 
+                x-cloak
+                @click.stop
+                @click.outside="open = false" 
+                @keydown.escape.window="open = false"
+                x-transition:enter="transition ease-out duration-100"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-75"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95"
+                class="absolute bottom-full mb-2 left-0 right-0 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden z-[60] min-w-[200px] pointer-events-auto"
+                role="menu"
+                aria-orientation="vertical"
+            >
                 <!-- Dark Mode Toggle -->
-                <button @click="$dispatch('toggle-dark-mode')" class="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                <button 
+                    type="button"
+                    @click="$dispatch('toggle-dark-mode'); open = false" 
+                    class="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-700"
+                    role="menuitem"
+                >
                     <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
@@ -320,14 +406,23 @@
                 </div>
 
                 <!-- Profile Link -->
-                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                <a 
+                    href="{{ route('profile.edit') }}" 
+                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-700"
+                    role="menuitem"
+                    @click="open = false"
+                >
                     {{ __('common.Profile') }}
                 </a>
 
                 <!-- Logout -->
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" class="border-t border-gray-200 dark:border-gray-700">
                     @csrf
-                    <button type="submit" class="w-full text-start px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                    <button 
+                        type="submit" 
+                        class="w-full text-start px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-700"
+                        role="menuitem"
+                    >
                         {{ __('common.Log Out') }}
                     </button>
                 </form>

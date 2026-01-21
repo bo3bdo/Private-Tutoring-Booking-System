@@ -1,4 +1,5 @@
 import './bootstrap';
+import './keyboard-shortcuts';
 
 import Alpine from 'alpinejs';
 

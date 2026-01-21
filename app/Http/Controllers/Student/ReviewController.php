@@ -82,7 +82,7 @@ class ReviewController extends Controller
             return back();
         }
 
-        $review = Review::create([
+        $reviewData = [
             'user_id' => auth()->id(),
             'reviewable_type' => $request->reviewable_type,
             'reviewable_id' => $request->reviewable_id,
@@ -90,7 +90,30 @@ class ReviewController extends Controller
             'comment' => $request->comment,
             'is_approved' => true, // Auto-approve reviews
             'approved_at' => now(),
-        ]);
+        ];
+
+        if ($request->has('teaching_style_rating')) {
+            $reviewData['teaching_style_rating'] = $request->teaching_style_rating;
+        }
+
+        if ($request->has('communication_rating')) {
+            $reviewData['communication_rating'] = $request->communication_rating;
+        }
+
+        if ($request->has('punctuality_rating')) {
+            $reviewData['punctuality_rating'] = $request->punctuality_rating;
+        }
+
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('reviews', 'public');
+                $imagePaths[] = $path;
+            }
+            $reviewData['images'] = $imagePaths;
+        }
+
+        $review = Review::create($reviewData);
 
         notify()->success()
             ->title(__('common.Sent'))

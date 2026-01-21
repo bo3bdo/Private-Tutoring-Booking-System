@@ -73,6 +73,9 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     // Review Routes
     Route::get('/reviews', [\App\Http\Controllers\Student\ReviewController::class, 'index'])->name('reviews.index');
     Route::post('/reviews', [\App\Http\Controllers\Student\ReviewController::class, 'store'])->name('reviews.store');
+
+    // Calendar Routes
+    Route::get('/calendar', [\App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
     Route::get('/teachers/{teacher}', [\App\Http\Controllers\Student\TeacherController::class, 'show'])->name('teachers.show');
     Route::get('/teachers/{teacher}/reviews', [\App\Http\Controllers\Student\TeacherController::class, 'reviews'])->name('teachers.reviews');
 
@@ -162,6 +165,10 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
 
     // Review Routes
     Route::get('/reviews', [\App\Http\Controllers\Teacher\ReviewController::class, 'index'])->name('reviews.index');
+    Route::post('/reviews/{review}/respond', [\App\Http\Controllers\Teacher\ReviewController::class, 'respond'])->name('reviews.respond');
+
+    // Calendar Routes
+    Route::get('/calendar', [\App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
 
     // Earnings Routes
     Route::get('/earnings', [\App\Http\Controllers\Teacher\EarningsController::class, 'index'])->name('earnings.index');
@@ -169,6 +176,8 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
 
 // API Routes
 Route::middleware(['auth'])->prefix('api')->group(function () {
+    Route::get('/calendar/events', [\App\Http\Controllers\Api\CalendarApiController::class, 'events'])->name('api.calendar.events');
+
     Route::post('/user/online-status', function () {
         try {
             $user = auth()->user();
@@ -236,6 +245,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/teacher-requests/{teacherRequest}', [\App\Http\Controllers\Admin\TeacherRequestController::class, 'show'])->name('teacher-requests.show');
     Route::post('/teacher-requests/{teacherRequest}/approve', [\App\Http\Controllers\Admin\TeacherRequestController::class, 'approve'])->name('teacher-requests.approve');
     Route::post('/teacher-requests/{teacherRequest}/reject', [\App\Http\Controllers\Admin\TeacherRequestController::class, 'reject'])->name('teacher-requests.reject');
+
+    // Discount Routes
+    Route::resource('discounts', \App\Http\Controllers\Admin\DiscountController::class);
+
+    // Report Routes
+    Route::get('/reports', [\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
+
+    // Calendar Routes
+    Route::get('/calendar', [\App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
 });
 
 // Payment Routes

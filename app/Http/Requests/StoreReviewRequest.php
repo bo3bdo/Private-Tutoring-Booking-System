@@ -18,7 +18,12 @@ class StoreReviewRequest extends FormRequest
             'reviewable_type' => ['required', 'string', Rule::in(['App\Models\Booking', 'App\Models\Course', 'App\Models\TeacherProfile'])],
             'reviewable_id' => ['required', 'integer'],
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'teaching_style_rating' => ['nullable', 'integer', 'min:1', 'max:5'],
+            'communication_rating' => ['nullable', 'integer', 'min:1', 'max:5'],
+            'punctuality_rating' => ['nullable', 'integer', 'min:1', 'max:5'],
             'comment' => ['nullable', 'string', 'max:2000'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'max:2048'],
         ];
     }
 

@@ -5,8 +5,22 @@
         </h2>
     </x-slot>
 
+    <x-slot name="breadcrumbs">
+        <x-breadcrumbs :items="[
+            ['label' => __('common.Dashboard'), 'url' => route('admin.dashboard')],
+            ['label' => __('common.Courses')],
+        ]" />
+    </x-slot>
+
     <div class="py-4 sm:py-6 lg:py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            <!-- Search Bar -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                <x-search-bar 
+                    :placeholder="__('common.Search courses...')"
+                    :action="route('admin.courses.index')"
+                />
+            </div>
             <!-- Mobile Card View -->
             <div class="block sm:hidden space-y-3">
                 @forelse($courses as $course)
@@ -40,9 +54,18 @@
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 p-8 text-center">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('common.No courses found.') }}</p>
-                    </div>
+                    <x-empty-state
+                        title="{{ __('common.No courses found') }}"
+                        description="{{ __('common.Get started by creating your first course') }}"
+                        :action="route('admin.courses.create')"
+                        action-label="{{ __('common.Create Course') }}"
+                    >
+                        <x-slot name="icon">
+                            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </x-slot>
+                    </x-empty-state>
                 @endforelse
             </div>
 
@@ -95,7 +118,14 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-4 sm:px-6 py-8 sm:py-12 text-center text-sm text-gray-500 dark:text-gray-400">{{ __('common.No courses found.') }}</td>
+                                        <td colspan="6" class="px-4 sm:px-6 py-8 sm:py-12">
+                                            <x-empty-state
+                                                title="{{ __('common.No courses found') }}"
+                                                description="{{ __('common.Get started by creating your first course') }}"
+                                                :action="route('admin.courses.create')"
+                                                action-label="{{ __('common.Create Course') }}"
+                                            />
+                                        </td>
                                     </tr>
                                 @endforelse
                             </tbody>

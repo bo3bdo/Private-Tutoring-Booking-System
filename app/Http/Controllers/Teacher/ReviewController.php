@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Course;
 use App\Models\Review;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -81,5 +82,38 @@ class ReviewController extends Controller
         $reviewsCount = $teacher->reviewsCount();
 
         return view('teacher.reviews.index', compact('reviews', 'averageRating', 'reviewsCount'));
+    }
+
+    public function respond(Request $request, Review $review): RedirectResponse
+    {
+        $teacher = auth()->user()->teacherProfile;
+
+        // Verify this review is for this teacher
+        $isTeacherReview = $review->reviewable_type === TeacherProfile::class
+            && $review->reviewable_id === $teacher->id;
+
+        $isBookingReview = $review->reviewable_type === Booking::class
+            && $review->reviewable->teacher_id === $teacher->id;
+
+        $isCourseReview = $review->reviewable_type === Course::class
+            && $review->reviewable
+            && $review->reviewable->teacher_id === $teacher->user_id;
+
+        if (! $isTeacherReview && ! $isBookingReview && ! $isCourseReview) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'response' => 'required|string|max:2000',
+        ]);
+
+        $review->addTeacherResponse($validated['response']);
+
+        notify()->success()
+            ->title(__('common.Sent'))
+            ->message(__('common.Response submitted successfully'))
+            ->send();
+
+        return back();
     }
 }
