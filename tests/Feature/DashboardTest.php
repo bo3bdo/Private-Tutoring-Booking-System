@@ -138,9 +138,9 @@ it('displays student dashboard with booking statistics', function () {
     $this->actingAs($student)
         ->get(route('student.dashboard'))
         ->assertSuccessful()
-        ->assertSee(__('common.Student Dashboard'))
-        ->assertSee(__('common.Total Bookings'))
-        ->assertSee(__('common.Upcoming Bookings'));
+        ->assertSeeText(__('common.Student Dashboard'))
+        ->assertSeeText(__('common.Total Bookings'))
+        ->assertSeeText(__('common.Upcoming Bookings'));
 });
 
 it('calculates correct statistics for admin dashboard', function () {
