@@ -7,6 +7,8 @@ use App\Http\Requests\StoreBookingRequest;
 use App\Models\Booking;
 use App\Models\TimeSlot;
 use App\Services\BookingService;
+use App\Services\DiscountService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -14,7 +16,8 @@ use Illuminate\View\View;
 class BookingController extends Controller
 {
     public function __construct(
-        protected BookingService $bookingService
+        protected BookingService $bookingService,
+        protected DiscountService $discountService
     ) {}
 
     public function index(Request $request): View
@@ -136,5 +139,24 @@ class BookingController extends Controller
         }
 
         return view('student.bookings.pay', compact('booking'));
+    }
+
+    public function validateDiscount(Request $request, Booking $booking): JsonResponse
+    {
+        $this->authorize('view', $booking);
+
+        $request->validate([
+            'code' => 'required|string',
+        ]);
+
+        $amount = $booking->teacher->hourly_rate ?? 25.00;
+
+        $result = $this->discountService->validateDiscount(
+            $request->code,
+            auth()->user(),
+            $amount
+        );
+
+        return response()->json($result);
     }
 }

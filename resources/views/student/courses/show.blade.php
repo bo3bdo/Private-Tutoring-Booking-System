@@ -85,10 +85,58 @@
 
             <!-- Purchase Button -->
             @if(!$isEnrolled)
-                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6" x-data="courseDiscountCode()">
                     <h3 class="text-lg font-bold text-gray-900 mb-4">{{ __('common.Purchase This Course') }}</h3>
+                    
+                    <!-- Discount Code Section -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded-xl">
+                        <h4 class="text-sm font-semibold text-gray-900 mb-3">{{ __('common.Have a discount code?') }}</h4>
+                        
+                        <div x-show="!applied" class="flex gap-3">
+                            <input type="text" x-model="code" 
+                                   placeholder="{{ __('common.Discount Code') }}"
+                                   class="flex-1 px-4 py-2 border-2 border-slate-300 rounded-lg bg-white text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:ring-0 transition">
+                            <button type="button" @click="applyCode()" :disabled="loading || !code"
+                                    class="px-4 py-2 bg-emerald-600 rounded-lg text-sm font-semibold text-white hover:bg-emerald-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span x-show="!loading">{{ __('common.Apply') }}</span>
+                                <span x-show="loading">...</span>
+                            </button>
+                        </div>
+
+                        <div x-show="errorMessage" x-text="errorMessage" class="mt-2 text-sm text-red-600"></div>
+
+                        <div x-show="applied" class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                                <div>
+                                    <p class="text-sm font-semibold text-gray-900">{{ __('common.Discount Applied') }}</p>
+                                    <p class="text-xs text-gray-600" x-text="'Code: ' + code.toUpperCase()"></p>
+                                </div>
+                                <button type="button" @click="removeCode()" 
+                                        class="text-sm font-medium text-red-600 hover:text-red-700 transition">
+                                    {{ __('common.Remove') }}
+                                </button>
+                            </div>
+
+                            <div class="space-y-1 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">{{ __('common.Subtotal') }}:</span>
+                                    <span class="font-semibold text-gray-900" x-text="subtotal + ' {{ $course->currency }}'"></span>
+                                </div>
+                                <div class="flex justify-between text-emerald-600">
+                                    <span>{{ __('common.Discount') }}:</span>
+                                    <span class="font-semibold" x-text="'-' + discount + ' {{ $course->currency }}'"></span>
+                                </div>
+                                <div class="pt-1 border-t border-slate-200 flex justify-between font-bold">
+                                    <span class="text-gray-900">{{ __('common.Final Amount') }}:</span>
+                                    <span class="text-emerald-600" x-text="finalAmount + ' {{ $course->currency }}'"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <form method="POST" action="{{ route('student.courses.purchase', $course) }}" class="space-y-4">
                         @csrf
+                        <input type="hidden" name="discount_code" x-model="code" x-bind:disabled="!applied">
                         <div>
                             <label class="block text-sm font-semibold text-gray-900 mb-2">{{ __('common.Payment Method') }}</label>
                             <div class="grid grid-cols-2 gap-4">
@@ -103,7 +151,8 @@
                             </div>
                         </div>
                         <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-emerald-700 hover:to-emerald-800 transition">
-                            {{ __('common.Purchase for') }} {{ number_format($course->price, 2) }} {{ $course->currency }}
+                            <span x-show="!applied">{{ __('common.Purchase for') }} {{ number_format($course->price, 2) }} {{ $course->currency }}</span>
+                            <span x-show="applied" x-text="'{{ __('common.Purchase for') }} ' + finalAmount + ' {{ $course->currency }}'"></span>
                         </button>
                     </form>
                 </div>
@@ -116,4 +165,62 @@
             @endif
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        function courseDiscountCode() {
+            return {
+                code: '',
+                loading: false,
+                applied: false,
+                errorMessage: '',
+                subtotal: {{ number_format($course->price, 2) }},
+                discount: 0,
+                finalAmount: {{ number_format($course->price, 2) }},
+
+                async applyCode() {
+                    if (!this.code) return;
+                    
+                    this.loading = true;
+                    this.errorMessage = '';
+
+                    try {
+                        const response = await fetch('{{ route("student.courses.validate-discount", $course) }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                code: this.code
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.valid) {
+                            this.applied = true;
+                            this.discount = parseFloat(data.discount_amount).toFixed(2);
+                            this.finalAmount = parseFloat(data.final_amount).toFixed(2);
+                        } else {
+                            this.errorMessage = data.message;
+                        }
+                    } catch (error) {
+                        this.errorMessage = '{{ __("common.An error occurred.") }}';
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                removeCode() {
+                    this.code = '';
+                    this.applied = false;
+                    this.discount = 0;
+                    this.finalAmount = this.subtotal;
+                    this.errorMessage = '';
+                }
+            }
+        }
+    </script>
+    @endpush
 </x-app-layout>
