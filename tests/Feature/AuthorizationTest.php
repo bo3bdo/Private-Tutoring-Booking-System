@@ -101,33 +101,33 @@ it('allows teachers to view their own bookings', function () {
 });
 
 it('allows students to view only available slots', function () {
+    $tomorrow = now()->addDay()->startOfDay();
     $availableSlot = TimeSlot::factory()->create([
         'teacher_id' => $this->teacherProfile->id,
         'subject_id' => $this->subject->id,
         'status' => SlotStatus::Available,
-        'start_at' => now()->addDay(),
-        'end_at' => now()->addDay()->addHour(),
+        'start_at' => $tomorrow->copy()->setTime(10, 0),
+        'end_at' => $tomorrow->copy()->setTime(11, 0),
     ]);
 
     $blockedSlot = TimeSlot::factory()->create([
         'teacher_id' => $this->teacherProfile->id,
         'subject_id' => $this->subject->id,
         'status' => SlotStatus::Blocked,
-        'start_at' => now()->addDay()->addHours(2),
-        'end_at' => now()->addDay()->addHours(3),
+        'start_at' => $tomorrow->copy()->setTime(23, 55),
+        'end_at' => $tomorrow->copy()->addDay()->setTime(0, 55),
     ]);
 
     $response = $this->actingAs($this->student)
-        ->get(route('student.teachers.slots', $this->teacherProfile))
+        ->get(route('student.teachers.slots', $this->teacherProfile).'?start='.$tomorrow->format('Y-m-d'))
         ->assertSuccessful();
 
-    // Check for time in different formats (12h or 24h)
+    $content = $response->getContent();
     $availableTime12h = $availableSlot->start_at->format('g:i A');
     $availableTime24h = $availableSlot->start_at->format('H:i');
     $blockedTime12h = $blockedSlot->start_at->format('g:i A');
     $blockedTime24h = $blockedSlot->start_at->format('H:i');
 
-    $content = $response->getContent();
     expect(str_contains($content, $availableTime12h) || str_contains($content, $availableTime24h))->toBeTrue();
     expect(str_contains($content, $blockedTime12h))->toBeFalse();
     expect(str_contains($content, $blockedTime24h))->toBeFalse();

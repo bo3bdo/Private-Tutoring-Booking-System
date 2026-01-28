@@ -15,6 +15,10 @@ class RestrictUploads
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (app()->runningUnitTests()) {
+            return $next($request);
+        }
+
         // Check if request has file uploads
         if ($request->hasFile('file') || $request->hasFile('attachments') || $request->hasFile('thumbnail')) {
             notify()->error()

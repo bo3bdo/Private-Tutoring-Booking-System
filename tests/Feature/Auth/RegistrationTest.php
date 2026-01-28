@@ -12,7 +12,7 @@ beforeEach(function () {
 test('registration screen can be rendered', function () {
     $response = $this->get('/register');
 
-    $response->assertStatus(200);
+    $response->assertSuccessful();
 });
 
 test('new users can register', function () {

@@ -1,18 +1,13 @@
 {
     "agents": [
-        "claude_code",
-        "codex",
-        "cursor",
-        "opencode",
-        "phpstorm"
+        "cursor"
     ],
-    "editors": [
-        "claude_code",
-        "codex",
-        "cursor",
-        "opencode",
-        "phpstorm",
-        "vscode"
-    ],
-    "guidelines": []
+    "guidelines": true,
+    "herd_mcp": false,
+    "mcp": true,
+    "sail": false,
+    "skills": [
+        "pest-testing",
+        "tailwindcss-development"
+    ]
 }
