@@ -259,6 +259,68 @@
             const onlineFields = document.getElementById('online_fields');
             const inPersonFields = document.getElementById('in_person_fields');
 
+            function updateLabelStyles() {
+                // Get all lesson mode labels
+                const labels = document.querySelectorAll('label[class*="border-2"]');
+                
+                // Reset all labels to inactive state
+                labels.forEach(label => {
+                    const input = label.querySelector('input[name="lesson_mode"]');
+                    const radioIndicator = label.querySelector('div.rounded-full.border-2');
+                    
+                    if (input) {
+                        // Remove active classes
+                        label.classList.remove('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+                        label.classList.remove('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-900/20');
+                        
+                        // Add inactive classes
+                        if (!label.classList.contains('border-slate-200')) {
+                            label.classList.add('border-slate-200', 'dark:border-gray-600');
+                        }
+                        
+                        // Update radio indicator to inactive state
+                        if (radioIndicator) {
+                            radioIndicator.classList.remove('border-blue-500', 'bg-blue-500', 'border-emerald-500', 'bg-emerald-500');
+                            radioIndicator.classList.add('border-slate-300', 'dark:border-gray-500');
+                            // Remove the inner dot
+                            radioIndicator.innerHTML = '';
+                        }
+                    }
+                });
+                
+                // Apply active state to checked input
+                const checkedInput = document.querySelector('input[name="lesson_mode"]:checked');
+                if (checkedInput) {
+                    const activeLabel = checkedInput.closest('label');
+                    const radioIndicator = activeLabel.querySelector('div.rounded-full.border-2');
+                    
+                    // Remove inactive classes
+                    activeLabel.classList.remove('border-slate-200', 'dark:border-gray-600');
+                    
+                    if (checkedInput.value === 'online') {
+                        // Apply online active classes
+                        activeLabel.classList.add('border-blue-500', 'bg-blue-50', 'dark:bg-blue-900/20');
+                        
+                        // Update radio indicator
+                        if (radioIndicator) {
+                            radioIndicator.classList.remove('border-slate-300', 'dark:border-gray-500');
+                            radioIndicator.classList.add('border-blue-500', 'bg-blue-500');
+                            radioIndicator.innerHTML = '<div class="w-full h-full rounded-full bg-blue-500 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>';
+                        }
+                    } else if (checkedInput.value === 'in_person') {
+                        // Apply in-person active classes
+                        activeLabel.classList.add('border-emerald-500', 'bg-emerald-50', 'dark:bg-emerald-900/20');
+                        
+                        // Update radio indicator
+                        if (radioIndicator) {
+                            radioIndicator.classList.remove('border-slate-300', 'dark:border-gray-500');
+                            radioIndicator.classList.add('border-emerald-500', 'bg-emerald-500');
+                            radioIndicator.innerHTML = '<div class="w-full h-full rounded-full bg-emerald-500 flex items-center justify-center"><div class="w-2 h-2 bg-white rounded-full"></div></div>';
+                        }
+                    }
+                }
+            }
+
             function toggleFields() {
                 const selectedMode = document.querySelector('input[name="lesson_mode"]:checked')?.value;
                 
@@ -270,6 +332,9 @@
                 } else if (selectedMode === 'in_person') {
                     inPersonFields.classList.remove('hidden');
                 }
+                
+                // Update label styles
+                updateLabelStyles();
             }
 
             lessonModeInputs.forEach(input => {
