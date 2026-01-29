@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__laravel-boost__application-info",
+      "mcp__laravel-boost__database-schema",
+      "mcp__laravel-boost__list-routes",
+      "Bash(php artisan make:factory:*)",
+      "Bash(php artisan:*)",
+      "Bash(vendor/bin/pint:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ],
+  "statusLine": {
+    "type": "command",
+    "command": "powershell -NoProfile -Command \"$input = $input | Out-String | ConvertFrom-Json; $model = $input.model.display_name; $dir = Split-Path -Leaf $input.workspace.current_dir; $remaining = $input.context_window.remaining_percentage; $total_input = $input.context_window.total_input_tokens; $total_output = $input.context_window.total_output_tokens; $cost_input = [math]::Round($total_input / 1000000 * 3, 4); $cost_output = [math]::Round($total_output / 1000000 * 15, 4); $total_cost = [math]::Round($cost_input + $cost_output, 4); if ($null -ne $remaining) { Write-Host \"$model | $dir | Context: $([math]::Round($remaining, 1))% remaining | Cost: `$$total_cost\" } else { Write-Host \"$model | $dir | Cost: `$$total_cost\" }\""
+  }
+}

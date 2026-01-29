@@ -4,6 +4,10 @@ namespace Database\Factories;
 
 use App\Models\Booking;
 use App\Models\LiveMeeting;
+use App\Models\Subject;
+use App\Models\TeacherProfile;
+use App\Models\TimeSlot;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LiveMeetingFactory extends Factory
@@ -21,8 +25,29 @@ class LiveMeetingFactory extends Factory
             default => $this->faker->uuid,
         };
 
+        $bookingId = function (): int {
+            $student = User::factory()->create();
+            $teacherUser = User::factory()->create();
+            $teacher = TeacherProfile::factory()->create(['user_id' => $teacherUser->id]);
+            $subject = Subject::factory()->create();
+            $timeSlot = TimeSlot::factory()->create([
+                'teacher_id' => $teacher->id,
+                'start_at' => now()->addDay(),
+                'end_at' => now()->addDay()->addHour(),
+            ]);
+
+            return Booking::factory()->create([
+                'student_id' => $student->id,
+                'teacher_id' => $teacher->id,
+                'subject_id' => $subject->id,
+                'time_slot_id' => $timeSlot->id,
+                'start_at' => $timeSlot->start_at,
+                'end_at' => $timeSlot->end_at,
+            ])->id;
+        };
+
         return [
-            'booking_id' => Booking::factory(),
+            'booking_id' => $bookingId,
             'provider' => $provider,
             'meeting_id' => $meetingCode,
             'meeting_url' => "https://{$provider}.com/{$meetingCode}",

@@ -154,9 +154,26 @@ class User extends Authenticatable
         return $this->hasMany(Conversation::class, 'user_two_id');
     }
 
-    public function conversations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    /**
+     * Get all conversations for this user (as either participant).
+     *
+     * @return \Illuminate\Database\Eloquent\Collection<int, \App\Models\Conversation>
+     */
+    public function conversations(): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->conversationsAsUserOne()->union($this->conversationsAsUserTwo()->toBase());
+        return Conversation::where('user_one_id', $this->id)
+            ->orWhere('user_two_id', $this->id)
+            ->get();
+    }
+
+    /**
+     * Query scope for conversations.
+     */
+    public function scopeConversationsQuery(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
+    {
+        return Conversation::query()
+            ->where('user_one_id', $this->id)
+            ->orWhere('user_two_id', $this->id);
     }
 
     public function sentMessages(): \Illuminate\Database\Eloquent\Relations\HasMany

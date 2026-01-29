@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Booking extends Model
 {
@@ -104,17 +105,15 @@ class Booking extends Model
         return $this->status === BookingStatus::Completed;
     }
 
-    public function reviews(): HasMany
+    public function reviews(): MorphMany
     {
-        return $this->hasMany(Review::class, 'reviewable_id')
-            ->where('reviewable_type', self::class)
+        return $this->morphMany(Review::class, 'reviewable')
             ->latest('created_at');
     }
 
-    public function resources(): HasMany
+    public function resources(): MorphMany
     {
-        return $this->hasMany(Resource::class, 'resourceable_id')
-            ->where('resourceable_type', self::class)
+        return $this->morphMany(Resource::class, 'resourceable')
             ->latest('created_at');
     }
 

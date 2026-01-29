@@ -60,12 +60,12 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     Route::get('/bookings/{booking}', [StudentBookingController::class, 'show'])->name('bookings.show');
     Route::post('/bookings/{booking}/cancel', [StudentBookingController::class, 'cancel'])->name('bookings.cancel');
     Route::get('/bookings/{booking}/pay', [StudentBookingController::class, 'pay'])->name('bookings.pay');
-    Route::post('/bookings/{booking}/validate-discount', [StudentBookingController::class, 'validateDiscount'])->name('bookings.validate-discount');
+    Route::post('/bookings/{booking}/validate-discount', [StudentBookingController::class, 'validateDiscount'])->name('bookings.validate-discount')->middleware('throttle:10,1');
 
     // Course Routes
     Route::get('/courses/{course:slug}', [\App\Http\Controllers\Student\CourseController::class, 'show'])->name('courses.show');
     Route::post('/courses/{course}/purchase', [\App\Http\Controllers\CoursePurchasePaymentController::class, 'purchase'])->name('courses.purchase');
-    Route::post('/courses/{course}/validate-discount', [\App\Http\Controllers\Student\CourseController::class, 'validateDiscount'])->name('courses.validate-discount');
+    Route::post('/courses/{course}/validate-discount', [\App\Http\Controllers\Student\CourseController::class, 'validateDiscount'])->name('courses.validate-discount')->middleware('throttle:10,1');
     Route::get('/my-courses', [\App\Http\Controllers\Student\MyCoursesController::class, 'index'])->name('my-courses.index');
     Route::get('/my-courses/{course:slug}/learn', [\App\Http\Controllers\Student\LearningController::class, 'learn'])->name('my-courses.learn');
     Route::get('/my-courses/{course:slug}/lesson/{lesson}', [\App\Http\Controllers\Student\LearningController::class, 'showLesson'])->name('my-courses.lesson');
@@ -182,7 +182,7 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
 });
 
 // API Routes
-Route::middleware(['auth'])->prefix('api')->group(function () {
+Route::middleware(['auth', 'throttle:60,1'])->prefix('api')->group(function () {
     Route::get('/calendar/events', [\App\Http\Controllers\Api\CalendarApiController::class, 'events'])->name('api.calendar.events');
 
     Route::post('/user/online-status', function () {

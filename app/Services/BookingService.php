@@ -81,10 +81,19 @@ class BookingService
 
             $lockedSlot->update(['status' => SlotStatus::Booked]);
 
-            $this->logHistory($booking, 'created', null, $booking->status, [
-                'time_slot_id' => $timeSlot->id,
-                'lesson_mode' => $lessonMode,
-            ]);
+            $this->logHistory(
+                $booking,
+                'created',
+                null,
+                $booking->status,
+                null,
+                [
+                    'time_slot_id' => $timeSlot->id,
+                    'lesson_mode' => $lessonMode,
+                    'student_id' => $student->id,
+                    'subject_id' => $subjectId,
+                ]
+            );
 
             if ($initialStatus === BookingStatus::Confirmed) {
                 $this->notificationService->sendBookingCreated($booking);
@@ -124,10 +133,18 @@ class BookingService
                 $booking->timeSlot->update(['status' => SlotStatus::Available]);
             }
 
-            $this->logHistory($booking, 'cancelled', $oldStatus, $booking->status, [
-                'reason' => $reason,
-                'actor_id' => $actor->id,
-            ]);
+            $this->logHistory(
+                $booking,
+                'cancelled',
+                $oldStatus,
+                $booking->status,
+                ['status' => $oldStatus?->value],
+                [
+                    'reason' => $reason,
+                    'actor_id' => $actor->id,
+                    'cancelled_at' => now()->toIso8601String(),
+                ]
+            );
 
             $this->notificationService->sendBookingCancelled($booking);
         });
@@ -164,15 +181,23 @@ class BookingService
 
             $lockedSlot->update(['status' => SlotStatus::Booked]);
 
-            $this->logHistory($booking, 'rescheduled', $booking->status, BookingStatus::Rescheduled, [
-                'old_slot_id' => $oldSlot?->id,
-                'old_start_at' => $oldStart,
-                'old_end_at' => $oldEnd,
-                'new_slot_id' => $newTimeSlot->id,
-                'new_start_at' => $newTimeSlot->start_at,
-                'new_end_at' => $newTimeSlot->end_at,
-                'actor_id' => $actor->id,
-            ]);
+            $this->logHistory(
+                $booking,
+                'rescheduled',
+                $booking->status,
+                BookingStatus::Rescheduled,
+                [
+                    'slot_id' => $oldSlot?->id,
+                    'start_at' => $oldStart?->toIso8601String(),
+                    'end_at' => $oldEnd?->toIso8601String(),
+                ],
+                [
+                    'slot_id' => $newTimeSlot->id,
+                    'start_at' => $newTimeSlot->start_at->toIso8601String(),
+                    'end_at' => $newTimeSlot->end_at->toIso8601String(),
+                    'actor_id' => $actor->id,
+                ]
+            );
 
             $this->notificationService->sendBookingRescheduled($booking);
         });
@@ -194,9 +219,14 @@ class BookingService
 
             $booking->update($updates);
 
-            $this->logHistory($booking, 'status_changed', $oldStatus, $newStatus, [
-                'actor_id' => $actor->id,
-            ]);
+            $this->logHistory(
+                $booking,
+                'status_changed',
+                $oldStatus,
+                $newStatus,
+                ['status' => $oldStatus->value],
+                ['status' => $newStatus->value, 'actor_id' => $actor->id]
+            );
 
             if ($newStatus === BookingStatus::Completed) {
                 $this->notificationService->sendBookingCompleted($booking);
@@ -224,7 +254,14 @@ class BookingService
                 'status' => BookingStatus::Confirmed,
             ]);
 
-            $this->logHistory($booking, 'confirmed', $oldStatus, BookingStatus::Confirmed);
+            $this->logHistory(
+                $booking,
+                'confirmed',
+                $oldStatus,
+                BookingStatus::Confirmed,
+                ['status' => $oldStatus->value],
+                ['status' => BookingStatus::Confirmed->value]
+            );
 
             $this->notificationService->sendBookingConfirmed($booking);
 
@@ -244,7 +281,8 @@ class BookingService
         string $action,
         ?BookingStatus $oldStatus = null,
         ?BookingStatus $newStatus = null,
-        ?array $payload = null
+        ?array $oldPayload = null,
+        ?array $newPayload = null
     ): void {
         BookingHistory::create([
             'booking_id' => $booking->id,
@@ -252,8 +290,8 @@ class BookingService
             'action' => $action,
             'old_status' => $oldStatus?->value,
             'new_status' => $newStatus?->value,
-            'old_payload' => $payload,
-            'new_payload' => $payload,
+            'old_payload' => $oldPayload,
+            'new_payload' => $newPayload,
         ]);
     }
 }

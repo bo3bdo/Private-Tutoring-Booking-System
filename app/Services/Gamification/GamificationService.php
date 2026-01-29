@@ -2,6 +2,7 @@
 
 namespace App\Services\Gamification;
 
+use App\Enums\BookingStatus;
 use App\Models\Achievement;
 use App\Models\Badge;
 use App\Models\LeaderboardEntry;
@@ -431,7 +432,7 @@ class GamificationService
     private function calculateAchievementProgress(User $user, Achievement $achievement): int
     {
         $progress = match ($achievement->type) {
-            'booking_count' => $user->bookings()->where('status', 'completed')->count(),
+            'booking_count' => $user->bookings()->where('status', BookingStatus::Completed)->count(),
             'course_enrolled' => $user->courseEnrollments()->count(),
             'course_completed' => $user->courseEnrollments()->where('is_completed', true)->count(),
             'review_given' => $user->reviews()->count(),
@@ -507,9 +508,9 @@ class GamificationService
 
         $consecutive = 0;
         foreach ($recentBookings as $booking) {
-            if ($booking->status === 'completed') {
+            if ($booking->status === BookingStatus::Completed) {
                 $consecutive++;
-            } elseif ($booking->status === 'no_show') {
+            } elseif ($booking->status === BookingStatus::NoShow) {
                 break;
             }
         }
@@ -523,7 +524,7 @@ class GamificationService
     private function calculateEarlyBookings(User $user): int
     {
         return $user->bookings()
-            ->where('status', 'completed')
+            ->where('status', BookingStatus::Completed)
             ->whereTime('start_at', '<', '09:00:00')
             ->count();
     }

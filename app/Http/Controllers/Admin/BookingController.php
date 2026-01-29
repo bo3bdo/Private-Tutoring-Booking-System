@@ -28,11 +28,19 @@ class BookingController extends Controller
 
         $bookings = $query->latest('start_at')->paginate(20);
 
+        // Optimized single query for stats instead of 4 separate queries
+        $statsQuery = Booking::query()
+            ->selectRaw('COUNT(*) as total')
+            ->selectRaw('SUM(CASE WHEN start_at > ? THEN 1 ELSE 0 END) as upcoming', [now()])
+            ->selectRaw('SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as completed', [\App\Enums\BookingStatus::Completed->value])
+            ->selectRaw('SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as cancelled', [\App\Enums\BookingStatus::Cancelled->value])
+            ->first();
+
         $stats = [
-            'total' => Booking::count(),
-            'upcoming' => Booking::where('start_at', '>', now())->count(),
-            'completed' => Booking::where('status', 'completed')->count(),
-            'cancelled' => Booking::where('status', 'cancelled')->count(),
+            'total' => (int) $statsQuery->total,
+            'upcoming' => (int) $statsQuery->upcoming,
+            'completed' => (int) $statsQuery->completed,
+            'cancelled' => (int) $statsQuery->cancelled,
         ];
 
         return view('admin.bookings.index', compact('bookings', 'stats'));

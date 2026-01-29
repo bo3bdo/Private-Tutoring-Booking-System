@@ -64,13 +64,15 @@ class NotificationService
             $users[] = $booking->teacher->user;
         }
 
+        $notificationType = get_class($notification);
+
         foreach ($users as $user) {
             try {
                 Notification::send($user, $notification);
 
-                $this->logNotification($user, $booking, NotificationChannel::Email, 'sent');
+                $this->logNotification($user, $booking, NotificationChannel::Email, 'sent', null, null, $notificationType);
             } catch (\Exception $e) {
-                $this->logNotification($user, $booking, NotificationChannel::Email, 'failed', $e->getMessage());
+                $this->logNotification($user, $booking, NotificationChannel::Email, 'failed', $e->getMessage(), null, $notificationType);
             }
         }
     }
@@ -80,9 +82,9 @@ class NotificationService
         try {
             $notification = new \App\Notifications\CourseEnrolledNotification($course, $student);
             Notification::send($student, $notification);
-            $this->logNotification($student, null, NotificationChannel::Email, 'sent', null, $course);
+            $this->logNotification($student, null, NotificationChannel::Email, 'sent', null, $course, get_class($notification));
         } catch (\Exception $e) {
-            $this->logNotification($student, null, NotificationChannel::Email, 'failed', $e->getMessage(), $course);
+            $this->logNotification($student, null, NotificationChannel::Email, 'failed', $e->getMessage(), $course, \App\Notifications\CourseEnrolledNotification::class);
         }
     }
 
@@ -91,19 +93,20 @@ class NotificationService
         try {
             $notification = new \App\Notifications\CourseEnrolledToTeacherNotification($course, $student);
             Notification::send($course->teacher, $notification);
-            $this->logNotification($course->teacher, null, NotificationChannel::Email, 'sent', null, $course);
+            $this->logNotification($course->teacher, null, NotificationChannel::Email, 'sent', null, $course, get_class($notification));
         } catch (\Exception $e) {
-            $this->logNotification($course->teacher, null, NotificationChannel::Email, 'failed', $e->getMessage(), $course);
+            $this->logNotification($course->teacher, null, NotificationChannel::Email, 'failed', $e->getMessage(), $course, \App\Notifications\CourseEnrolledToTeacherNotification::class);
         }
     }
 
     protected function logNotification(
-        $user,
+        \App\Models\User $user,
         ?Booking $booking,
         NotificationChannel $channel,
         string $status,
         ?string $errorMessage = null,
-        ?\App\Models\Course $course = null
+        ?\App\Models\Course $course = null,
+        ?string $notificationType = null
     ): void {
         NotificationLog::create([
             'user_id' => $user->id,
@@ -112,7 +115,7 @@ class NotificationService
             'channel' => $channel,
             'status' => $status,
             'payload' => [
-                'notification_type' => get_class($booking ?: ($course ?: new \stdClass)),
+                'notification_type' => $notificationType ?? 'unknown',
             ],
             'error_message' => $errorMessage,
         ]);

@@ -160,9 +160,9 @@ describe('Achievements', function () {
 
         $unlocked = $this->service->checkAchievements($this->user);
 
-        // Should unlock first-steps (1 booking) and dedicated-student (10 bookings)
-        expect($unlocked)->toHaveCount(2);
-        expect(collect($unlocked)->pluck('slug')->toArray())->toContain('first-steps', 'dedicated-student');
+        // Should unlock first-steps (1 booking), dedicated-student (10 bookings), and perfect-attendance (10 consecutive)
+        expect($unlocked)->toHaveCount(3);
+        expect(collect($unlocked)->pluck('slug')->toArray())->toContain('first-steps', 'dedicated-student', 'perfect-attendance');
         expect($this->user->fresh()->total_points)->toBeGreaterThan(0);
     });
 

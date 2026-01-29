@@ -300,10 +300,10 @@ class RecommendationEngine
             $score += 20;
         }
 
-        // Time proximity (prefer slots in the next few days)
-        $daysFromNow = $slot->start_at->diffInDays(now());
+        // Time proximity (only reward slots within next 3 days so near future beats day/hour preference)
+        $daysFromNow = (int) $slot->start_at->diffInDays(now(), false);
         if ($daysFromNow <= 3) {
-            $score += 10;
+            $score += 50 - $daysFromNow;
         }
 
         return min($score, 100);
