@@ -17,8 +17,8 @@ class DashboardController extends Controller
     {
         $student = auth()->user();
 
-        // Get all bookings with payments
-        $bookings = $student->bookings()->with(['payment', 'teacher.user', 'subject'])->latest('created_at');
+        // Get all bookings with payments (eager load teacher for pending payment calculation)
+        $bookings = $student->bookings()->with(['payment', 'teacher', 'teacher.user', 'subject'])->latest('created_at');
 
         // Calculate payment statistics
         $allBookingsList = $bookings->get();

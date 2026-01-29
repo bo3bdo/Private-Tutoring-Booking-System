@@ -17,6 +17,10 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
+     * NOTE: total_points, current_streak, and last_activity_date are included
+     * for programmatic updates by the system (GamificationService).
+     * Controllers should NOT accept these from user input.
+     *
      * @var list<string>
      */
     protected $fillable = [

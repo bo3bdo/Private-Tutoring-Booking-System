@@ -25,6 +25,8 @@ class SubjectController extends Controller
 
     public function store(StoreSubjectRequest $request): RedirectResponse
     {
+        $this->authorize('create', Subject::class);
+
         Subject::create([
             'name' => $request->name,
             'description' => $request->description,
@@ -53,6 +55,8 @@ class SubjectController extends Controller
 
     public function update(UpdateSubjectRequest $request, Subject $subject): RedirectResponse
     {
+        $this->authorize('update', $subject);
+
         $subject->update([
             'name' => $request->name,
             'description' => $request->description,
@@ -69,6 +73,8 @@ class SubjectController extends Controller
 
     public function destroy(Subject $subject): RedirectResponse
     {
+        $this->authorize('delete', $subject);
+
         if ($subject->bookings()->exists()) {
             notify()->error()
                 ->title(__('common.Error'))

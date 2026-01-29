@@ -42,6 +42,9 @@ class BookingController extends Controller
     {
         $this->authorize('view', $slot);
 
+        // Eager load relationships
+        $slot->load(['subject', 'teacher']);
+
         $subject = $request->get('subject_id')
             ? \App\Models\Subject::findOrFail($request->get('subject_id'))
             : $slot->subject;
@@ -147,6 +150,9 @@ class BookingController extends Controller
         $request->validate([
             'code' => 'required|string',
         ]);
+
+        // Eager load teacher relationship
+        $booking->load('teacher');
 
         $amount = $booking->teacher->hourly_rate ?? 25.00;
 

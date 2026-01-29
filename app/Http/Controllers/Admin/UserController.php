@@ -74,6 +74,8 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
+        $this->authorize('update', $user);
+
         // Prevent editing admin
         if ($user->isAdmin()) {
             notify()->error()
@@ -186,6 +188,8 @@ class UserController extends Controller
 
     public function updateRole(UpdateUserRoleRequest $request, User $user): RedirectResponse
     {
+        $this->authorize('updateRole', User::class);
+
         // Prevent changing admin role
         if ($user->isAdmin()) {
             notify()->error()

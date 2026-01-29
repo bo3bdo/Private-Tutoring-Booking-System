@@ -32,6 +32,8 @@ class BadgeController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('create', Badge::class);
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:badges,slug'],
@@ -63,6 +65,8 @@ class BadgeController extends Controller
 
     public function update(Request $request, Badge $badge): RedirectResponse
     {
+        $this->authorize('update', $badge);
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:badges,slug,'.$badge->id],
@@ -87,6 +91,8 @@ class BadgeController extends Controller
 
     public function destroy(Badge $badge): RedirectResponse
     {
+        $this->authorize('delete', $badge);
+
         // Check if badge has been awarded to users
         if ($badge->userBadges()->count() > 0) {
             notify()->warning()
@@ -124,6 +130,8 @@ class BadgeController extends Controller
 
     public function award(Request $request, Badge $badge): RedirectResponse
     {
+        $this->authorize('award', Badge::class);
+
         $validated = $request->validate([
             'user_id' => ['required', 'exists:users,id'],
         ]);
@@ -155,6 +163,8 @@ class BadgeController extends Controller
 
     public function revoke(Request $request, Badge $badge): RedirectResponse
     {
+        $this->authorize('revoke', Badge::class);
+
         $validated = $request->validate([
             'user_id' => ['required', 'exists:users,id'],
         ]);

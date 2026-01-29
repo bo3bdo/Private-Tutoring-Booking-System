@@ -17,12 +17,10 @@ class CourseSalesController extends Controller
             ->latest('purchased_at')
             ->paginate(20);
 
-        $totalRevenue = CoursePurchase::whereHas('payment', function ($query) {
-            $query->where('status', 'succeeded');
-        })
-            ->with('payment')
-            ->get()
-            ->sum(fn ($purchase) => $purchase->payment->amount ?? 0);
+        // Use database aggregation instead of loading all records
+        $totalRevenue = CoursePurchase::join('payments', 'course_purchases.payment_id', '=', 'payments.id')
+            ->where('payments.status', 'succeeded')
+            ->sum('payments.amount');
 
         $totalSales = $purchases->total();
 
