@@ -1,8 +1,10 @@
 <?php
 
+use App\Enums\BookingStatus;
 use App\Enums\LessonMode;
 use App\Enums\SlotStatus;
 use App\Models\Booking;
+use App\Models\CourseEnrollment;
 use App\Models\Course;
 use App\Models\Review;
 use App\Models\Subject;
@@ -40,6 +42,8 @@ it('allows student to create review for booking', function () {
         'start_at' => $this->slot->start_at,
         'end_at' => $this->slot->end_at,
         'lesson_mode' => LessonMode::Online->value,
+        'status' => BookingStatus::Completed,
+        'completed_at' => now(),
     ]);
 
     $this->actingAs($this->student)
@@ -64,6 +68,12 @@ it('allows student to create review for course', function () {
     $course = Course::factory()->create([
         'teacher_id' => $this->teacher->id,
         'subject_id' => $this->subject->id,
+    ]);
+
+    CourseEnrollment::create([
+        'course_id' => $course->id,
+        'student_id' => $this->student->id,
+        'enrolled_at' => now(),
     ]);
 
     $this->actingAs($this->student)
@@ -92,6 +102,8 @@ it('prevents duplicate reviews from same user', function () {
         'start_at' => $this->slot->start_at,
         'end_at' => $this->slot->end_at,
         'lesson_mode' => LessonMode::Online->value,
+        'status' => BookingStatus::Completed,
+        'completed_at' => now(),
     ]);
 
     Review::create([
@@ -122,6 +134,8 @@ it('validates rating is between 1 and 5', function () {
         'start_at' => $this->slot->start_at,
         'end_at' => $this->slot->end_at,
         'lesson_mode' => LessonMode::Online->value,
+        'status' => BookingStatus::Completed,
+        'completed_at' => now(),
     ]);
 
     $this->actingAs($this->student)

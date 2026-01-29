@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use App\Enums\BookingStatus;
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
@@ -12,84 +13,63 @@ class DashboardController extends Controller
     {
         $teacher = auth()->user()->teacherProfile;
 
-        // Get bookings with payments
-        $bookings = $teacher->bookings()->with(['payment', 'student', 'subject'])->latest('created_at');
+        $bookingsCollection = $teacher->bookings()
+            ->with(['payment', 'student', 'subject'])
+            ->latest('created_at')
+            ->get();
 
-        // Calculate earnings statistics
-        $todayEarnings = $this->calculateEarnings($bookings->get(), 'today');
-        $weekEarnings = $this->calculateEarnings($bookings->get(), 'week');
-        $monthEarnings = $this->calculateEarnings($bookings->get(), 'month');
-        $totalEarnings = $this->calculateEarnings($bookings->get(), 'all');
+        $todayEarnings = $this->calculateEarnings($bookingsCollection, 'today');
+        $weekEarnings = $this->calculateEarnings($bookingsCollection, 'week');
+        $monthEarnings = $this->calculateEarnings($bookingsCollection, 'month');
+        $totalEarnings = $this->calculateEarnings($bookingsCollection, 'all');
+        $lastMonthEarnings = $this->calculateEarnings($bookingsCollection, 'last_month');
 
-        // Count bookings
-        $allBookings = $teacher->bookings()->latest('created_at');
-        $totalBookings = $allBookings->count();
-        $completedBookings = $allBookings->where('status', 'completed')->count();
-        $cancelledBookings = $allBookings->where('status', 'cancelled')->count();
-        $noShowBookings = $allBookings->where('status', 'no_show')->count();
-        $upcomingBookingsCount = $allBookings
-            ->where('start_at', '>', now())
-            ->where('status', 'confirmed')
+        $totalBookings = $bookingsCollection->count();
+        $completedBookings = $bookingsCollection->where('status', BookingStatus::Completed)->count();
+        $cancelledBookings = $bookingsCollection->where('status', BookingStatus::Cancelled)->count();
+        $noShowBookings = $bookingsCollection->where('status', BookingStatus::NoShow)->count();
+        $upcomingBookingsCount = $bookingsCollection
+            ->filter(fn ($b) => $b->start_at > now() && $b->status === BookingStatus::Confirmed)
             ->count();
 
-        // Performance statistics
         $attendanceRate = $completedBookings > 0
             ? round(($completedBookings / ($completedBookings + $noShowBookings)) * 100, 1)
             : 0;
 
-        // Unique students count
-        $uniqueStudents = $allBookings->distinct('student_id')->count('student_id');
+        $uniqueStudents = $bookingsCollection->pluck('student_id')->unique()->filter()->count();
 
-        // Average booking value
-        $succeededPayments = $bookings->get()->filter(function ($booking) {
-            return $booking->payment && $booking->payment->status === PaymentStatus::Succeeded;
-        });
+        $succeededPayments = $bookingsCollection->filter(fn ($b) => $b->payment && $b->payment->status === PaymentStatus::Succeeded);
         $averageBookingValue = $succeededPayments->count() > 0
             ? $succeededPayments->sum(fn ($b) => $b->payment->amount ?? 0) / $succeededPayments->count()
             : 0;
 
-        // Pending payments
-        $pendingPaymentsAmount = $bookings->get()->filter(function ($booking) {
+        $pendingPaymentsAmount = $bookingsCollection->filter(function ($booking) {
             return $booking->payment
                 && in_array($booking->payment->status, [PaymentStatus::Pending, PaymentStatus::Initiated])
-                && $booking->status !== \App\Enums\BookingStatus::Cancelled;
+                && $booking->status !== BookingStatus::Cancelled;
         })->sum(fn ($b) => $b->payment->amount ?? 0);
 
-        // Total teaching hours
-        $totalHours = $allBookings->where('status', 'completed')
-            ->get()
+        $totalHours = $bookingsCollection
+            ->where('status', BookingStatus::Completed)
             ->sum(fn ($b) => $b->start_at->diffInMinutes($b->end_at) / 60);
 
-        // Subjects statistics
         $subjectsCount = $teacher->subjects()->count();
-        $mostBookedSubject = $allBookings->with('subject')
-            ->get()
-            ->groupBy('subject_id')
-            ->map->count()
-            ->sortDesc()
-            ->keys()
-            ->first();
-
+        $mostBookedSubject = $bookingsCollection->groupBy('subject_id')->map->count()->sortDesc()->keys()->first();
         $mostBookedSubjectName = $mostBookedSubject
             ? \App\Models\Subject::find($mostBookedSubject)?->name ?? 'N/A'
             : 'N/A';
 
-        // Monthly growth (compare with last month)
-        $lastMonthEarnings = $this->calculateEarnings($bookings->get(), 'last_month');
         $monthGrowth = $lastMonthEarnings > 0
             ? round((($monthEarnings - $lastMonthEarnings) / $lastMonthEarnings) * 100, 1)
             : ($monthEarnings > 0 ? 100 : 0);
 
-        // New bookings this month
-        $newBookingsThisMonth = $allBookings
-            ->whereMonth('created_at', now()->month)
-            ->whereYear('created_at', now()->year)
+        $newBookingsThisMonth = $bookingsCollection
+            ->filter(fn ($b) => $b->created_at->month === now()->month && $b->created_at->year === now()->year)
             ->count();
 
-        // Get upcoming bookings for display
         $upcomingBookings = $teacher->bookings()
             ->where('start_at', '>', now())
-            ->where('status', 'confirmed')
+            ->where('status', BookingStatus::Confirmed->value)
             ->with(['student', 'subject'])
             ->orderBy('start_at')
             ->limit(5)
@@ -101,7 +81,6 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
-        // Check if profile is incomplete
         $isProfileIncomplete = $teacher->hourly_rate == 0 || $teacher->subjects()->count() == 0;
 
         return view('teacher.dashboard', compact(

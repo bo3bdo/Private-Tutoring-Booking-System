@@ -73,37 +73,37 @@ class TeacherProfile extends Model
             ->where('reviewable_type', self::class);
     }
 
-    public function averageRating(): float
+    /**
+     * @return array{average: float, count: int, reviews: \Illuminate\Database\Eloquent\Collection<int, Review>}
+     */
+    public function getReviewsSummary(): array
     {
-        // Get booking IDs for this teacher
         $bookingIds = $this->bookings()->pluck('id');
-
-        // Get course IDs for this teacher
         $courseIds = Course::where('teacher_id', $this->user_id)->pluck('id');
 
-        // Get all approved reviews: direct teacher reviews + booking reviews + course reviews
+        $reviews = Review::where('is_approved', true)
+            ->where($this->reviewsScopeCallback($bookingIds, $courseIds))
+            ->with('user')
+            ->latest('created_at')
+            ->get();
+
+        $average = $reviews->isEmpty() ? 0.0 : round((float) $reviews->avg('rating'), 2);
+        $count = $reviews->count();
+
+        return [
+            'average' => $average,
+            'count' => $count,
+            'reviews' => $reviews,
+        ];
+    }
+
+    public function averageRating(): float
+    {
+        $bookingIds = $this->bookings()->pluck('id');
+        $courseIds = Course::where('teacher_id', $this->user_id)->pluck('id');
+
         $avgRating = Review::where('is_approved', true)
-            ->where(function ($query) use ($bookingIds, $courseIds) {
-                // Direct teacher profile reviews
-                $query->where(function ($q) {
-                    $q->where('reviewable_type', self::class)
-                        ->where('reviewable_id', $this->id);
-                })
-                // Booking reviews
-                    ->orWhere(function ($q) use ($bookingIds) {
-                        if ($bookingIds->isNotEmpty()) {
-                            $q->where('reviewable_type', Booking::class)
-                                ->whereIn('reviewable_id', $bookingIds);
-                        }
-                    })
-                // Course reviews
-                    ->orWhere(function ($q) use ($courseIds) {
-                        if ($courseIds->isNotEmpty()) {
-                            $q->where('reviewable_type', Course::class)
-                                ->whereIn('reviewable_id', $courseIds);
-                        }
-                    });
-            })
+            ->where($this->reviewsScopeCallback($bookingIds, $courseIds))
             ->avg('rating');
 
         return round((float) ($avgRating ?? 0), 2);
@@ -111,71 +111,49 @@ class TeacherProfile extends Model
 
     public function reviewsCount(): int
     {
-        // Get booking IDs for this teacher
         $bookingIds = $this->bookings()->pluck('id');
-
-        // Get course IDs for this teacher
         $courseIds = Course::where('teacher_id', $this->user_id)->pluck('id');
 
-        // Count all approved reviews: direct teacher reviews + booking reviews + course reviews
         return Review::where('is_approved', true)
-            ->where(function ($query) use ($bookingIds, $courseIds) {
-                // Direct teacher profile reviews
-                $query->where(function ($q) {
-                    $q->where('reviewable_type', self::class)
-                        ->where('reviewable_id', $this->id);
-                })
-                // Booking reviews
-                    ->orWhere(function ($q) use ($bookingIds) {
-                        if ($bookingIds->isNotEmpty()) {
-                            $q->where('reviewable_type', Booking::class)
-                                ->whereIn('reviewable_id', $bookingIds);
-                        }
-                    })
-                // Course reviews
-                    ->orWhere(function ($q) use ($courseIds) {
-                        if ($courseIds->isNotEmpty()) {
-                            $q->where('reviewable_type', Course::class)
-                                ->whereIn('reviewable_id', $courseIds);
-                        }
-                    });
-            })
+            ->where($this->reviewsScopeCallback($bookingIds, $courseIds))
             ->count();
     }
 
     public function getAllReviews()
     {
-        // Get booking IDs for this teacher
         $bookingIds = $this->bookings()->pluck('id');
-
-        // Get course IDs for this teacher
         $courseIds = Course::where('teacher_id', $this->user_id)->pluck('id');
 
-        // Get all approved reviews: direct teacher reviews + booking reviews + course reviews
         return Review::where('is_approved', true)
-            ->where(function ($query) use ($bookingIds, $courseIds) {
-                // Direct teacher profile reviews
-                $query->where(function ($q) {
-                    $q->where('reviewable_type', self::class)
-                        ->where('reviewable_id', $this->id);
-                })
-                // Booking reviews
-                    ->orWhere(function ($q) use ($bookingIds) {
-                        if ($bookingIds->isNotEmpty()) {
-                            $q->where('reviewable_type', Booking::class)
-                                ->whereIn('reviewable_id', $bookingIds);
-                        }
-                    })
-                // Course reviews
-                    ->orWhere(function ($q) use ($courseIds) {
-                        if ($courseIds->isNotEmpty()) {
-                            $q->where('reviewable_type', Course::class)
-                                ->whereIn('reviewable_id', $courseIds);
-                        }
-                    });
-            })
+            ->where($this->reviewsScopeCallback($bookingIds, $courseIds))
             ->with('user')
             ->latest('created_at')
             ->get();
+    }
+
+    /**
+     * @param  \Illuminate\Support\Collection<int, int>  $bookingIds
+     * @param  \Illuminate\Support\Collection<int, int>  $courseIds
+     */
+    protected function reviewsScopeCallback($bookingIds, $courseIds): \Closure
+    {
+        return function ($query) use ($bookingIds, $courseIds) {
+            $query->where(function ($q) {
+                $q->where('reviewable_type', self::class)
+                    ->where('reviewable_id', $this->id);
+            })
+                ->orWhere(function ($q) use ($bookingIds) {
+                    if ($bookingIds->isNotEmpty()) {
+                        $q->where('reviewable_type', Booking::class)
+                            ->whereIn('reviewable_id', $bookingIds);
+                    }
+                })
+                ->orWhere(function ($q) use ($courseIds) {
+                    if ($courseIds->isNotEmpty()) {
+                        $q->where('reviewable_type', Course::class)
+                            ->whereIn('reviewable_id', $courseIds);
+                    }
+                });
+        };
     }
 }

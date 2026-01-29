@@ -91,6 +91,8 @@ class ResourceController extends Controller
             return back();
         }
 
+        $this->authorize('view', $resourceable);
+
         $file = $request->file('file');
         $path = $file->store('resources', 'public');
 

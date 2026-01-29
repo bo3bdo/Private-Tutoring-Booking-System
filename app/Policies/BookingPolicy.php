@@ -109,4 +109,17 @@ class BookingPolicy
 
         return false;
     }
+
+    public function review(User $user, Booking $booking): bool
+    {
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        if ($user->isStudent()) {
+            return $booking->student_id === $user->id && $booking->isCompleted();
+        }
+
+        return false;
+    }
 }

@@ -72,6 +72,12 @@ class ReviewController extends Controller
             return back();
         }
 
+        if ($reviewable instanceof Booking) {
+            $this->authorize('review', $reviewable);
+        } elseif ($reviewable instanceof Course) {
+            $this->authorize('accessLearning', $reviewable);
+        }
+
         // Check if user already reviewed this item
         $existingReview = Review::where('user_id', auth()->id())
             ->where('reviewable_type', $request->reviewable_type)

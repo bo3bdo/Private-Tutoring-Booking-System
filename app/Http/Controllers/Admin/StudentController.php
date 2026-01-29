@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\BookingStatus;
+use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\View\View;
@@ -40,10 +42,10 @@ class StudentController extends Controller
         ]);
 
         $stats = [
-            'total_bookings' => $student->bookings()->count(),
-            'completed_bookings' => $student->bookings()->where('status', 'completed')->count(),
-            'total_courses' => $student->courseEnrollments()->count(),
-            'total_spent' => $student->payments()->where('status', 'completed')->sum('amount'),
+            'total_bookings' => $student->bookings->count(),
+            'completed_bookings' => $student->bookings->where('status', BookingStatus::Completed)->count(),
+            'total_courses' => $student->courseEnrollments->count(),
+            'total_spent' => $student->payments->where('status', PaymentStatus::Succeeded)->sum('amount'),
         ];
 
         return view('admin.students.show', compact('student', 'stats'));

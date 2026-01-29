@@ -19,9 +19,10 @@ class TeacherController extends Controller
             'availabilities',
         ]);
 
-        $reviews = $teacher->getAllReviews();
-        $averageRating = $teacher->averageRating();
-        $reviewsCount = $teacher->reviewsCount();
+        $reviewsSummary = $teacher->getReviewsSummary();
+        $reviews = $reviewsSummary['reviews'];
+        $averageRating = $reviewsSummary['average'];
+        $reviewsCount = $reviewsSummary['count'];
 
         // Get teacher's courses
         $courses = Course::where('teacher_id', $teacher->user_id)
@@ -52,16 +53,16 @@ class TeacherController extends Controller
 
     public function reviews(TeacherProfile $teacher): JsonResponse
     {
-        $reviews = $teacher->getAllReviews();
+        $reviewsSummary = $teacher->getReviewsSummary();
 
         return response()->json([
             'teacher' => [
                 'id' => $teacher->id,
                 'name' => $teacher->user->name,
-                'average_rating' => $teacher->averageRating(),
-                'reviews_count' => $teacher->reviewsCount(),
+                'average_rating' => $reviewsSummary['average'],
+                'reviews_count' => $reviewsSummary['count'],
             ],
-            'reviews' => $reviews->map(function ($review) {
+            'reviews' => $reviewsSummary['reviews']->map(function ($review) {
                 return [
                     'id' => $review->id,
                     'rating' => $review->rating,

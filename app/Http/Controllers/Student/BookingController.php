@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Student;
 
+use App\Enums\BookingStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Booking;
@@ -28,7 +29,7 @@ class BookingController extends Controller
             match ($request->filter) {
                 'upcoming' => $query->where('start_at', '>', now()),
                 'past' => $query->where('start_at', '<', now()),
-                'cancelled' => $query->where('status', 'cancelled'),
+                'cancelled' => $query->where('status', BookingStatus::Cancelled->value),
                 default => null,
             };
         }

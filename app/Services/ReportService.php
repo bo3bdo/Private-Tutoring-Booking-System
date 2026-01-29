@@ -2,8 +2,12 @@
 
 namespace App\Services;
 
+use App\Enums\PaymentStatus;
 use App\Models\Booking;
+use App\Models\Course;
 use App\Models\Payment;
+use App\Models\Review;
+use App\Models\SupportTicket;
 use App\Models\TeacherProfile;
 use App\Models\User;
 use Carbon\Carbon;
@@ -11,6 +15,28 @@ use Illuminate\Support\Facades\DB;
 
 class ReportService
 {
+    /**
+     * @return array{total_bookings: int, pending_payments: int, active_teachers: int, active_students: int, total_revenue: float, total_courses: int, pending_reviews: int, open_support_tickets: int}
+     */
+    public function getDashboardStats(): array
+    {
+        $paymentStats = Payment::query()
+            ->selectRaw('COUNT(CASE WHEN status = ? THEN 1 END) as pending_count', [PaymentStatus::Pending->value])
+            ->selectRaw('COALESCE(SUM(CASE WHEN status = ? THEN amount END), 0) as total_revenue', [PaymentStatus::Succeeded->value])
+            ->first();
+
+        return [
+            'total_bookings' => Booking::count(),
+            'pending_payments' => (int) $paymentStats->pending_count,
+            'active_teachers' => TeacherProfile::where('is_active', true)->count(),
+            'active_students' => User::role('student')->count(),
+            'total_revenue' => (float) $paymentStats->total_revenue,
+            'total_courses' => Course::count(),
+            'pending_reviews' => Review::where('is_approved', false)->count(),
+            'open_support_tickets' => SupportTicket::whereIn('status', ['open', 'in_progress'])->count(),
+        ];
+    }
+
     public function getRevenueReport(?Carbon $startDate = null, ?Carbon $endDate = null): array
     {
         $startDate = $startDate ?? Carbon::now()->startOfMonth();
