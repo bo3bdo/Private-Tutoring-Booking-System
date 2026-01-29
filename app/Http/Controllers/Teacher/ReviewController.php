@@ -75,7 +75,7 @@ class ReviewController extends Controller
             });
         }
 
-        $reviews = $query->latest()->paginate(15);
+        $reviews = $query->latest('created_at')->paginate(15);
 
         // Calculate statistics
         $averageRating = $teacher->averageRating();

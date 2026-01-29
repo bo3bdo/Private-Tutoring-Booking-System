@@ -10,12 +10,14 @@ use App\Models\BookingHistory;
 use App\Models\Setting;
 use App\Models\TimeSlot;
 use App\Models\User;
+use App\Services\Gamification\GamificationService;
 use Illuminate\Support\Facades\DB;
 
 class BookingService
 {
     public function __construct(
-        protected NotificationService $notificationService
+        protected NotificationService $notificationService,
+        protected GamificationService $gamificationService
     ) {}
 
     public function createBooking(
@@ -91,6 +93,17 @@ class BookingService
             }
 
             event(new BookingCreated($booking));
+
+            // Award points for booking creation
+            if ($initialStatus === BookingStatus::Confirmed) {
+                $this->gamificationService->awardPoints(
+                    $student,
+                    10,
+                    'booking',
+                    'Booking created',
+                    $booking
+                );
+            }
 
             return $booking;
         });
@@ -187,6 +200,15 @@ class BookingService
 
             if ($newStatus === BookingStatus::Completed) {
                 $this->notificationService->sendBookingCompleted($booking);
+
+                // Award points for completing the lesson
+                $this->gamificationService->awardPoints(
+                    $booking->student,
+                    25,
+                    'booking_completed',
+                    'Lesson completed',
+                    $booking
+                );
             } elseif ($newStatus === BookingStatus::NoShow) {
                 $this->notificationService->sendBookingNoShow($booking);
             }
@@ -205,6 +227,15 @@ class BookingService
             $this->logHistory($booking, 'confirmed', $oldStatus, BookingStatus::Confirmed);
 
             $this->notificationService->sendBookingConfirmed($booking);
+
+            // Award points for booking confirmation
+            $this->gamificationService->awardPoints(
+                $booking->student,
+                10,
+                'booking',
+                'Booking confirmed',
+                $booking
+            );
         });
     }
 

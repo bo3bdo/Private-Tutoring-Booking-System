@@ -7,6 +7,8 @@ use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\TeacherRequest;
+use App\Services\AI\RecommendationEngine;
+use App\Services\Gamification\GamificationService;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -16,7 +18,7 @@ class DashboardController extends Controller
         $student = auth()->user();
 
         // Get all bookings with payments
-        $bookings = $student->bookings()->with(['payment', 'teacher.user', 'subject'])->latest();
+        $bookings = $student->bookings()->with(['payment', 'teacher.user', 'subject'])->latest('created_at');
 
         // Calculate payment statistics
         $allBookingsList = $bookings->get();
@@ -26,7 +28,7 @@ class DashboardController extends Controller
         $pendingPayments = $this->calculatePendingPayments($allBookingsList);
 
         // Count bookings
-        $allBookings = $student->bookings()->latest();
+        $allBookings = $student->bookings()->latest('created_at');
         $allBookingsList = $allBookings->get();
         $totalBookings = $allBookingsList->count();
         $upcomingBookings = $allBookingsList
@@ -92,8 +94,21 @@ class DashboardController extends Controller
 
         // Check if user has a teacher request
         $teacherRequest = TeacherRequest::where('user_id', $student->id)
-            ->latest()
+            ->latest('created_at')
             ->first();
+
+        // Gamification data
+        $gamificationService = app(GamificationService::class);
+        $userLevel = $gamificationService->getUserLevel($student);
+        $userRank = $gamificationService->getUserRank($student) ?? ['rank' => 0];
+        $achievements = $gamificationService->getUserAchievements($student);
+        $unlockedAchievements = collect($achievements)->where('is_unlocked', true)->count();
+
+        // AI Recommendations
+        $recommendationEngine = app(RecommendationEngine::class);
+        $recommendedTeachers = $recommendationEngine->recommendTeachers($student, 3);
+        $recommendedCourses = $recommendationEngine->recommendCourses($student, 3);
+        $engagementAnalysis = $recommendationEngine->analyzeEngagement($student);
 
         return view('student.dashboard', compact(
             'totalPaid',
@@ -112,7 +127,13 @@ class DashboardController extends Controller
             'averageDuration',
             'upcomingBookingsList',
             'recentBookings',
-            'teacherRequest'
+            'teacherRequest',
+            'userLevel',
+            'userRank',
+            'unlockedAchievements',
+            'recommendedTeachers',
+            'recommendedCourses',
+            'engagementAnalysis'
         ));
     }
 

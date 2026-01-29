@@ -13,7 +13,7 @@ class SubjectController extends Controller
 {
     public function index(): View
     {
-        $subjects = Subject::latest()->paginate(15);
+        $subjects = Subject::latest('created_at')->paginate(15);
 
         return view('admin.subjects.index', compact('subjects'));
     }

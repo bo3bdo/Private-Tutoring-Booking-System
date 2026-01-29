@@ -29,7 +29,7 @@ class SupportTicketController extends Controller
             });
         }
 
-        $tickets = $query->latest()->paginate(15);
+        $tickets = $query->latest('created_at')->paginate(15);
 
         return view('student.support-tickets.index', compact('tickets'));
     }

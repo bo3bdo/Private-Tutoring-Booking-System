@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\LessonMode;
+use App\Rules\AvailableTimeSlot;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -16,7 +17,11 @@ class StoreBookingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'time_slot_id' => ['required', 'exists:teacher_time_slots,id'],
+            'time_slot_id' => [
+                'required',
+                'exists:teacher_time_slots,id',
+                new AvailableTimeSlot,
+            ],
             'subject_id' => ['required', 'exists:subjects,id'],
             'lesson_mode' => ['required', Rule::enum(LessonMode::class)],
             'notes' => ['nullable', 'string', 'max:1000'],

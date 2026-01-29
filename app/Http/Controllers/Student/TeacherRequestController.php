@@ -90,7 +90,7 @@ class TeacherRequestController extends Controller
     {
         $teacherRequest = TeacherRequest::where('user_id', auth()->id())
             ->with(['subjects', 'defaultLocation', 'reviewedBy'])
-            ->latest()
+            ->latest('created_at')
             ->first();
 
         if (! $teacherRequest) {

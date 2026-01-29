@@ -175,7 +175,7 @@ class TeacherProfile extends Model
                     });
             })
             ->with('user')
-            ->latest()
+            ->latest('created_at')
             ->get();
     }
 }

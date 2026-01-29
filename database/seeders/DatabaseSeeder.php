@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             SampleDataSeeder::class,
             CourseSeeder::class,
             RealisticDataSeeder::class,
+            BadgeSeeder::class,
+            AchievementSeeder::class,
         ]);
     }
 }

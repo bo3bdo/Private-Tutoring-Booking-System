@@ -107,6 +107,11 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     Route::get('/become-teacher', [\App\Http\Controllers\Student\TeacherRequestController::class, 'create'])->name('teacher-request.create');
     Route::post('/become-teacher', [\App\Http\Controllers\Student\TeacherRequestController::class, 'store'])->name('teacher-request.store');
     Route::get('/teacher-request', [\App\Http\Controllers\Student\TeacherRequestController::class, 'show'])->name('teacher-request.show');
+
+    // Gamification Routes
+    Route::get('/gamification', [\App\Http\Controllers\Student\GamificationController::class, 'index'])->name('gamification.index');
+    Route::get('/gamification/achievements', [\App\Http\Controllers\Student\GamificationController::class, 'achievements'])->name('gamification.achievements');
+    Route::get('/gamification/leaderboard', [\App\Http\Controllers\Student\GamificationController::class, 'leaderboard'])->name('gamification.leaderboard');
 });
 
 // Teacher Routes
@@ -256,6 +261,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Calendar Routes
     Route::get('/calendar', [\App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
+
+    // Gamification Routes
+    Route::resource('badges', \App\Http\Controllers\Admin\BadgeController::class);
+    Route::get('/badges/{badge}/users', [\App\Http\Controllers\Admin\BadgeController::class, 'showUsers'])->name('badges.users');
+    Route::get('/badges/{badge}/award', [\App\Http\Controllers\Admin\BadgeController::class, 'awardForm'])->name('badges.award.form');
+    Route::post('/badges/{badge}/award', [\App\Http\Controllers\Admin\BadgeController::class, 'award'])->name('badges.award');
+    Route::delete('/badges/{badge}/revoke', [\App\Http\Controllers\Admin\BadgeController::class, 'revoke'])->name('badges.revoke');
+
+    Route::resource('achievements', \App\Http\Controllers\Admin\AchievementController::class);
+    Route::get('/achievements/{achievement}/users', [\App\Http\Controllers\Admin\AchievementController::class, 'showUsers'])->name('achievements.users');
+    Route::get('/achievements/{achievement}/unlock', [\App\Http\Controllers\Admin\AchievementController::class, 'unlockForm'])->name('achievements.unlock.form');
+    Route::post('/achievements/{achievement}/unlock', [\App\Http\Controllers\Admin\AchievementController::class, 'unlock'])->name('achievements.unlock');
 });
 
 // Payment Routes

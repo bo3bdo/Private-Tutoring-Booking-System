@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index(): View
     {
         $users = User::with(['roles', 'teacherProfile', 'studentProfile'])
-            ->latest()
+            ->latest('created_at')
             ->paginate(15);
 
         return view('admin.users.index', compact('users'));
@@ -39,7 +39,7 @@ class UserController extends Controller
             },
             'courseEnrollments' => function ($query) {
                 $query->with(['course.subject'])
-                    ->latest()
+                    ->latest('created_at')
                     ->limit(10);
             },
         ]);

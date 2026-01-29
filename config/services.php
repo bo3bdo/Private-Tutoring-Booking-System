@@ -48,4 +48,19 @@ return [
         'webhook_secret' => env('BENEFITPAY_WEBHOOK_SECRET'),
     ],
 
+    'zoom' => [
+        'api_key' => env('ZOOM_API_KEY'),
+        'api_secret' => env('ZOOM_API_SECRET'),
+        'account_id' => env('ZOOM_ACCOUNT_ID'),
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    ],
+
+    'meeting' => [
+        'default_provider' => env('MEETING_DEFAULT_PROVIDER', 'zoom'),
+    ],
+
 ];

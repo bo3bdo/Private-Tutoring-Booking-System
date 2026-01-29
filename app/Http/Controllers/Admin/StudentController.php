@@ -12,7 +12,7 @@ class StudentController extends Controller
     {
         $students = User::role('student')
             ->with(['studentProfile', 'bookings', 'courseEnrollments'])
-            ->latest()
+            ->latest('created_at')
             ->paginate(15);
 
         return view('admin.students.index', compact('students'));
@@ -28,14 +28,14 @@ class StudentController extends Controller
             },
             'courseEnrollments' => function ($query) {
                 $query->with(['course.subject', 'course.teacher', 'course.lessons'])
-                    ->latest();
+                    ->latest('created_at');
             },
             'coursePurchases' => function ($query) {
                 $query->with(['course', 'payment'])
-                    ->latest();
+                    ->latest('created_at');
             },
             'payments' => function ($query) {
-                $query->latest();
+                $query->latest('created_at');
             },
         ]);
 

@@ -23,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'total_points',
+        'current_streak',
+        'last_activity_date',
     ];
 
     /**
@@ -119,6 +122,26 @@ class User extends Authenticatable
     public function reviews(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function pointsHistory(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PointsHistory::class);
+    }
+
+    public function userAchievements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserAchievement::class);
+    }
+
+    public function userBadges(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserBadge::class);
+    }
+
+    public function leaderboardEntries(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LeaderboardEntry::class);
     }
 
     public function conversationsAsUserOne(): \Illuminate\Database\Eloquent\Relations\HasMany

@@ -27,7 +27,7 @@ class DashboardController extends Controller
         ];
 
         $recentBookings = \App\Models\Booking::with(['student', 'teacher.user', 'subject'])
-            ->latest()
+            ->latest('created_at')
             ->limit(10)
             ->get();
 

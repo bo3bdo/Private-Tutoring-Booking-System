@@ -24,7 +24,7 @@ class CourseController extends Controller
         $teacher = auth()->user()->teacherProfile;
         $courses = Course::where('teacher_id', auth()->id())
             ->with(['subject', 'lessons', 'enrollments'])
-            ->latest()
+            ->latest('created_at')
             ->paginate(15);
 
         return view('teacher.courses.index', compact('courses'));

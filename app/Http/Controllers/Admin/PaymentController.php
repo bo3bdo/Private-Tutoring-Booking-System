@@ -26,7 +26,7 @@ class PaymentController extends Controller
             $query->where('status', $request->status);
         }
 
-        $payments = $query->latest()->paginate(20);
+        $payments = $query->latest('created_at')->paginate(20);
 
         $stats = [
             'total' => Payment::count(),

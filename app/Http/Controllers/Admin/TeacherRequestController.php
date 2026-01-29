@@ -32,7 +32,7 @@ class TeacherRequestController extends Controller
             });
         }
 
-        $requests = $query->latest()->paginate(20);
+        $requests = $query->latest('created_at')->paginate(20);
 
         // Statistics
         $pendingCount = TeacherRequest::where('status', 'pending')->count();

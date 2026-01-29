@@ -268,7 +268,7 @@ it('prevents student from creating booking for unavailable slot', function () {
             'subject_id' => $this->subject->id,
             'lesson_mode' => LessonMode::Online->value,
         ])
-        ->assertForbidden();
+        ->assertSessionHasErrors('time_slot_id');
 });
 
 it('prevents student from creating booking for past slot', function () {
@@ -286,5 +286,5 @@ it('prevents student from creating booking for past slot', function () {
             'subject_id' => $this->subject->id,
             'lesson_mode' => LessonMode::Online->value,
         ])
-        ->assertForbidden();
+        ->assertSessionHasErrors('time_slot_id');
 });

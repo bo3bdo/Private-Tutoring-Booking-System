@@ -18,7 +18,7 @@ class TeacherController extends Controller
     public function index(): View
     {
         $teachers = TeacherProfile::with(['user', 'subjects', 'defaultLocation'])
-            ->latest()
+            ->latest('created_at')
             ->paginate(15);
 
         return view('admin.teachers.index', compact('teachers'));

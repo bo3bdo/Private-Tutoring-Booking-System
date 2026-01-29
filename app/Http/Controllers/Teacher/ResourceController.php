@@ -28,7 +28,7 @@ class ResourceController extends Controller
                 ->where('resourceable_id', $request->course_id);
         }
 
-        $resources = $query->latest()->paginate(20);
+        $resources = $query->latest('created_at')->paginate(20);
 
         return view('teacher.resources.index', compact('resources'));
     }

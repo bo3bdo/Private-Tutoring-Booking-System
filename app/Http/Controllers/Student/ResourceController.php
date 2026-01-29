@@ -56,7 +56,7 @@ class ResourceController extends Controller
             });
         }
 
-        $resources = $query->latest()->paginate(20);
+        $resources = $query->latest('created_at')->paginate(20);
 
         return view('student.resources.index', compact('resources', 'booking', 'course'));
     }

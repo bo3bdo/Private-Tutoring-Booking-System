@@ -11,7 +11,7 @@ class CoursesController extends Controller
     public function index(): View
     {
         $courses = Course::with(['teacher', 'subject', 'lessons', 'enrollments'])
-            ->latest()
+            ->latest('created_at')
             ->paginate(20);
 
         return view('admin.courses.index', compact('courses'));

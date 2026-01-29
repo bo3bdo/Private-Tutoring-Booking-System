@@ -30,7 +30,7 @@ class DiscountController extends Controller
             }
         }
 
-        $discounts = $query->latest()->paginate(15);
+        $discounts = $query->latest('created_at')->paginate(15);
 
         return view('admin.discounts.index', compact('discounts'));
     }

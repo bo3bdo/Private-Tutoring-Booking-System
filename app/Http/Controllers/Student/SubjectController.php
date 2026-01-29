@@ -13,7 +13,7 @@ class SubjectController extends Controller
 {
     public function index(): View
     {
-        $subjects = Subject::where('is_active', true)->latest()->get();
+        $subjects = Subject::where('is_active', true)->latest('created_at')->get();
 
         return view('student.subjects.index', compact('subjects'));
     }
@@ -30,7 +30,7 @@ class SubjectController extends Controller
             ->with(['user', 'reviews' => function ($query) {
                 $query->where('is_approved', true);
             }])
-            ->latest()
+            ->latest('created_at')
             ->get();
 
         return view('student.subjects.show', compact('subject', 'teachers'));

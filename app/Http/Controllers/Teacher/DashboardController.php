@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $teacher = auth()->user()->teacherProfile;
 
         // Get bookings with payments
-        $bookings = $teacher->bookings()->with(['payment', 'student', 'subject'])->latest();
+        $bookings = $teacher->bookings()->with(['payment', 'student', 'subject'])->latest('created_at');
 
         // Calculate earnings statistics
         $todayEarnings = $this->calculateEarnings($bookings->get(), 'today');
@@ -22,7 +22,7 @@ class DashboardController extends Controller
         $totalEarnings = $this->calculateEarnings($bookings->get(), 'all');
 
         // Count bookings
-        $allBookings = $teacher->bookings()->latest();
+        $allBookings = $teacher->bookings()->latest('created_at');
         $totalBookings = $allBookings->count();
         $completedBookings = $allBookings->where('status', 'completed')->count();
         $cancelledBookings = $allBookings->where('status', 'cancelled')->count();

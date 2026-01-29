@@ -7,12 +7,17 @@ use App\Http\Requests\StoreMessageRequest;
 use App\Models\Booking;
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Services\Gamification\GamificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class MessageController extends Controller
 {
+    public function __construct(
+        protected GamificationService $gamificationService
+    ) {}
+
     public function index(Request $request): View
     {
         $user = auth()->user();
@@ -89,6 +94,15 @@ class MessageController extends Controller
 
         // Update conversation last message time
         $conversation->update(['last_message_at' => now()]);
+
+        // Award points for sending a message
+        $this->gamificationService->awardPoints(
+            $user,
+            2,
+            'message',
+            'Message sent',
+            $message
+        );
 
         notify()->success()
             ->title(__('common.Sent'))

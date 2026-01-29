@@ -8,12 +8,17 @@ use App\Models\Booking;
 use App\Models\Course;
 use App\Models\Review;
 use App\Models\TeacherProfile;
+use App\Services\Gamification\GamificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
+    public function __construct(
+        protected GamificationService $gamificationService
+    ) {}
+
     public function index(Request $request): View
     {
         $student = auth()->user();
@@ -41,7 +46,7 @@ class ReviewController extends Controller
             $query->where('comment', 'like', "%{$search}%");
         }
 
-        $reviews = $query->latest()->paginate(15);
+        $reviews = $query->latest('created_at')->paginate(15);
 
         // Calculate statistics
         $totalReviews = $student->reviews()->count();
@@ -114,6 +119,15 @@ class ReviewController extends Controller
         }
 
         $review = Review::create($reviewData);
+
+        // Award points for leaving a review
+        $this->gamificationService->awardPoints(
+            auth()->user(),
+            15,
+            'review',
+            'Review submitted',
+            $review
+        );
 
         notify()->success()
             ->title(__('common.Sent'))

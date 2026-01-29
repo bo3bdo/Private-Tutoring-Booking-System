@@ -266,6 +266,177 @@
                 </div>
             </div>
 
+            <!-- Gamification Widget -->
+            <div class="bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-purple-900/30 dark:via-pink-900/30 dark:to-orange-900/30 rounded-2xl shadow-lg border-2 border-purple-200 dark:border-purple-700/50 overflow-hidden">
+                <div class="p-6 border-b border-purple-200 dark:border-purple-700/50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('Your Progress') }}</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('Keep learning to earn more points!') }}</p>
+                            </div>
+                        </div>
+                        <a href="{{ route('student.gamification.index') }}" class="text-sm font-semibold text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300">
+                            {{ __('View Details') }}
+                        </a>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-purple-200 dark:border-purple-700/50 text-center">
+                            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <span class="text-xl font-bold text-purple-600 dark:text-purple-400">{{ $userLevel['current']['level'] }}</span>
+                            </div>
+                            <p class="font-semibold text-gray-900 dark:text-white">{{ $userLevel['current']['name'] }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Level') }}</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-purple-200 dark:border-purple-700/50 text-center">
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ number_format(auth()->user()->total_points) }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Points') }}</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-purple-200 dark:border-purple-700/50 text-center">
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ auth()->user()->current_streak }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Day Streak') }}</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-purple-200 dark:border-purple-700/50 text-center">
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white">#{{ $userRank['rank'] ?? 0 }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Rank') }}</p>
+                        </div>
+                    </div>
+                    @if($unlockedAchievements > 0)
+                    <div class="mt-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-amber-200 dark:border-amber-700/50">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('Achievements Unlocked') }}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ $unlockedAchievements }} {{ __('achievement(s) earned so far') }}</p>
+                            </div>
+                            <a href="{{ route('student.gamification.achievements') }}" class="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- AI Recommendations -->
+            @if(count($recommendedTeachers) > 0 || count($recommendedCourses) > 0)
+            <div class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/30 dark:via-purple-900/30 dark:to-pink-900/30 rounded-2xl shadow-lg border-2 border-indigo-200 dark:border-indigo-700/50 overflow-hidden">
+                <div class="p-6 border-b border-indigo-200 dark:border-indigo-700/50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('Recommended For You') }}</h3>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('Personalized suggestions based on your learning') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <!-- Engagement Analysis -->
+                    @if(isset($engagementAnalysis['recommendations']) && count($engagementAnalysis['recommendations']) > 0)
+                    <div class="mb-6 p-4 bg-white dark:bg-gray-800 rounded-xl border border-amber-200 dark:border-amber-700/50">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                            <p class="font-semibold text-gray-900 dark:text-white">{{ __('Learning Insights') }}</p>
+                        </div>
+                        <ul class="space-y-2">
+                            @foreach($engagementAnalysis['recommendations'] as $recommendation)
+                            <li class="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-400">
+                                <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                {{ $recommendation }}
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Recommended Teachers -->
+                        @if(count($recommendedTeachers) > 0)
+                        <div>
+                            <h4 class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">{{ __('Recommended Teachers') }}</h4>
+                            <div class="space-y-3">
+                                @foreach($recommendedTeachers as $rec)
+                                <a href="{{ route('student.teachers.show', $rec['teacher']) }}" class="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-600 hover:border-indigo-300 dark:hover:border-indigo-500 hover:shadow-md transition group">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-white font-bold">
+                                        {{ substr($rec['teacher']->user->name, 0, 1) }}
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-semibold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition truncate">{{ $rec['teacher']->user->name }}</p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ number_format($rec['teacher']->hourly_rate, 2) }} BHD/hr</p>
+                                        @if(count($rec['reasons']) > 0)
+                                        <p class="text-xs text-indigo-600 dark:text-indigo-400 mt-1">{{ $rec['reasons'][0] }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-lg text-sm font-semibold">
+                                            {{ round($rec['score']) }}%
+                                        </span>
+                                    </div>
+                                </a>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Recommended Courses -->
+                        @if(count($recommendedCourses) > 0)
+                        <div>
+                            <h4 class="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">{{ __('Recommended Courses') }}</h4>
+                            <div class="space-y-3">
+                                @foreach($recommendedCourses as $rec)
+                                <a href="{{ route('student.courses.show', $rec['course']) }}" class="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-slate-200 dark:border-gray-600 hover:border-purple-300 dark:hover:border-purple-500 hover:shadow-md transition group">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center text-white">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-semibold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition truncate">{{ $rec['course']->title }}</p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ number_format($rec['course']->price, 2) }} BHD</p>
+                                        @if(count($rec['reasons']) > 0)
+                                        <p class="text-xs text-purple-600 dark:text-purple-400 mt-1">{{ $rec['reasons'][0] }}</p>
+                                        @endif
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-lg text-sm font-semibold">
+                                            {{ round($rec['score']) }}%
+                                        </span>
+                                    </div>
+                                </a>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endif
+
             <!-- Quick Actions -->
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-6 border-b border-slate-200 dark:border-gray-700">
