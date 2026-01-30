@@ -10,9 +10,9 @@
             <div class="relative z-20 flex items-center justify-between">
                 <div>
                     <h2 class="font-semibold text-3xl text-white leading-tight drop-shadow-lg">
-                        {{ __('Gamification') }}
+                        {{ __('gamification.Gamification') }}
                     </h2>
-                    <p class="text-sm text-gray-100 dark:text-gray-200 mt-2 drop-shadow-md">{{ __('Track your progress, earn points, and unlock achievements') }}</p>
+                    <p class="text-sm text-gray-100 dark:text-gray-200 mt-2 drop-shadow-md">{{ __('gamification.Track your progress, earn points, and unlock achievements') }}</p>
                 </div>
                 <div class="hidden md:block">
                     <div class="w-24 h-24 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 dark:border-white/20 shadow-lg">
@@ -36,7 +36,7 @@
                             <div class="w-32 h-32 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
                                 <div class="w-28 h-28 rounded-full bg-white dark:bg-gray-800 flex flex-col items-center justify-center">
                                     <span class="text-4xl font-bold text-purple-600 dark:text-purple-400">{{ $level['current']['level'] }}</span>
-                                    <span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">{{ __('Level') }}</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">{{ __('gamification.Level') }}</span>
                                 </div>
                             </div>
                             <div class="absolute -bottom-2 -right-2 bg-yellow-400 rounded-full p-2 shadow-md">
@@ -51,7 +51,7 @@
                     <!-- Progress & Stats -->
                     <div class="flex-1 w-full">
                         <div class="flex items-center justify-between mb-2">
-                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('Progress to next level') }}</span>
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('gamification.Progress to next level') }}</span>
                             <span class="text-sm font-bold text-purple-600 dark:text-purple-400">{{ $progressPercentage }}%</span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 mb-6">
@@ -61,19 +61,19 @@
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                             <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-slate-200 dark:border-gray-700 text-center">
                                 <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ number_format($user->total_points) }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Total Points') }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('gamification.Total Points') }}</p>
                             </div>
                             <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-slate-200 dark:border-gray-700 text-center">
                                 <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $user->current_streak }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Day Streak') }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('gamification.Day Streak') }}</p>
                             </div>
                             <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-slate-200 dark:border-gray-700 text-center">
                                 <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $unlockedAchievements }}/{{ $totalAchievements }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Achievements') }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('gamification.Achievements') }}</p>
                             </div>
                             <div class="bg-white dark:bg-gray-800 rounded-xl p-4 border border-slate-200 dark:border-gray-700 text-center">
                                 <p class="text-2xl font-bold text-gray-900 dark:text-white">#{{ $userRank['rank'] ?? 0 }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Rank') }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('gamification.Rank') }}</p>
                             </div>
                         </div>
                     </div>
@@ -89,8 +89,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-400 transition">{{ __('Achievements') }}</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('View all achievements and badges') }}</p>
+                        <h3 class="font-semibold text-gray-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-400 transition">{{ __('gamification.Achievements') }}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('gamification.View all achievements and badges') }}</p>
                     </div>
                     <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 ml-auto opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -104,8 +104,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">{{ __('Leaderboard') }}</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('See how you rank against others') }}</p>
+                        <h3 class="font-semibold text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">{{ __('gamification.Leaderboard') }}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('gamification.See how you rank against others') }}</p>
                     </div>
                     <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 ml-auto opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -119,8 +119,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ __('Book a Lesson') }}</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('Earn points by booking lessons') }}</p>
+                        <h3 class="font-semibold text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">{{ __('gamification.Book a Lesson') }}</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('gamification.Earn points by booking lessons') }}</p>
                     </div>
                     <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 ml-auto opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -134,9 +134,9 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-6 border-b border-slate-200 dark:border-gray-700">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('Recent Achievements') }}</h3>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('gamification.Recent Achievements') }}</h3>
                         <a href="{{ route('student.gamification.achievements') }}" class="text-sm font-semibold text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300">
-                            {{ __('View All') }}
+                            {{ __('gamification.View All') }}
                         </a>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
                             </div>
                             <div>
                                 <p class="font-semibold text-gray-900 dark:text-white">{{ $achievement['name'] }}</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-400">+{{ $achievement['points'] }} {{ __('points') }}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">+{{ $achievement['points'] }} {{ __('gamification.points') }}</p>
                             </div>
                         </div>
                         @endforeach
@@ -164,7 +164,7 @@
             @if(count($badges) > 0)
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-6 border-b border-slate-200 dark:border-gray-700">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('My Badges') }}</h3>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('gamification.My Badges') }}</h3>
                 </div>
                 <div class="p-6">
                     <div class="flex flex-wrap gap-4">
@@ -187,7 +187,7 @@
             <!-- Points History -->
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-6 border-b border-slate-200 dark:border-gray-700">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('Points History') }}</h3>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('gamification.Points History') }}</h3>
                 </div>
                 <div class="p-6">
                     @if($pointsHistory->count() > 0)
@@ -222,8 +222,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">{{ __('No points history yet') }}</p>
-                        <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">{{ __('Start booking lessons to earn points!') }}</p>
+                        <p class="text-gray-600 dark:text-gray-400">{{ __('gamification.No points history yet') }}</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">{{ __('gamification.Start booking lessons to earn points!') }}</p>
                     </div>
                     @endif
                 </div>
@@ -233,9 +233,9 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-6 border-b border-slate-200 dark:border-gray-700">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('Top Learners') }}</h3>
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('gamification.Top Learners') }}</h3>
                         <a href="{{ route('student.gamification.leaderboard') }}" class="text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300">
-                            {{ __('View Full Leaderboard') }}
+                            {{ __('gamification.View Full Leaderboard') }}
                         </a>
                     </div>
                 </div>
@@ -253,14 +253,14 @@
                                 <p class="font-semibold text-gray-900 dark:text-white">
                                     {{ $leader['name'] }}
                                     @if($leader['id'] === $user->id)
-                                    <span class="text-xs ml-2 px-2 py-0.5 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full">{{ __('You') }}</span>
+                                    <span class="text-xs ml-2 px-2 py-0.5 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full">{{ __('gamification.You') }}</span>
                                     @endif
                                 </p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ number_format($leader['points']) }} {{ __('points') }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ number_format($leader['points']) }} {{ __('gamification.points') }}</p>
                             </div>
                             <div class="text-right">
                                 <p class="font-bold text-gray-900 dark:text-white">{{ number_format($leader['points']) }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('points') }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('gamification.points') }}</p>
                             </div>
                         </div>
                         @endforeach

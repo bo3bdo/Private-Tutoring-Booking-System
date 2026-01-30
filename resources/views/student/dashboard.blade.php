@@ -317,7 +317,7 @@
                                 </svg>
                             </div>
                             <div class="flex-1">
-                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('Achievements Unlocked') }}</p>
+                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('gamification.Achievements Unlocked') }}</p>
                                 <p class="text-sm text-gray-600 dark:text-gray-400">{{ $unlockedAchievements }} {{ __('achievement(s) earned so far') }}</p>
                             </div>
                             <a href="{{ route('student.gamification.achievements') }}" class="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300">

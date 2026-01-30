@@ -287,4 +287,76 @@ class User extends Authenticatable
         // Use abs() to ensure positive value regardless of order
         return abs($this->last_seen_at->diffInSeconds(now())) <= 90;
     }
+
+    // Forum Relationships
+    public function forumThreads(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ForumThread::class);
+    }
+
+    public function forumPosts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ForumPost::class);
+    }
+
+    public function forumReactions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ForumReaction::class);
+    }
+
+    public function forumSubscriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ForumSubscription::class);
+    }
+
+    public function subscribedThreads(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasManyThrough(
+            ForumThread::class,
+            ForumSubscription::class,
+            'user_id',
+            'id',
+            'id',
+            'thread_id'
+        );
+    }
+
+    public function getForumThreadsCountAttribute(): int
+    {
+        return $this->forumThreads()->count();
+    }
+
+    public function getForumPostsCountAttribute(): int
+    {
+        return $this->forumPosts()->count();
+    }
+
+    public function getForumUpvotesReceivedAttribute(): int
+    {
+        return $this->forumReactions()
+            ->whereHas('reactable', function ($query) {
+                $query->whereIn('reactable_type', [ForumThread::class, ForumPost::class]);
+            })
+            ->where('reaction_type', 'upvote')
+            ->count();
+    }
+
+    public function hasReactedTo(\Illuminate\Database\Eloquent\Model $reactable, string $reactionType): bool
+    {
+        return ForumReaction::hasReaction($this, $reactable, $reactionType);
+    }
+
+    public function addPoints(int $points, string $source, ?string $description = null): void
+    {
+        $this->increment('total_points', $points);
+
+        $this->pointsHistory()->create([
+            'points' => $points,
+            'source' => $source,
+            'description' => $description,
+        ]);
+
+        // Update user's last activity
+        $this->update(['last_activity_date' => now()]);
+    }
 }

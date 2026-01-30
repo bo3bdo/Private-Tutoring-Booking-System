@@ -8,9 +8,9 @@
             <div class="relative z-20 flex items-center justify-between">
                 <div>
                     <h2 class="font-semibold text-3xl text-white leading-tight drop-shadow-lg">
-                        {{ __('Achievements & Badges') }}
+                        {{ __('gamification.Achievements & Badges') }}
                     </h2>
-                    <p class="text-sm text-gray-100 dark:text-gray-200 mt-2 drop-shadow-md">{{ __('Unlock achievements and collect badges as you learn') }}</p>
+                    <p class="text-sm text-gray-100 dark:text-gray-200 mt-2 drop-shadow-md">{{ __('gamification.Unlock achievements and collect badges as you learn') }}</p>
                 </div>
                 <div class="hidden md:block">
                     <div class="w-24 h-24 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 dark:border-white/20 shadow-lg">
@@ -34,7 +34,7 @@
                         </svg>
                     </div>
                     <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ collect($achievements)->where('is_unlocked', true)->count() }}</p>
-                    <p class="text-sm text-amber-700 dark:text-amber-300 uppercase font-semibold">{{ __('Unlocked') }}</p>
+                    <p class="text-sm text-amber-700 dark:text-amber-300 uppercase font-semibold">{{ __('gamification.Unlocked') }}</p>
                 </div>
 
                 <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 rounded-2xl shadow-lg border-2 border-purple-200 dark:border-purple-700/50 p-6 text-center">
@@ -44,7 +44,7 @@
                         </svg>
                     </div>
                     <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ count($badges) }}</p>
-                    <p class="text-sm text-purple-700 dark:text-purple-300 uppercase font-semibold">{{ __('Badges') }}</p>
+                    <p class="text-sm text-purple-700 dark:text-purple-300 uppercase font-semibold">{{ __('gamification.Badges') }}</p>
                 </div>
 
                 <div class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/30 dark:to-teal-900/30 rounded-2xl shadow-lg border-2 border-emerald-200 dark:border-emerald-700/50 p-6 text-center">
@@ -54,7 +54,7 @@
                         </svg>
                     </div>
                     <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ number_format(collect($achievements)->where('is_unlocked', true)->sum('points')) }}</p>
-                    <p class="text-sm text-emerald-700 dark:text-emerald-300 uppercase font-semibold">{{ __('Points Earned') }}</p>
+                    <p class="text-sm text-emerald-700 dark:text-emerald-300 uppercase font-semibold">{{ __('gamification.Points Earned') }}</p>
                 </div>
             </div>
 
@@ -66,7 +66,7 @@
                         <svg class="w-6 h-6 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
-                        {{ __('My Badges') }}
+                        {{ __('gamification.My Badges') }}
                     </h3>
                 </div>
                 <div class="p-6">
@@ -109,7 +109,7 @@
                         <svg class="w-6 h-6 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                         </svg>
-                        {{ __('Available Badges to Earn') }}
+                        {{ __('gamification.Available Badges to Earn') }}
                     </h3>
                 </div>
                 <div class="p-6">
@@ -161,8 +161,8 @@
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <p class="text-lg font-bold text-gray-900 dark:text-white">{{ __('Congratulations!') }}</p>
-                            <p class="text-gray-600 dark:text-gray-400">{{ __('You have collected all available badges!') }}</p>
+                            <p class="text-lg font-bold text-gray-900 dark:text-white">{{ __('gamification.Congratulations!') }}</p>
+                            <p class="text-gray-600 dark:text-gray-400">{{ __('gamification.You have collected all available badges!') }}</p>
                         </div>
                         @endforelse
                     </div>
@@ -176,7 +176,7 @@
                         <svg class="w-6 h-6 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
-                        {{ __('All Achievements') }}
+                        {{ __('gamification.All Achievements') }}
                     </h3>
                 </div>
                 <div class="p-6">
@@ -201,12 +201,12 @@
                                     <div class="flex items-center gap-2">
                                         <p class="font-semibold text-gray-900 dark:text-white {{ $achievement['is_unlocked'] ? '' : 'text-gray-500 dark:text-gray-400' }}">{{ $achievement['name'] }}</p>
                                         @if($achievement['is_unlocked'])
-                                        <span class="text-xs px-2 py-0.5 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full">{{ __('Unlocked') }}</span>
+                                        <span class="text-xs px-2 py-0.5 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full">{{ __('gamification.Unlocked') }}</span>
                                         @endif
                                     </div>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">{{ $achievement['description'] }}</p>
                                     @if($achievement['is_unlocked'] && $achievement['unlocked_at'])
-                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ __('Unlocked') }}: {{ $achievement['unlocked_at']->format('M d, Y') }}</p>
+                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ __('gamification.Unlocked') }}: {{ $achievement['unlocked_at']->format('M d, Y') }}</p>
                                     @endif
                                 </div>
                                 <div class="flex-shrink-0 text-right">
@@ -228,7 +228,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                             </svg>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-400">{{ __('No achievements available yet') }}</p>
+                        <p class="text-gray-600 dark:text-gray-400">{{ __('gamification.No achievements available yet') }}</p>
                     </div>
                     @endforelse
                 </div>

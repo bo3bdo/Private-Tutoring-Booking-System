@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ForumController as AdminForumController;
 use App\Http\Controllers\Dev\QuickLoginController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\PaymentController;
@@ -211,6 +212,27 @@ Route::middleware(['auth', 'throttle:60,1'])->prefix('api')->group(function () {
     });
 });
 
+// Forum Routes - All authenticated users
+Route::middleware(['auth'])->prefix('forum')->name('forum.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Forum\ForumController::class, 'index'])->name('home');
+    Route::get('/search', [\App\Http\Controllers\Forum\ForumController::class, 'search'])->name('search');
+    Route::get('/category/{slug}', [\App\Http\Controllers\Forum\ForumController::class, 'category'])->name('category');
+    Route::get('/thread/{slug}', [\App\Http\Controllers\Forum\ForumController::class, 'thread'])->name('thread');
+
+    // Thread creation
+    Route::get('/create-thread', [\App\Http\Controllers\Forum\ForumController::class, 'createThread'])->name('create-thread');
+    Route::post('/thread', [\App\Http\Controllers\Forum\ForumController::class, 'storeThread'])->name('store-thread');
+
+    // Post creation and replies
+    Route::get('/thread/{slug}/reply', [\App\Http\Controllers\Forum\ForumController::class, 'createPost'])->name('create-post');
+    Route::post('/thread/{slug}/reply', [\App\Http\Controllers\Forum\ForumController::class, 'storePost'])->name('store-post');
+
+    // AJAX reactions and interactions
+    Route::post('/react/{type}/{id}', [\App\Http\Controllers\Forum\ForumController::class, 'toggleReaction'])->name('react');
+    Route::post('/subscribe/{slug}', [\App\Http\Controllers\Forum\ForumController::class, 'toggleSubscription'])->name('subscribe');
+    Route::post('/best-answer/{threadSlug}/{postId}', [\App\Http\Controllers\Forum\ForumController::class, 'markAsBestAnswer'])->name('best-answer');
+});
+
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
@@ -261,6 +283,34 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Calendar Routes
     Route::get('/calendar', [\App\Http\Controllers\CalendarController::class, 'index'])->name('calendar.index');
+
+    // Forum Admin Routes
+    Route::prefix('forum')->name('forum.')->group(function () {
+        Route::get('/dashboard', [AdminForumController::class, 'dashboard'])->name('dashboard');
+
+        // Category Management
+        Route::get('/categories', [AdminForumController::class, 'categories'])->name('categories');
+        Route::get('/categories/create', [AdminForumController::class, 'createCategory'])->name('categories.create');
+        Route::post('/categories', [AdminForumController::class, 'storeCategory'])->name('categories.store');
+        Route::get('/categories/{category}/edit', [AdminForumController::class, 'editCategory'])->name('categories.edit');
+        Route::put('/categories/{category}', [AdminForumController::class, 'updateCategory'])->name('categories.update');
+        Route::delete('/categories/{category}', [AdminForumController::class, 'deleteCategory'])->name('categories.destroy');
+        Route::post('/categories/reorder', [AdminForumController::class, 'reorderCategories'])->name('categories.reorder');
+
+        // Thread Management
+        Route::get('/threads', [AdminForumController::class, 'threads'])->name('threads');
+        Route::get('/threads/{thread}/edit', [AdminForumController::class, 'editThread'])->name('threads.edit');
+        Route::put('/threads/{thread}', [AdminForumController::class, 'updateThread'])->name('threads.update');
+        Route::delete('/threads/{thread}', [AdminForumController::class, 'deleteThread'])->name('threads.destroy');
+        Route::post('/threads/{thread}/pin', [AdminForumController::class, 'pinThread'])->name('threads.pin');
+        Route::post('/threads/{thread}/lock', [AdminForumController::class, 'lockThread'])->name('threads.lock');
+
+        // Post Management
+        Route::get('/posts', [AdminForumController::class, 'posts'])->name('posts');
+        Route::get('/posts/{post}/edit', [AdminForumController::class, 'editPost'])->name('posts.edit');
+        Route::put('/posts/{post}', [AdminForumController::class, 'updatePost'])->name('posts.update');
+        Route::delete('/posts/{post}', [AdminForumController::class, 'deletePost'])->name('posts.destroy');
+    });
 
     // Gamification Routes
     Route::resource('badges', \App\Http\Controllers\Admin\BadgeController::class);

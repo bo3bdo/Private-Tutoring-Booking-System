@@ -42,6 +42,9 @@
                         <x-nav-link :href="route('admin.support-tickets.index')" :active="request()->routeIs('admin.support-tickets.*')" :badge="auth()->user()->totalUnreadSupportTicketsCount()">
                             {{ __('common.Support Tickets') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.forum.dashboard')" :active="request()->routeIs('admin.forum.*')">
+                            {{ __('forum.Forum') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.teacher-requests.index')" :active="request()->routeIs('admin.teacher-requests.*')" :badge="\App\Models\TeacherRequest::where('status', 'pending')->count()">
                             {{ __('common.Teacher Requests') }}
                         </x-nav-link>
@@ -76,6 +79,9 @@
                         <x-nav-link :href="route('teacher.reviews.index')" :active="request()->routeIs('teacher.reviews.*')">
                             {{ __('common.My Reviews') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('forum.home')" :active="request()->routeIs('forum.*')">
+                            {{ __('forum.Forum') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('teacher.earnings.index')" :active="request()->routeIs('teacher.earnings.*')">
                             {{ __('common.Earnings') }}
                         </x-nav-link>
@@ -107,8 +113,11 @@
                         <x-nav-link :href="route('student.payment-history.index')" :active="request()->routeIs('student.payment-history.*')">
                             {{ __('common.Payment History') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('forum.home')" :active="request()->routeIs('forum.*')">
+                            {{ __('forum.Forum') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('student.gamification.index')" :active="request()->routeIs('student.gamification.*')">
-                            {{ __('Achievements') }}
+                            {{ __('gamification.Achievements') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -273,7 +282,7 @@
                     {{ __('common.Payment History') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('student.gamification.index')" :active="request()->routeIs('student.gamification.*')">
-                    {{ __('Achievements') }}
+                    {{ __('gamification.Achievements') }}
                 </x-responsive-nav-link>
             @endif
         </div>
