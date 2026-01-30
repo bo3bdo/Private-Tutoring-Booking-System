@@ -113,8 +113,8 @@
             @endif
         </div>
 
-        <div class="prose dark:prose-invert max-w-none">
-            {{ $thread->content }}
+        <div class="prose dark:prose-invert max-w-none forum-content">
+            {!! \App\Helpers\ForumHelper::parseMentions($thread->content, \App\Helpers\ForumHelper::threadUsers($thread)) !!}
         </div>
 
         <!-- Vote Buttons -->
@@ -169,8 +169,8 @@
                     </div>
                 </div>
 
-                <div class="prose dark:prose-invert max-w-none mb-4">
-                    {{ $post->content }}
+                <div class="prose dark:prose-invert max-w-none mb-4 forum-content">
+                    {!! \App\Helpers\ForumHelper::parseMentions($post->content, \App\Helpers\ForumHelper::threadUsers($thread)) !!}
                 </div>
 
                 <!-- Post Vote Buttons -->

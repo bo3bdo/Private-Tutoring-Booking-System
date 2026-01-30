@@ -121,5 +121,6 @@ return [
     'Connection error' => 'خطأ في الاتصال',
     'Vote failed' => 'فشل التصويت',
     'Searching in titles, content, posts, usernames, and categories' => 'البحث في العناوين، المحتوى، المشاركات، أسماء المستخدمين، والفئات',
+    'Mention hint' => 'استخدم @الاسم (مثال: @ahmed-alkhalifa) للإشارة إلى شخص. سيظهر مميزاً في الموضوع.',
 
 ];

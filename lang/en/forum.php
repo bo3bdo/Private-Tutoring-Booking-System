@@ -121,5 +121,6 @@ return [
     'Connection error' => 'Connection error',
     'Vote failed' => 'Vote failed',
     'Searching in titles, content, posts, usernames, and categories' => 'Searching in titles, content, posts, usernames, and categories',
+    'Mention hint' => 'Use @name (e.g. @ahmed-alkhalifa) to mention someone. They will be highlighted in the thread.',
 
 ];
