@@ -74,14 +74,18 @@ class ReportService
         $startDate = $startDate ?? Carbon::now()->startOfMonth();
         $endDate = $endDate ?? Carbon::now()->endOfMonth();
 
-        $teachers = TeacherProfile::with(['user', 'bookings' => function ($query) use ($startDate, $endDate) {
-            $query->whereBetween('created_at', [$startDate, $endDate]);
-        }])
+        $teachers = TeacherProfile::with([
+            'user',
+            'bookings' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            },
+            'reviews' => function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('created_at', [$startDate, $endDate]);
+            },
+        ])
             ->get()
             ->map(function ($teacher) use ($startDate, $endDate) {
-                $bookings = $teacher->bookings()
-                    ->whereBetween('created_at', [$startDate, $endDate])
-                    ->get();
+                $bookings = $teacher->bookings;
 
                 $completedBookings = $bookings->where('status', 'completed')->count();
                 $totalBookings = $bookings->count();
@@ -94,9 +98,7 @@ class ReportService
                     ->where('status', 'succeeded')
                     ->sum('amount');
 
-                $averageRating = $teacher->reviews()
-                    ->whereBetween('created_at', [$startDate, $endDate])
-                    ->avg('rating') ?? 0;
+                $averageRating = $teacher->reviews->avg('rating') ?? 0;
 
                 return [
                     'id' => $teacher->id,
@@ -130,9 +132,7 @@ class ReportService
             }])
             ->get()
             ->map(function ($student) use ($startDate, $endDate) {
-                $bookings = $student->bookings()
-                    ->whereBetween('created_at', [$startDate, $endDate])
-                    ->get();
+                $bookings = $student->bookings;
 
                 $completedBookings = $bookings->where('status', 'completed')->count();
                 $totalBookings = $bookings->count();

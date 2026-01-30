@@ -68,6 +68,11 @@ class CoursePolicy
         return $this->update($user, $course);
     }
 
+    public function togglePublish(User $user, Course $course): bool
+    {
+        return $user->isAdmin();
+    }
+
     public function manageLessons(User $user, Course $course): bool
     {
         return $this->update($user, $course);

@@ -25,6 +25,8 @@ class LocationController extends Controller
 
     public function store(StoreLocationRequest $request): RedirectResponse
     {
+        $this->authorize('create', Location::class);
+
         Location::create([
             'name' => $request->name,
             'address' => $request->address,
@@ -55,6 +57,8 @@ class LocationController extends Controller
 
     public function update(UpdateLocationRequest $request, Location $location): RedirectResponse
     {
+        $this->authorize('update', $location);
+
         $location->update([
             'name' => $request->name,
             'address' => $request->address,
@@ -73,6 +77,8 @@ class LocationController extends Controller
 
     public function destroy(Location $location): RedirectResponse
     {
+        $this->authorize('delete', $location);
+
         if ($location->bookings()->exists()) {
             notify()->error()
                 ->title(__('common.Error'))

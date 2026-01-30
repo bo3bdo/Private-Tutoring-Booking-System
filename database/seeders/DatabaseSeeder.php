@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             RealisticDataSeeder::class,
             BadgeSeeder::class,
             AchievementSeeder::class,
+            RealisticForumSeeder::class,
         ]);
     }
 }

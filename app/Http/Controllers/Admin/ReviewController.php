@@ -29,6 +29,8 @@ class ReviewController extends Controller
 
     public function approve(Review $review): RedirectResponse
     {
+        $this->authorize('approve', Review::class);
+
         $review->approve();
 
         notify()->success()
@@ -41,6 +43,8 @@ class ReviewController extends Controller
 
     public function destroy(Review $review): RedirectResponse
     {
+        $this->authorize('delete', $review);
+
         $review->delete();
 
         notify()->success()

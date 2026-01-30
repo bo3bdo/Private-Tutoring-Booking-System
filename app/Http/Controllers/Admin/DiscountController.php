@@ -42,6 +42,8 @@ class DiscountController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('create', Discount::class);
+
         $validated = $request->validate([
             'code' => 'required|string|unique:discounts,code|max:50',
             'name' => 'required|string|max:255',
@@ -74,6 +76,8 @@ class DiscountController extends Controller
 
     public function update(Request $request, Discount $discount): RedirectResponse
     {
+        $this->authorize('update', $discount);
+
         $validated = $request->validate([
             'code' => 'required|string|unique:discounts,code,'.$discount->id.'|max:50',
             'name' => 'required|string|max:255',
@@ -101,6 +105,8 @@ class DiscountController extends Controller
 
     public function destroy(Discount $discount): RedirectResponse
     {
+        $this->authorize('delete', $discount);
+
         $discount->delete();
 
         notify()->success()

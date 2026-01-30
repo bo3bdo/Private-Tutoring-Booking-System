@@ -17,13 +17,11 @@ class CourseSalesController extends Controller
             ->latest('enrolled_at')
             ->paginate(20);
 
+        // Use database aggregation instead of loading all records
         $totalRevenue = $course->purchases()
-            ->whereHas('payment', function ($query) {
-                $query->where('status', 'succeeded');
-            })
-            ->with('payment')
-            ->get()
-            ->sum(fn ($purchase) => $purchase->payment->amount ?? 0);
+            ->join('payments', 'course_purchases.payment_id', '=', 'payments.id')
+            ->where('payments.status', 'succeeded')
+            ->sum('payments.amount');
 
         $totalEnrollments = $enrollments->total();
 

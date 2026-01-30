@@ -8,9 +8,9 @@
             <div class="relative z-20 flex items-center justify-between">
                 <div>
                     <h2 class="font-semibold text-3xl text-white leading-tight drop-shadow-lg">
-                        {{ __('Leaderboard') }}
+                        {{ __('gamification.Leaderboard') }}
                     </h2>
-                    <p class="text-sm text-gray-100 dark:text-gray-200 mt-2 drop-shadow-md">{{ __('Compete with other learners and climb the ranks') }}</p>
+                    <p class="text-sm text-gray-100 dark:text-gray-200 mt-2 drop-shadow-md">{{ __('gamification.Compete with other learners and climb the ranks') }}</p>
                 </div>
                 <div class="hidden md:block">
                     <div class="w-24 h-24 bg-white/20 dark:bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 dark:border-white/20 shadow-lg">
@@ -29,24 +29,24 @@
             <div class="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/30 dark:to-teal-900/30 rounded-2xl shadow-lg border-2 border-emerald-200 dark:border-emerald-700/50 p-6">
                 <div class="flex flex-col md:flex-row items-center gap-6">
                     <div class="flex-shrink-0">
-                        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg">
-                            <div class="w-20 h-20 rounded-full bg-white dark:bg-gray-800 flex flex-col items-center justify-center">
-                                <span class="text-3xl font-bold text-emerald-600 dark:text-emerald-400">#{{ $userRank['rank'] ?? 0 }}</span>
-                                <span class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Rank') }}</span>
+                            <div class="w-24 h-24 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg">
+                                <div class="w-20 h-20 rounded-full bg-white dark:bg-gray-800 flex flex-col items-center justify-center">
+                                    <span class="text-3xl font-bold text-emerald-600 dark:text-emerald-400">#{{ $userRank['rank'] ?? 0 }}</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('gamification.Rank') }}</span>
+                                </div>
                             </div>
-                        </div>
                     </div>
                     <div class="flex-1 text-center md:text-left">
                         <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ $user->name }}</h3>
-                        <p class="text-gray-600 dark:text-gray-400">{{ __('Level') }} {{ $level['current']['level'] }} - {{ $level['current']['name'] }}</p>
+                        <p class="text-gray-600 dark:text-gray-400">{{ __('gamification.Level') }} {{ $level['current']['level'] }} - {{ $level['current']['name'] }}</p>
                         <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-4">
                             <div class="px-4 py-2 bg-white dark:bg-gray-800 rounded-xl border border-emerald-200 dark:border-emerald-700/50">
                                 <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ number_format($user->total_points) }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Points') }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('gamification.Points') }}</p>
                             </div>
                             <div class="px-4 py-2 bg-white dark:bg-gray-800 rounded-xl border border-emerald-200 dark:border-emerald-700/50">
                                 <p class="text-2xl font-bold text-teal-600 dark:text-teal-400">{{ $user->current_streak }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('Day Streak') }}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 uppercase">{{ __('gamification.Day Streak') }}</p>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                             </svg>
-                            {{ __('Earn More Points') }}
+                            {{ __('gamification.Earn More Points') }}
                         </a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <svg class="w-6 h-6 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                         </svg>
-                        {{ __('How to Earn Points') }}
+                        {{ __('gamification.How to Earn Points') }}
                     </h3>
                 </div>
                 <div class="p-6">
@@ -80,8 +80,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('Book a Lesson') }}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('+10 points') }}</p>
+                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('gamification.Book a Lesson') }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('gamification.+10 points') }}</p>
                             </div>
                         </div>
 
@@ -92,8 +92,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('Complete a Lesson') }}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('+25 points') }}</p>
+                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('gamification.Complete a Lesson') }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('gamification.+25 points') }}</p>
                             </div>
                         </div>
 
@@ -104,8 +104,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('Send a Message') }}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('+2 points') }}</p>
+                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('gamification.Send a Message') }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('gamification.+2 points') }}</p>
                             </div>
                         </div>
 
@@ -116,8 +116,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('Leave a Review') }}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('+15 points') }}</p>
+                                <p class="font-semibold text-gray-900 dark:text-white">{{ __('gamification.Leave a Review') }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('gamification.+15 points') }}</p>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
             @endphp
             @if($leaderboardCollection->count() >= 3)
             <div class="bg-gradient-to-br from-yellow-50 via-orange-50 to-amber-50 dark:from-yellow-900/20 dark:via-orange-900/20 dark:to-amber-900/20 rounded-2xl shadow-lg border-2 border-yellow-200 dark:border-yellow-700/50 p-8">
-                <h3 class="text-center text-xl font-bold text-gray-900 dark:text-white mb-8">{{ __('Top Learners') }}</h3>
+                <h3 class="text-center text-xl font-bold text-gray-900 dark:text-white mb-8">{{ __('gamification.Top Learners') }}</h3>
                 <div class="flex justify-center items-end gap-4 md:gap-8">
                     <!-- Second Place -->
                     <div class="flex flex-col items-center">
@@ -189,7 +189,7 @@
                         <svg class="w-6 h-6 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                         </svg>
-                        {{ __('Full Leaderboard') }}
+                        {{ __('gamification.Full Leaderboard') }}
                     </h3>
                 </div>
                 <div class="divide-y divide-slate-200 dark:divide-gray-700">
@@ -205,14 +205,14 @@
                             <div class="flex items-center gap-2">
                                 <p class="font-semibold text-gray-900 dark:text-white truncate">{{ $leader['name'] }}</p>
                                 @if($leader['id'] === $user->id)
-                                <span class="text-xs px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 rounded-full">{{ __('You') }}</span>
+                                <span class="text-xs px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 rounded-full">{{ __('gamification.You') }}</span>
                                 @endif
                             </div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ number_format($leader['points']) }} {{ __('points') }}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ number_format($leader['points']) }} {{ __('gamification.points') }}</p>
                         </div>
                         <div class="text-right">
                             <p class="font-bold text-gray-900 dark:text-white">{{ number_format($leader['points']) }}</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('points') }}</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{{ __('gamification.points') }}</p>
                         </div>
                     </div>
                     @endforeach

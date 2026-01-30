@@ -18,6 +18,7 @@ return [
     'Subjects' => 'Subjects',
     'Locations' => 'Locations',
     'Teachers' => 'Teachers',
+    'Forum' => 'Forum',
     'Users' => 'Users',
     'Role' => 'Role',
     'Reviews' => 'Reviews',

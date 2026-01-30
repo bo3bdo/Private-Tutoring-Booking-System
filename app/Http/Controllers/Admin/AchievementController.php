@@ -41,6 +41,8 @@ class AchievementController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $this->authorize('create', Achievement::class);
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:achievements,slug'],
@@ -83,6 +85,8 @@ class AchievementController extends Controller
 
     public function update(Request $request, Achievement $achievement): RedirectResponse
     {
+        $this->authorize('update', $achievement);
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:achievements,slug,'.$achievement->id],
@@ -109,6 +113,8 @@ class AchievementController extends Controller
 
     public function destroy(Achievement $achievement): RedirectResponse
     {
+        $this->authorize('delete', $achievement);
+
         // Check if achievement has been unlocked by users
         if ($achievement->userAchievements()->whereNotNull('unlocked_at')->count() > 0) {
             notify()->warning()
@@ -146,6 +152,8 @@ class AchievementController extends Controller
 
     public function unlock(Request $request, Achievement $achievement): RedirectResponse
     {
+        $this->authorize('unlock', Achievement::class);
+
         $validated = $request->validate([
             'user_id' => ['required', 'exists:users,id'],
         ]);

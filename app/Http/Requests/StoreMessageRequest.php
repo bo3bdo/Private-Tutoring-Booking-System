@@ -8,7 +8,23 @@ class StoreMessageRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        // Verify user belongs to the conversation
+        $conversationId = $this->input('conversation_id');
+
+        if (! $conversationId) {
+            return false;
+        }
+
+        $conversation = \App\Models\Conversation::find($conversationId);
+
+        if (! $conversation) {
+            return false;
+        }
+
+        // Check if authenticated user is either user_one or user_two in the conversation
+        $user = $this->user();
+
+        return $user && ($conversation->user_one_id === $user->id || $conversation->user_two_id === $user->id);
     }
 
     public function rules(): array

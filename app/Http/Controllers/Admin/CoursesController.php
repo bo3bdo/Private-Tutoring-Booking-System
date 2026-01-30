@@ -26,6 +26,8 @@ class CoursesController extends Controller
 
     public function togglePublish(Course $course): \Illuminate\Http\RedirectResponse
     {
+        $this->authorize('togglePublish', $course);
+
         if ($course->is_published) {
             $course->update([
                 'is_published' => false,

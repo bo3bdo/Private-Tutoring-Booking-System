@@ -28,6 +28,7 @@ return [
     'Bookings' => 'الحجوزات',
     'Messages' => 'الرسائل',
     'Resources' => 'الموارد',
+    'Forum' => 'المنتدى',
     'Recorded Courses' => 'الدورات المسجلة',
     'My Bookings' => 'حجوزاتي',
     'Support' => 'الدعم',

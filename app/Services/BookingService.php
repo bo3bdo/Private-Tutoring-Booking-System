@@ -39,6 +39,7 @@ class BookingService
             $notes
         ) {
             $lockedSlot = TimeSlot::where('id', $timeSlot->id)
+                ->with('teacher')
                 ->lockForUpdate()
                 ->first();
 
