@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('forum_posts')) {
+            return;
+        }
+
         Schema::create('forum_posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('thread_id')->constrained('forum_threads')->cascadeOnDelete();

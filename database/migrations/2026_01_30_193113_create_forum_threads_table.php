@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('forum_threads')) {
+            return;
+        }
+
         Schema::create('forum_threads', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');

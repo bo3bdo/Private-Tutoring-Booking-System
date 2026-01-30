@@ -17,15 +17,10 @@ class DashboardController extends Controller
     {
         $student = auth()->user();
 
-<<<<<<< HEAD
         $allBookingsList = $student->bookings()
-            ->with(['payment', 'teacher.user', 'subject'])
+            ->with(['payment', 'teacher', 'teacher.user', 'subject'])
             ->latest('created_at')
             ->get();
-=======
-        // Get all bookings with payments (eager load teacher for pending payment calculation)
-        $bookings = $student->bookings()->with(['payment', 'teacher', 'teacher.user', 'subject'])->latest('created_at');
->>>>>>> 4742654f7dfb1454c4f8b1b6360f130264dee09d
 
         $totalPaid = $this->calculateTotalPaid($allBookingsList);
         $monthPaid = $this->calculateTotalPaid($allBookingsList, 'month');

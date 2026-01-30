@@ -216,39 +216,28 @@ class RealisticDataSeeder extends Seeder
                 ]);
             }
 
-            // Add some time slots for upcoming days
+            // Add some time slots for upcoming days (firstOrCreate to avoid unique constraint when re-seeding)
             for ($i = 1; $i <= 14; $i++) {
                 $date = now()->addDays($i);
                 if ($date->dayOfWeek >= 1 && $date->dayOfWeek <= 5) {
-                    // Morning slots
-                    TimeSlot::create([
-                        'teacher_id' => $profile->id,
-                        'start_at' => $date->copy()->setTime(9, 0),
-                        'end_at' => $date->copy()->setTime(10, 30),
-                        'status' => rand(0, 3) !== 0 ? 'available' : 'blocked', // 75% available
-                    ]);
-
-                    TimeSlot::create([
-                        'teacher_id' => $profile->id,
-                        'start_at' => $date->copy()->setTime(11, 0),
-                        'end_at' => $date->copy()->setTime(12, 30),
-                        'status' => rand(0, 3) !== 0 ? 'available' : 'blocked',
-                    ]);
-
-                    // Afternoon slots
-                    TimeSlot::create([
-                        'teacher_id' => $profile->id,
-                        'start_at' => $date->copy()->setTime(14, 0),
-                        'end_at' => $date->copy()->setTime(15, 30),
-                        'status' => rand(0, 3) !== 0 ? 'available' : 'blocked',
-                    ]);
-
-                    TimeSlot::create([
-                        'teacher_id' => $profile->id,
-                        'start_at' => $date->copy()->setTime(16, 0),
-                        'end_at' => $date->copy()->setTime(17, 30),
-                        'status' => rand(0, 3) !== 0 ? 'available' : 'blocked',
-                    ]);
+                    $slots = [
+                        [$date->copy()->setTime(9, 0), $date->copy()->setTime(10, 30)],
+                        [$date->copy()->setTime(11, 0), $date->copy()->setTime(12, 30)],
+                        [$date->copy()->setTime(14, 0), $date->copy()->setTime(15, 30)],
+                        [$date->copy()->setTime(16, 0), $date->copy()->setTime(17, 30)],
+                    ];
+                    foreach ($slots as [$startAt, $endAt]) {
+                        TimeSlot::firstOrCreate(
+                            [
+                                'teacher_id' => $profile->id,
+                                'start_at' => $startAt,
+                                'end_at' => $endAt,
+                            ],
+                            [
+                                'status' => rand(0, 3) !== 0 ? 'available' : 'blocked',
+                            ]
+                        );
+                    }
                 }
             }
         }
@@ -507,107 +496,114 @@ class RealisticDataSeeder extends Seeder
 
             $subject = Subject::where('name', $data['subject'])->first();
 
-            $course = Course::create([
-                'teacher_id' => $teacher->id,
-                'subject_id' => $subject->id,
-                'title' => $data['title'],
-                'slug' => \Illuminate\Support\Str::slug($data['title']),
-                'description' => $data['description'],
-                'price' => $data['price'],
-                'currency' => 'BHD',
-                'is_published' => true,
-                'published_at' => now()->subDays(rand(5, 60)),
-            ]);
-
-            foreach ($data['lessons'] as $index => $lessonData) {
-                CourseLesson::create([
-                    'course_id' => $course->id,
-                    'title' => $lessonData['title'],
-                    'summary' => $lessonData['summary'],
-                    'sort_order' => $index,
-                    'video_provider' => 'youtube',
-                    'video_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-                    'duration_seconds' => $lessonData['duration'],
-                    'is_free_preview' => $index === 0,
-                ]);
-            }
-
-            // Enroll some students in courses
-            $numEnrollments = rand(3, 8);
-            $enrolledStudents = collect($createdStudents)->random(min($numEnrollments, count($createdStudents)));
-
-            foreach ($enrolledStudents as $student) {
-                $enrolledAt = now()->subDays(rand(1, 30));
-
-                // Create payment first
-                $provider = rand(0, 1) === 0 ? 'stripe' : 'benefitpay';
-                $transactionId = 'CRS'.strtoupper(substr(md5(uniqid()), 0, 12));
-
-                $payment = Payment::create([
-                    'booking_id' => null,
-                    'student_id' => $student->id,
-                    'provider' => $provider,
-                    'amount' => $course->price,
+            $slug = \Illuminate\Support\Str::slug($data['title']);
+            $course = Course::firstOrCreate(
+                ['slug' => $slug],
+                [
+                    'teacher_id' => $teacher->id,
+                    'subject_id' => $subject->id,
+                    'title' => $data['title'],
+                    'description' => $data['description'],
+                    'price' => $data['price'],
                     'currency' => 'BHD',
-                    'status' => 'succeeded',
-                    'provider_reference' => strtoupper($provider).'_'.$transactionId,
-                    'paid_at' => $enrolledAt,
-                ]);
+                    'is_published' => true,
+                    'published_at' => now()->subDays(rand(5, 60)),
+                ]
+            );
 
-                // Then create purchase with payment_id
-                $purchase = CoursePurchase::create([
-                    'student_id' => $student->id,
-                    'course_id' => $course->id,
-                    'payment_id' => $payment->id,
-                    'purchased_at' => $enrolledAt,
-                ]);
-
-                // Create enrollment
-                $enrollment = CourseEnrollment::create([
-                    'student_id' => $student->id,
-                    'course_id' => $course->id,
-                    'enrolled_at' => $enrolledAt,
-                ]);
-
-                // Create some lesson progress
-                $lessons = $course->lessons;
-                $progressCount = rand(1, min(3, $lessons->count()));
-
-                foreach ($lessons->take($progressCount) as $lesson) {
-                    $isCompleted = rand(0, 2) !== 0;
-                    $watchedSeconds = $isCompleted ? $lesson->duration_seconds : rand(100, $lesson->duration_seconds - 100);
-
-                    LessonProgress::create([
+            if ($course->wasRecentlyCreated) {
+                foreach ($data['lessons'] as $index => $lessonData) {
+                    CourseLesson::create([
                         'course_id' => $course->id,
-                        'lesson_id' => $lesson->id,
-                        'student_id' => $student->id,
-                        'watched_seconds' => $watchedSeconds,
-                        'completed_at' => $isCompleted ? now()->subDays(rand(1, 20)) : null,
+                        'title' => $lessonData['title'],
+                        'summary' => $lessonData['summary'],
+                        'sort_order' => $index,
+                        'video_provider' => 'youtube',
+                        'video_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                        'duration_seconds' => $lessonData['duration'],
+                        'is_free_preview' => $index === 0,
                     ]);
                 }
+            }
 
-                // Some students leave reviews
-                if (rand(0, 2) === 0) {
-                    Review::create([
-                        'user_id' => $student->id,
-                        'reviewable_id' => $course->id,
-                        'reviewable_type' => 'App\Models\Course',
-                        'rating' => rand(4, 5),
-                        'comment' => [
-                            'Excellent course! Very well explained and easy to follow.',
-                            'This course helped me understand the subject much better. Highly recommend!',
-                            'Great content and presentation. The examples were very helpful.',
-                            'Perfect for exam preparation. Covered everything I needed to know.',
-                            'Outstanding course! The teacher explains everything clearly.',
-                        ][rand(0, 4)],
-                        'is_approved' => true,
-                        'approved_at' => now(),
+            // Enroll some students in courses (only when course was just created to avoid duplicates on re-seed)
+            if ($course->wasRecentlyCreated) {
+                $numEnrollments = rand(3, 8);
+                $enrolledStudents = collect($createdStudents)->random(min($numEnrollments, count($createdStudents)));
+
+                foreach ($enrolledStudents as $student) {
+                    $enrolledAt = now()->subDays(rand(1, 30));
+
+                    // Create payment first
+                    $provider = rand(0, 1) === 0 ? 'stripe' : 'benefitpay';
+                    $transactionId = 'CRS'.strtoupper(substr(md5(uniqid()), 0, 12));
+
+                    $payment = Payment::create([
+                        'booking_id' => null,
+                        'student_id' => $student->id,
+                        'provider' => $provider,
+                        'amount' => $course->price,
+                        'currency' => 'BHD',
+                        'status' => 'succeeded',
+                        'provider_reference' => strtoupper($provider).'_'.$transactionId,
+                        'paid_at' => $enrolledAt,
                     ]);
+
+                    // Then create purchase with payment_id
+                    $purchase = CoursePurchase::create([
+                        'student_id' => $student->id,
+                        'course_id' => $course->id,
+                        'payment_id' => $payment->id,
+                        'purchased_at' => $enrolledAt,
+                    ]);
+
+                    // Create enrollment
+                    $enrollment = CourseEnrollment::create([
+                        'student_id' => $student->id,
+                        'course_id' => $course->id,
+                        'enrolled_at' => $enrolledAt,
+                    ]);
+
+                    // Create some lesson progress
+                    $lessons = $course->lessons;
+                    $progressCount = rand(1, min(3, $lessons->count()));
+
+                    foreach ($lessons->take($progressCount) as $lesson) {
+                        $isCompleted = rand(0, 2) !== 0;
+                        $watchedSeconds = $isCompleted ? $lesson->duration_seconds : rand(100, $lesson->duration_seconds - 100);
+
+                        LessonProgress::create([
+                            'course_id' => $course->id,
+                            'lesson_id' => $lesson->id,
+                            'student_id' => $student->id,
+                            'watched_seconds' => $watchedSeconds,
+                            'completed_at' => $isCompleted ? now()->subDays(rand(1, 20)) : null,
+                        ]);
+                    }
+
+                    // Some students leave reviews
+                    if (rand(0, 2) === 0) {
+                        Review::create([
+                            'user_id' => $student->id,
+                            'reviewable_id' => $course->id,
+                            'reviewable_type' => 'App\Models\Course',
+                            'rating' => rand(4, 5),
+                            'comment' => [
+                                'Excellent course! Very well explained and easy to follow.',
+                                'This course helped me understand the subject much better. Highly recommend!',
+                                'Great content and presentation. The examples were very helpful.',
+                                'Perfect for exam preparation. Covered everything I needed to know.',
+                                'Outstanding course! The teacher explains everything clearly.',
+                            ][rand(0, 4)],
+                            'is_approved' => true,
+                            'approved_at' => now(),
+                        ]);
+                    }
                 }
             }
         }
 
-        // Create some conversations between students and teachers
+        // Create some conversations between students and teachers (firstOrCreate to avoid duplicates on re-seed)
         $numConversations = 20;
         $createdConversations = [];
 
@@ -615,7 +611,7 @@ class RealisticDataSeeder extends Seeder
             $student = $createdStudents[array_rand($createdStudents)];
             $teacher = $createdTeachers[array_rand($createdTeachers)];
 
-            // Check if conversation already exists between these users
+            // Check if conversation already exists between these users (in-memory for this run)
             $existingConv = collect($createdConversations)->first(function ($conv) use ($student, $teacher) {
                 return ($conv['user_one'] === $student->id && $conv['user_two'] === $teacher->id)
                     || ($conv['user_one'] === $teacher->id && $conv['user_two'] === $student->id);
@@ -625,14 +621,20 @@ class RealisticDataSeeder extends Seeder
                 continue;
             }
 
+            $userOneId = min($student->id, $teacher->id);
+            $userTwoId = max($student->id, $teacher->id);
             $lastMessageTime = now()->subDays(rand(0, 30))->subHours(rand(0, 23));
 
-            $conversation = Conversation::create([
-                'user_one_id' => min($student->id, $teacher->id), // Lower ID goes first
-                'user_two_id' => max($student->id, $teacher->id),
-                'booking_id' => null,
-                'last_message_at' => $lastMessageTime,
-            ]);
+            $conversation = Conversation::firstOrCreate(
+                [
+                    'user_one_id' => $userOneId,
+                    'user_two_id' => $userTwoId,
+                ],
+                [
+                    'booking_id' => null,
+                    'last_message_at' => $lastMessageTime,
+                ]
+            );
 
             $createdConversations[] = [
                 'user_one' => $student->id,
@@ -640,7 +642,11 @@ class RealisticDataSeeder extends Seeder
                 'conversation' => $conversation,
             ];
 
-            // Create 2-5 messages per conversation
+            // Create 2-5 messages per conversation (only when conversation was just created to avoid duplicates)
+            if (! $conversation->wasRecentlyCreated) {
+                continue;
+            }
+
             $numMessages = rand(2, 5);
             for ($j = 0; $j < $numMessages; $j++) {
                 $isFromStudent = $j % 2 === 0;
@@ -674,14 +680,15 @@ class RealisticDataSeeder extends Seeder
             ['subject' => 'Problem with notification emails', 'category' => 'technical'],
         ];
 
-        $ticketCounter = 1000;
+        $ticketBase = (SupportTicket::max('id') ?? 0) + 1000;
+        $ticketCounter = 0;
         foreach (array_rand($ticketData, 6) as $index) {
             $data = $ticketData[$index];
             $student = $createdStudents[array_rand($createdStudents)];
             $status = ['open', 'in_progress', 'resolved'][rand(0, 2)];
 
             $ticket = SupportTicket::create([
-                'ticket_number' => 'TKT-'.str_pad($ticketCounter++, 6, '0', STR_PAD_LEFT),
+                'ticket_number' => 'TKT-'.str_pad($ticketBase + $ticketCounter++, 6, '0', STR_PAD_LEFT),
                 'user_id' => $student->id,
                 'subject' => $data['subject'],
                 'description' => 'I am experiencing an issue with '.$data['subject'].'. Could you please help me resolve this? This is affecting my ability to use the platform effectively.',
