@@ -21,6 +21,11 @@
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+        <!-- Skip Navigation Link for Accessibility -->
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-dark-blue-600 focus:text-white focus:rounded-lg focus:shadow-lg">
+            {{ __('common.Skip to main content') }}
+        </a>
+
         <div class="min-h-screen flex">
             <!-- Sidebar -->
             @include('layouts.sidebar')
@@ -94,7 +99,7 @@
                 </div>
 
                 <!-- Page Content -->
-                <main class="flex-1 overflow-y-auto">
+                <main id="main-content" class="flex-1 overflow-y-auto" role="main" tabindex="-1">
                     <div class="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
                         @isset($header)
                             <header class="mb-6">

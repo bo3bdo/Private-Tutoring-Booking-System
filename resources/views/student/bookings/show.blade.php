@@ -288,9 +288,9 @@
                             </a>
                         @endif
                         @if(!$booking->isCancelled() && !$booking->isCompleted())
-                            <button type="button" onclick="document.getElementById('cancelModal').classList.remove('hidden')" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border-2 border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-xl text-sm font-semibold hover:bg-red-100 dark:hover:bg-red-900/50 hover:border-red-400 dark:hover:border-red-500 transition">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            <button type="button" @click="$dispatch('open-modal', 'cancel-booking')" class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border-2 border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-xl text-sm font-semibold hover:bg-red-100 dark:hover:bg-red-900/50 hover:border-red-400 dark:hover:border-red-500 transition">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
                                 {{ __('common.Cancel Booking') }}
                             </button>
@@ -301,9 +301,8 @@
 
             <!-- Cancel Booking Modal -->
             @if(!$booking->isCancelled() && !$booking->isCompleted())
-                <div id="cancelModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full p-6 border border-slate-200 dark:border-gray-700">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">{{ __('common.Cancel Booking') }}</h3>
+                <x-modal name="cancel-booking" :title="__('common.Cancel Booking')" maxWidth="md" focusable>
+                    <div class="p-6">
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">{{ __('common.Are you sure you want to cancel this booking? Please provide a reason for cancellation.') }}</p>
                         <form method="POST" action="{{ route('student.bookings.cancel', $booking) }}">
                             @csrf
@@ -319,7 +318,7 @@
                                 @enderror
                             </div>
                             <div class="flex items-center justify-end gap-3">
-                                <button type="button" onclick="document.getElementById('cancelModal').classList.add('hidden')" class="px-4 py-2 border-2 border-slate-300 dark:border-gray-600 rounded-xl text-sm font-semibold text-slate-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-slate-50 dark:hover:bg-gray-700 transition">
+                                <button type="button" @click="$dispatch('close-modal', 'cancel-booking')" class="px-4 py-2 border-2 border-slate-300 dark:border-gray-600 rounded-xl text-sm font-semibold text-slate-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-slate-50 dark:hover:bg-gray-700 transition">
                                     {{ __('common.Cancel') }}
                                 </button>
                                 <button type="submit" class="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 dark:from-red-700 dark:to-red-600 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-red-700 hover:to-red-800 dark:hover:from-red-600 dark:hover:to-red-500 transition">
@@ -328,7 +327,7 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </x-modal>
             @endif
 
             <!-- Resources Section -->
@@ -398,13 +397,7 @@
                                 <div class="p-4 bg-slate-50 dark:bg-gray-700 border border-slate-200 dark:border-gray-600 rounded-xl">
                                     <div class="flex items-start justify-between mb-2">
                                         <div class="flex items-center gap-2">
-                                            <div class="flex items-center gap-1">
-                                                @for($i = 1; $i <= 5; $i++)
-                                                    <svg class="w-4 h-4 {{ $i <= $review->rating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600' }}" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                                    </svg>
-                                                @endfor
-                                            </div>
+                                            <x-rating-stars :rating="$review->rating" size="sm" :showValue="false" />
                                             <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ $review->user->name }}</span>
                                         </div>
                                         <span class="text-xs text-gray-500 dark:text-gray-400">{{ $review->created_at->format('M j, Y') }}</span>
@@ -446,14 +439,7 @@
                                 <input type="hidden" name="reviewable_id" value="{{ $booking->id }}">
                                 <div class="mb-4">
                                     <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">{{ __('common.Rating') }}</label>
-                                    <div class="flex items-center gap-2" id="rating-stars">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <button type="button" onclick="setRating({{ $i }})" class="star-rating text-3xl text-gray-300 dark:text-gray-600 hover:text-yellow-400 transition" data-rating="{{ $i }}">
-                                                ★
-                                            </button>
-                                        @endfor
-                                    </div>
-                                    <input type="hidden" name="rating" id="rating" value="5" required>
+                                    <x-rating-stars :rating="5" :interactive="true" size="xl" name="rating" />
                                 </div>
                                 <div class="mb-4">
                                     <label for="comment" class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">{{ __('common.Your Review (optional)') }}</label>
@@ -463,20 +449,6 @@
                                     {{ __('common.Submit Review') }}
                                 </button>
                             </form>
-                            <script>
-                                function setRating(rating) {
-                                    document.getElementById('rating').value = rating;
-                                    document.querySelectorAll('.star-rating').forEach((star, index) => {
-                                        if (index < rating) {
-                                            star.classList.remove('text-gray-300', 'dark:text-gray-600');
-                                            star.classList.add('text-yellow-400');
-                                        } else {
-                                            star.classList.remove('text-yellow-400');
-                                            star.classList.add('text-gray-300', 'dark:text-gray-600');
-                                        }
-                                    });
-                                }
-                            </script>
                         </div>
                     </div>
                 @else
@@ -488,12 +460,8 @@
                                 </svg>
                                 {{ __('common.Your Review') }}
                             </h3>
-                            <div class="flex items-center gap-2 mb-2">
-                                @for($i = 1; $i <= 5; $i++)
-                                    <svg class="w-5 h-5 {{ $i <= $existingReview->rating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600' }}" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.363 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118l-2.8-2.034c-.784-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                    </svg>
-                                @endfor
+                            <div class="mb-2">
+                                <x-rating-stars :rating="$existingReview->rating" size="md" :showValue="true" />
                             </div>
                             @if($existingReview->comment)
                                 <p class="text-sm text-gray-700 dark:text-gray-300">{{ $existingReview->comment }}</p>

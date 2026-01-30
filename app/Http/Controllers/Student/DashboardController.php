@@ -169,40 +169,31 @@ class DashboardController extends Controller
 
     private function checkAndNotifyUnreviewedBookings($student): void
     {
-        // Get completed bookings that don't have reviews from this student
-        $unreviewedBookings = Booking::where('student_id', $student->id)
+        // Get count of completed bookings that don't have reviews from this student
+        $unreviewedCount = Booking::where('student_id', $student->id)
             ->where('status', BookingStatus::Completed->value)
             ->whereDoesntHave('reviews', function ($query) use ($student) {
                 $query->where('user_id', $student->id);
             })
-            ->with(['teacher.user', 'subject'])
-            ->orderBy('completed_at', 'desc')
-            ->limit(5)
-            ->get();
+            ->count();
 
-        if ($unreviewedBookings->isEmpty()) {
+        if ($unreviewedCount === 0) {
             return;
         }
 
-        // Show notification for each unreviewed booking
-        foreach ($unreviewedBookings as $booking) {
-            $teacherName = $booking->teacher->user->name ?? __('common.Teacher');
-            $subjectName = $booking->subject->name ?? __('common.Subject');
-
-            notify()
-                ->info()
-                ->title(__('common.Please rate the lesson'))
-                ->message(__('common.You have a completed booking with :teacher in :subject - Please rate the lesson', [
-                    'teacher' => $teacherName,
-                    'subject' => $subjectName,
-                ]))
-                ->duration(10000) // 10 seconds
-                ->actions([
-                    \Mckenziearts\Notify\Action\NotifyAction::make()
-                        ->label(__('common.View Booking'))
-                        ->url(route('student.bookings.show', $booking)),
-                ])
-                ->send();
-        }
+        // Show a single consolidated notification
+        notify()
+            ->info()
+            ->title(__('common.Rate Your Lessons'))
+            ->message(trans_choice('common.You have :count completed lesson that needs your review|You have :count completed lessons that need your review', $unreviewedCount, [
+                'count' => $unreviewedCount,
+            ]))
+            ->duration(8000)
+            ->actions([
+                \Mckenziearts\Notify\Action\NotifyAction::make()
+                    ->label(__('common.View Bookings'))
+                    ->url(route('student.bookings.index', ['filter' => 'past'])),
+            ])
+            ->send();
     }
 }
