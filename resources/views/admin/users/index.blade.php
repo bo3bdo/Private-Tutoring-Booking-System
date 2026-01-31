@@ -10,61 +10,11 @@
         </div>
     </x-slot>
 
-    <div class="py-4 sm:py-6 lg:py-8">
+    <div class="py-4 sm:py-6 lg:py-8" id="users-container">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Mobile Card View -->
-            <div class="block sm:hidden space-y-3">
-                @forelse($users as $user)
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
-                        <div class="p-4">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="flex items-center gap-3 min-w-0 flex-1">
-                                    <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/50 dark:to-blue-900/50 rounded-lg flex items-center justify-center">
-                                        <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="min-w-0 flex-1">
-                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white truncate">{{ $user->name }}</h3>
-                                        <p class="text-xs text-gray-600 dark:text-gray-400 truncate mt-0.5">{{ $user->email }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between gap-2 flex-wrap">
-                                <div class="flex items-center gap-2">
-                                    @php
-                                        $role = $user->roles->first();
-                                        $roleName = $role ? $role->name : 'N/A';
-                                        $roleColors = [
-                                            'admin' => 'bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300',
-                                            'teacher' => 'bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300',
-                                            'student' => 'bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300',
-                                        ];
-                                        $colorClass = $roleColors[$roleName] ?? 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300';
-                                    @endphp
-                                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold {{ $colorClass }}">
-                                        {{ ucfirst($roleName) }}
-                                    </span>
-                                    <span class="text-xs text-gray-500 dark:text-gray-400">{{ $user->created_at->format('M j, Y') }}</span>
-                                </div>
-                                @if(!$user->isAdmin())
-                                    <a href="{{ route('admin.users.edit', $user) }}" class="inline-flex items-center justify-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-semibold rounded-lg transition">
-                                        {{ __('common.Edit') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 p-8 text-center">
-                        <div class="w-16 h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                        </div>
-                        <p class="text-gray-500 dark:text-gray-400 text-sm">{{ __('common.No users found.') }}</p>
-                    </div>
-                @endforelse
+            <div class="block sm:hidden space-y-3" id="mobile-container">
+                @include('admin.users._user-rows', ['users' => $users])
             </div>
 
             <!-- Desktop Table View -->
@@ -81,76 +31,129 @@
                                     <th class="px-4 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{ __('common.Actions') }}</th>
                                 </tr>
                             </thead>
-                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                                @forelse($users as $user)
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
-                                        <td class="px-4 sm:px-6 py-3 sm:py-4">
-                                            <div class="flex items-center gap-2 sm:gap-3">
-                                                <div class="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/50 dark:to-blue-900/50 rounded-lg flex items-center justify-center">
-                                                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                                    </svg>
-                                                </div>
-                                                <div class="text-sm font-semibold text-gray-900 dark:text-white truncate">{{ $user->name }}</div>
-                                            </div>
-                                        </td>
-                                        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm text-gray-600 dark:text-gray-400 truncate max-w-xs">{{ $user->email }}</td>
-                                        <td class="px-4 sm:px-6 py-3 sm:py-4">
-                                            @php
-                                                $role = $user->roles->first();
-                                                $roleName = $role ? $role->name : 'N/A';
-                                                $roleColors = [
-                                                    'admin' => 'bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300',
-                                                    'teacher' => 'bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300',
-                                                    'student' => 'bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300',
-                                                ];
-                                                $colorClass = $roleColors[$roleName] ?? 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300';
-                                            @endphp
-                                            <span class="inline-flex items-center rounded-full px-2 sm:px-2.5 py-0.5 text-xs font-semibold {{ $colorClass }}">
-                                                {{ ucfirst($roleName) }}
-                                            </span>
-                                        </td>
-                                        <td class="px-4 sm:px-6 py-3 sm:py-4 text-sm text-gray-600 dark:text-gray-400 hidden md:table-cell">
-                                            {{ $user->created_at->format('M j, Y') }}
-                                        </td>
-                                        <td class="px-4 sm:px-6 py-3 sm:py-4 text-right text-sm font-medium">
-                                            @if(!$user->isAdmin())
-                                                <a href="{{ route('admin.users.edit', $user) }}" class="inline-flex items-center justify-center px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs sm:text-sm font-semibold rounded-lg transition">
-                                                    {{ __('common.Edit') }}
-                                                </a>
-                                            @else
-                                                <span class="text-gray-400 dark:text-gray-600 text-xs">{{ __('common.Admin') }}</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="px-4 sm:px-6 py-12 text-center">
-                                            <div class="flex flex-col items-center">
-                                                <div class="w-16 h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                                                    <svg class="w-8 h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                                                    </svg>
-                                                </div>
-                                                <p class="text-gray-500 dark:text-gray-400 text-sm">{{ __('common.No users found.') }}</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforelse
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700" id="desktop-container">
+                                @include('admin.users._user-rows', ['users' => $users])
                             </tbody>
                         </table>
-                    </div>
-
-                    <div class="mt-4">
-                        {{ $users->links() }}
                     </div>
                 </div>
             </div>
 
-            <!-- Mobile Pagination -->
-            <div class="block sm:hidden mt-4">
-                {{ $users->links() }}
+            <!-- Load more button (visible when more pages exist) -->
+            <div class="mt-4 text-center hidden" id="load-more-wrap">
+                <button type="button" id="load-more-btn" class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition shadow-lg">
+                    {{ __('common.Load More') }}
+                </button>
+            </div>
+
+            <!-- Loading indicator -->
+            <div class="mt-4 text-center hidden" id="loading-indicator">
+                <div class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                    <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>{{ __('common.Loading...') }}</span>
+                </div>
+            </div>
+
+            <!-- End message -->
+            <div class="mt-4 text-center text-gray-600 dark:text-gray-400 text-sm hidden" id="end-message">
+                {{ __('common.No more users to load') }}
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentPage = {{ $users->currentPage() }};
+            let hasMore = {{ $users->hasMorePages() ? 'true' : 'false' }};
+            let isLoading = false;
+
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const endMessage = document.getElementById('end-message');
+            const loadMoreWrap = document.getElementById('load-more-wrap');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            const mobileContainer = document.getElementById('mobile-container');
+            const desktopContainer = document.getElementById('desktop-container');
+
+            if (hasMore) {
+                loadMoreWrap.classList.remove('hidden');
+            }
+
+            function updateUi() {
+                if (hasMore) {
+                    loadMoreWrap.classList.remove('hidden');
+                    endMessage.classList.add('hidden');
+                } else {
+                    loadMoreWrap.classList.add('hidden');
+                    endMessage.classList.remove('hidden');
+                }
+            }
+
+            function handleScroll() {
+                if (isLoading || !hasMore) return;
+                const el = document.getElementById('main-content') || document.documentElement;
+                const scrollTop = el.scrollTop ?? window.scrollY;
+                const scrollHeight = el.scrollHeight ?? document.documentElement.scrollHeight;
+                const clientHeight = el.clientHeight ?? window.innerHeight;
+                if ((scrollHeight - (scrollTop + clientHeight)) < 400) {
+                    loadMore();
+                }
+            }
+
+            function loadMore() {
+                if (isLoading || !hasMore) return;
+
+                isLoading = true;
+                currentPage++;
+                loadingIndicator.classList.remove('hidden');
+                loadMoreWrap.classList.add('hidden');
+                endMessage.classList.add('hidden');
+
+                fetch(`{{ route('admin.users.load-more') }}?page=${currentPage}`, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error('Load more failed');
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.html_mobile) {
+                        const wrap = document.createElement('div');
+                        wrap.innerHTML = data.html_mobile;
+                        wrap.querySelectorAll('.user-row').forEach(row => mobileContainer.appendChild(row.cloneNode(true)));
+                    }
+                    if (data.html_desktop) {
+                        const wrap = document.createElement('tbody');
+                        wrap.innerHTML = data.html_desktop;
+                        wrap.querySelectorAll('tr').forEach(tr => desktopContainer.appendChild(tr.cloneNode(true)));
+                    }
+
+                    hasMore = data.has_more;
+                    isLoading = false;
+                    loadingIndicator.classList.add('hidden');
+                    updateUi();
+                })
+                .catch(error => {
+                    console.error('Error loading more users:', error);
+                    isLoading = false;
+                    currentPage--;
+                    loadingIndicator.classList.add('hidden');
+                    updateUi();
+                });
+            }
+
+            if (loadMoreBtn) loadMoreBtn.addEventListener('click', loadMore);
+
+            const mainContent = document.getElementById('main-content');
+            if (mainContent) mainContent.addEventListener('scroll', handleScroll);
+            window.addEventListener('scroll', handleScroll);
+        });
+    </script>
+    @endpush
 </x-app-layout>

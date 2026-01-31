@@ -34,12 +34,35 @@ class DashboardController extends Controller
             Carbon::now()->endOfMonth()
         );
 
+        // Teacher Performance Analytics
+        $teacherPerformance = $this->reportService->getTeacherPerformanceReport(
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth()
+        );
+
+        // Student Progress Analytics
+        $studentProgress = $this->reportService->getStudentProgressReport(
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth()
+        );
+
+        // Booking Status Distribution
+        $bookingsByStatus = \App\Models\Booking::selectRaw('status, COUNT(*) as count')
+            ->groupBy('status')
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->status->value => $item->count];
+            });
+
         return view('admin.dashboard', compact(
             'stats',
             'recentBookings',
             'monthlyStats',
             'todayBookings',
-            'revenueReport'
+            'revenueReport',
+            'teacherPerformance',
+            'studentProgress',
+            'bookingsByStatus'
         ));
     }
 }

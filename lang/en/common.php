@@ -18,8 +18,8 @@ return [
     'Subjects' => 'Subjects',
     'Locations' => 'Locations',
     'Teachers' => 'Teachers',
-    'Forum' => 'Forum',
     'Users' => 'Users',
+    'Users Management' => 'Users Management',
     'Role' => 'Role',
     'Reviews' => 'Reviews',
     'Support Tickets' => 'Support Tickets',
@@ -291,6 +291,7 @@ return [
     'Details' => 'Details',
     'Loading...' => 'Loading...',
     'Uploading...' => 'Uploading...',
+    'No more users to load' => 'No more users to load',
     'Current Image' => 'Current Image',
     'No data available' => 'No data available',
     'Select' => 'Select',
@@ -1167,4 +1168,123 @@ return [
     'Create a new discount code for your platform' => 'Create a new discount code for your platform',
     'Update discount code information' => 'Update discount code information',
     'Comprehensive analytics and performance reports' => 'Comprehensive analytics and performance reports',
+
+    // Dashboard Analytics
+    'Booking' => 'Booking',
+    'Daily' => 'Daily',
+    'Monthly' => 'Monthly',
+    'Weekly' => 'Weekly',
+    'Revenue Chart' => 'Revenue Chart',
+    'Booking Status Distribution' => 'Booking Status Distribution',
+    'View and manage all bookings' => 'View and manage all bookings',
+    'Overview of booking statuses' => 'Overview of booking statuses',
+    'Daily revenue for the current month' => 'Daily revenue for the current month',
+
+    // Analytics & Reports
+    'Analytics' => 'Analytics',
+    'Charts' => 'Charts',
+    'Growth' => 'Growth',
+    'Trends' => 'Trends',
+    'Statistics' => 'Statistics',
+    'Monthly Statistics' => 'Monthly Statistics',
+    'Performance Metrics' => 'Performance Metrics',
+    'Revenue Breakdown' => 'Revenue Breakdown',
+    'Student Statistics' => 'Student Statistics',
+    'Teacher Statistics' => 'Teacher Statistics',
+
+    // Chart & Data Labels
+    'Confirmed' => 'Confirmed',
+    'Pending' => 'Pending',
+    'Completed' => 'Completed',
+    'Cancelled' => 'Cancelled',
+    'Rescheduled' => 'Rescheduled',
+
+    // Time Periods
+    'Today' => 'Today',
+    'Yesterday' => 'Yesterday',
+    'This Week' => 'This Week',
+    'Last Week' => 'Last Week',
+    'This Month' => 'This Month',
+    'Last Month' => 'Last Month',
+    'This Year' => 'This Year',
+    'All Time' => 'All Time',
+
+    // Metrics
+    'Total' => 'Total',
+    'Average' => 'Average',
+    'Minimum' => 'Minimum',
+    'Maximum' => 'Maximum',
+    'Highest' => 'Highest',
+    'Lowest' => 'Lowest',
+
+    // Performance
+    'Performance' => 'Performance',
+    'Excellent' => 'Excellent',
+    'Good' => 'Good',
+    'Average' => 'Average',
+    'Below Average' => 'Below Average',
+    'Poor' => 'Poor',
+
+    // Pagination
+    'Showing' => 'Showing',
+    'to' => 'to',
+    'of' => 'of',
+    'results' => 'results',
+    'No items found' => 'No items found',
+    'Load More' => 'Load More',
+    'Load More Items' => 'Load More Items',
+
+    // Data Display
+    'Data' => 'Data',
+    'No data' => 'No data',
+    'No data found' => 'No data found',
+    'Empty' => 'Empty',
+    'Export' => 'Export',
+    'Download' => 'Download',
+    'Print' => 'Print',
+    'Share' => 'Share',
+
+    // Table Headers
+    'Item' => 'Item',
+    'Value' => 'Value',
+    'Count' => 'Count',
+    'Percentage' => 'Percentage',
+    'Duration' => 'Duration',
+    'Rate' => 'Rate',
+    'Status' => 'Status',
+
+    // Filters & Sorting
+    'Filter' => 'Filter',
+    'Sort' => 'Sort',
+    'Ascending' => 'Ascending',
+    'Descending' => 'Descending',
+    'Sort By' => 'Sort By',
+    'Filter By' => 'Filter By',
+    'Clear All' => 'Clear All',
+    'Apply' => 'Apply',
+
+    // Navigation
+    'Skip to main content' => 'Skip to main content',
+    'Previous' => 'Previous',
+    'Next' => 'Next',
+    'First' => 'First',
+    'Last' => 'Last',
+
+    // User Actions
+    'Download' => 'Download',
+    'Export' => 'Export',
+    'Print' => 'Print',
+    'Share' => 'Share',
+    'More Options' => 'More Options',
+    'Options' => 'Options',
+
+    // Success/Error Messages
+    'Success' => 'Success',
+    'Error' => 'Error',
+    'Warning' => 'Warning',
+    'Info' => 'Info',
+    'Saved successfully' => 'Saved successfully',
+    'Updated successfully' => 'Updated successfully',
+    'Deleted successfully' => 'Deleted successfully',
+    'Created successfully' => 'Created successfully',
 ];

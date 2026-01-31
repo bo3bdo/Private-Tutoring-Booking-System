@@ -1,4 +1,11 @@
 <x-app-layout>
+    <x-slot name="breadcrumbs">
+        <x-breadcrumbs :items="[
+            ['label' => __('common.Dashboard'), 'url' => route('admin.dashboard')],
+            ['label' => __('common.Bookings Management')]
+        ]" />
+    </x-slot>
+
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
             <div class="min-w-0 flex-1">

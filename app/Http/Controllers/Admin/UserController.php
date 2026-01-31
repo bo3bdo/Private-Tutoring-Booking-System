@@ -26,6 +26,22 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    public function loadMore(): \Illuminate\Http\JsonResponse
+    {
+        $page = request()->query('page', 2);
+
+        $users = User::with(['roles', 'teacherProfile', 'studentProfile'])
+            ->latest('created_at')
+            ->paginate(15, ['*'], 'page', $page);
+
+        return response()->json([
+            'html_mobile' => view('admin.users._user-rows-mobile', compact('users'))->render(),
+            'html_desktop' => view('admin.users._user-rows-desktop', compact('users'))->render(),
+            'has_more' => $users->hasMorePages(),
+            'next_page' => $users->currentPage() + 1,
+        ]);
+    }
+
     public function show(User $user): View
     {
         $user->load([

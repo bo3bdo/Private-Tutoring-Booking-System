@@ -315,4 +315,123 @@ return [
     'Currency' => 'العملة',
     'Publish immediately' => 'نشر فوراً',
 
+    // Dashboard Analytics
+    'Booking' => 'الحجز',
+    'Daily' => 'يومي',
+    'Monthly' => 'شهري',
+    'Weekly' => 'أسبوعي',
+    'Revenue Chart' => 'مخطط الإيرادات',
+    'Booking Status Distribution' => 'توزيع حالة الحجز',
+    'View and manage all bookings' => 'عرض وإدارة جميع الحجوزات',
+    'Overview of booking statuses' => 'نظرة عامة على حالات الحجز',
+    'Daily revenue for the current month' => 'الإيرادات اليومية للشهر الحالي',
+
+    // Analytics & Reports
+    'Analytics' => 'التحليلات',
+    'Charts' => 'الرسوم البيانية',
+    'Growth' => 'النمو',
+    'Trends' => 'الاتجاهات',
+    'Statistics' => 'الإحصائيات',
+    'Monthly Statistics' => 'الإحصائيات الشهرية',
+    'Performance Metrics' => 'مقاييس الأداء',
+    'Revenue Breakdown' => 'تفصيل الإيرادات',
+    'Student Statistics' => 'إحصائيات الطلاب',
+    'Teacher Statistics' => 'إحصائيات المعلمين',
+
+    // Chart & Data Labels
+    'Confirmed' => 'مؤكد',
+    'Pending' => 'قيد الانتظار',
+    'Completed' => 'مكتمل',
+    'Cancelled' => 'ملغى',
+    'Rescheduled' => 'معاد الجدولة',
+
+    // Time Periods
+    'Today' => 'اليوم',
+    'Yesterday' => 'أمس',
+    'This Week' => 'هذا الأسبوع',
+    'Last Week' => 'الأسبوع الماضي',
+    'This Month' => 'هذا الشهر',
+    'Last Month' => 'الشهر الماضي',
+    'This Year' => 'هذه السنة',
+    'All Time' => 'طوال الوقت',
+
+    // Metrics
+    'Total' => 'الإجمالي',
+    'Average' => 'المتوسط',
+    'Minimum' => 'الحد الأدنى',
+    'Maximum' => 'الحد الأقصى',
+    'Highest' => 'الأعلى',
+    'Lowest' => 'الأدنى',
+
+    // Performance
+    'Performance' => 'الأداء',
+    'Excellent' => 'ممتاز',
+    'Good' => 'جيد',
+    'Average' => 'متوسط',
+    'Below Average' => 'تحت المتوسط',
+    'Poor' => 'ضعيف',
+
+    // Pagination
+    'Showing' => 'عرض',
+    'to' => 'إلى',
+    'of' => 'من',
+    'results' => 'النتائج',
+    'No items found' => 'لم يتم العثور على عناصر',
+    'Load More' => 'تحميل المزيد',
+    'Load More Items' => 'تحميل عناصر إضافية',
+
+    // Data Display
+    'Data' => 'البيانات',
+    'No data' => 'لا توجد بيانات',
+    'No data found' => 'لم يتم العثور على بيانات',
+    'Empty' => 'فارغ',
+    'Export' => 'تصدير',
+    'Download' => 'تحميل',
+    'Print' => 'طباعة',
+    'Share' => 'مشاركة',
+
+    // Table Headers
+    'Item' => 'العنصر',
+    'Value' => 'القيمة',
+    'Count' => 'العدد',
+    'Percentage' => 'النسبة المئوية',
+    'Duration' => 'المدة',
+    'Rate' => 'معدل',
+    'Status' => 'الحالة',
+
+    // Filters & Sorting
+    'Filter' => 'تصفية',
+    'Sort' => 'ترتيب',
+    'Ascending' => 'تصاعدي',
+    'Descending' => 'تنازلي',
+    'Sort By' => 'رتب حسب',
+    'Filter By' => 'صفى حسب',
+    'Clear All' => 'مسح الكل',
+    'Apply' => 'تطبيق',
+
+    // Navigation
+    'Skip to main content' => 'انتقل إلى المحتوى الرئيسي',
+    'Previous' => 'السابق',
+    'Next' => 'التالي',
+    'First' => 'الأول',
+    'Last' => 'الأخير',
+
+    // User Actions
+    'Download' => 'تحميل',
+    'Export' => 'تصدير',
+    'Print' => 'طباعة',
+    'Share' => 'مشاركة',
+    'More Options' => 'خيارات إضافية',
+    'Options' => 'الخيارات',
+
+    // Success/Error Messages
+    'Success' => 'نجح',
+    'Error' => 'خطأ',
+    'Warning' => 'تحذير',
+    'Info' => 'معلومات',
+    'Saved successfully' => 'تم الحفظ بنجاح',
+    'Updated successfully' => 'تم التحديث بنجاح',
+    'Deleted successfully' => 'تم الحذف بنجاح',
+    'Created successfully' => 'تم الإنشاء بنجاح',
+
 ];

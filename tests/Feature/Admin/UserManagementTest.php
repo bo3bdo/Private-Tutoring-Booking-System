@@ -27,6 +27,19 @@ it('allows admin to view all users', function () {
         ->assertSee($teacher->name);
 });
 
+it('returns JSON with user rows and has_more when admin requests load-more', function () {
+    User::factory()->count(20)->create()->each(fn ($u) => $u->assignRole('student'));
+
+    $response = $this->actingAs($this->admin)
+        ->getJson(route('admin.users.load-more', ['page' => 2]));
+
+    $response->assertSuccessful()
+        ->assertJsonStructure(['html_mobile', 'html_desktop', 'has_more', 'next_page'])
+        ->assertJsonPath('next_page', 3);
+
+    expect($response->json('has_more'))->toBeBool();
+});
+
 it('allows admin to view user details', function () {
     $user = User::factory()->create();
     $user->assignRole('student');
