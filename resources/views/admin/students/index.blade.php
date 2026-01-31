@@ -49,13 +49,17 @@
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 p-8 text-center">
-                        <div class="w-16 h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                        </div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('common.No students found.') }}</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                        <x-empty-state
+                            :title="__('common.No Students Found')"
+                            :description="__('common.No students have registered yet.')"
+                        >
+                            <x-slot name="icon">
+                                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                </svg>
+                            </x-slot>
+                        </x-empty-state>
                     </div>
                 @endforelse
             </div>
@@ -113,15 +117,17 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-4 sm:px-6 py-8 sm:py-12 text-center">
-                                            <div class="flex flex-col items-center">
-                                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-3 sm:mb-4">
-                                                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <td colspan="6" class="px-4 sm:px-6 py-4">
+                                            <x-empty-state
+                                                :title="__('common.No Students Found')"
+                                                :description="__('common.No students have registered yet.')"
+                                            >
+                                                <x-slot name="icon">
+                                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                                                     </svg>
-                                                </div>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('common.No students found.') }}</p>
-                                            </div>
+                                                </x-slot>
+                                            </x-empty-state>
                                         </td>
                                     </tr>
                                 @endforelse

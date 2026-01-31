@@ -58,11 +58,21 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('admin.discounts.edit', $discount) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 hover:underline mr-3">{{ __('common.Edit') }}</a>
-                                        <form method="POST" action="{{ route('admin.discounts.destroy', $discount) }}" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('{{ __('common.Are you sure?') }}')" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 hover:underline">{{ __('common.Delete') }}</button>
-                                        </form>
+                                        <button
+                                            type="button"
+                                            @click="$dispatch('open-dialog', { id: 'delete-discount-{{ $discount->id }}' })"
+                                            class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 hover:underline"
+                                        >
+                                            {{ __('common.Delete') }}
+                                        </button>
+                                        <x-confirm-dialog
+                                            id="delete-discount-{{ $discount->id }}"
+                                            :title="__('common.Delete Discount')"
+                                            :message="__('common.Are you sure you want to delete this discount?')"
+                                            :confirmText="__('common.Delete')"
+                                            :action="route('admin.discounts.destroy', $discount)"
+                                            method="DELETE"
+                                        />
                                     </td>
                                 </tr>
                                 @endforeach

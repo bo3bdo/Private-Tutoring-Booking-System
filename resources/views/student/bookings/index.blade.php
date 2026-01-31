@@ -120,19 +120,19 @@
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-12 text-center">
-                        <div class="flex justify-center mb-4">
-                            <div class="w-16 h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                                <svg class="w-8 h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                        <x-empty-state
+                            :title="__('common.No Bookings Found')"
+                            :description="__('common.You don\'t have any bookings yet.')"
+                            :action="route('student.subjects.index')"
+                            :actionLabel="__('common.Browse Subjects')"
+                        >
+                            <x-slot name="icon">
+                                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                                 </svg>
-                            </div>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('common.No Bookings Found') }}</h3>
-                        <p class="text-gray-600 dark:text-gray-400 mb-6">{{ __('common.You don\'t have any bookings yet.') }}</p>
-                        <a href="{{ route('student.subjects.index') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-700 dark:to-slate-600 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-slate-800 hover:to-slate-700 dark:hover:from-slate-600 dark:hover:to-slate-500 transition">
-                            {{ __('common.Browse Subjects') }}
-                        </a>
+                            </x-slot>
+                        </x-empty-state>
                     </div>
                 @endforelse
             </div>

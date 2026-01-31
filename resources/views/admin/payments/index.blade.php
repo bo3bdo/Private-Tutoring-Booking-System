@@ -78,8 +78,17 @@
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 p-8 text-center">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('common.No payments found.') }}</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                        <x-empty-state
+                            :title="__('common.No Payments Found')"
+                            :description="__('common.Payments will appear here once students complete bookings')"
+                        >
+                            <x-slot name="icon">
+                                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </x-slot>
+                        </x-empty-state>
                     </div>
                 @endforelse
             </div>
@@ -133,15 +142,17 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-4 sm:px-6 py-8 sm:py-12 text-center">
-                                            <div class="flex flex-col items-center">
-                                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-3 sm:mb-4">
-                                                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <td colspan="6" class="px-4 sm:px-6 py-4">
+                                            <x-empty-state
+                                                :title="__('common.No Payments Found')"
+                                                :description="__('common.Payments will appear here once students complete bookings')"
+                                            >
+                                                <x-slot name="icon">
+                                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                     </svg>
-                                                </div>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('common.No payments found.') }}</p>
-                                            </div>
+                                                </x-slot>
+                                            </x-empty-state>
                                         </td>
                                     </tr>
                                 @endforelse

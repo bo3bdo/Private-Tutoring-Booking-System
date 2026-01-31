@@ -15,7 +15,26 @@
     <div class="py-8">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
-                <form method="POST" action="{{ route('teacher.resources.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('teacher.resources.store') }}" enctype="multipart/form-data"
+                    x-data="{
+                        submitting: false,
+                        resourceType: '',
+                        resourceId: '',
+                        bookings: {{ Js::from($bookings ?? []) }},
+                        courses: {{ Js::from($courses ?? []) }},
+                        get items() {
+                            if (this.resourceType === 'App\\Models\\Booking') return this.bookings;
+                            if (this.resourceType === 'App\\Models\\Course') return this.courses;
+                            return [];
+                        },
+                        getItemLabel(item) {
+                            if (this.resourceType === 'App\\Models\\Booking') {
+                                return `${item.subject_name} - ${item.student_name} (${item.formatted_date})`;
+                            }
+                            return item.title;
+                        }
+                    }"
+                    x-on:submit="submitting = true">
                     @csrf
                     @if($resourceable)
                         <input type="hidden" name="resourceable_type" value="{{ get_class($resourceable) }}">
@@ -28,7 +47,7 @@
                             <label for="resourceable_type" class="block text-sm font-semibold text-gray-900 mb-2">
                                 {{ __('common.Resource Type') }} <span class="text-red-500">*</span>
                             </label>
-                            <select name="resourceable_type" id="resourceable_type" required class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition">
+                            <select name="resourceable_type" id="resourceable_type" required x-model="resourceType" @change="resourceId = ''" class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition">
                                 <option value="">{{ __('common.Select type...') }}</option>
                                 <option value="App\Models\Course">{{ __('common.Course') }}</option>
                                 <option value="App\Models\Booking">{{ __('common.Booking') }}</option>
@@ -38,8 +57,14 @@
                             <label for="resourceable_id" class="block text-sm font-semibold text-gray-900 mb-2">
                                 {{ __('common.Select Item') }} <span class="text-red-500">*</span>
                             </label>
-                            <select name="resourceable_id" id="resourceable_id" required class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition">
+                            <select name="resourceable_id" id="resourceable_id" required x-model="resourceId" class="w-full rounded-xl border-2 border-slate-200 px-4 py-3 text-sm text-gray-900 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 transition">
                                 <option value="">{{ __('common.Select item...') }}</option>
+                                <template x-if="items.length === 0 && resourceType">
+                                    <option value="" disabled x-text="resourceType === 'App\\Models\\Booking' ? '{{ __('common.No bookings available') }}' : '{{ __('common.No courses available') }}'"></option>
+                                </template>
+                                <template x-for="item in items" :key="item.id">
+                                    <option :value="item.id" x-text="getItemLabel(item)"></option>
+                                </template>
                             </select>
                         </div>
                     @endif
@@ -83,8 +108,15 @@
                         <a href="{{ route('teacher.resources.index') }}" class="px-4 py-2 border-2 border-slate-300 rounded-xl text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 transition">
                             {{ __('common.Cancel') }}
                         </a>
-                        <button type="submit" class="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-blue-700 hover:to-blue-800 transition">
-                            {{ __('common.Upload Resource') }}
+                        <button type="submit" :disabled="submitting" class="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-blue-700 hover:to-blue-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span x-show="!submitting">{{ __('common.Upload Resource') }}</span>
+                            <span x-show="submitting" x-cloak class="inline-flex items-center">
+                                <svg class="w-4 h-4 animate-spin mr-2" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                {{ __('common.Uploading...') }}
+                            </span>
                         </button>
                     </div>
                 </form>
@@ -92,48 +124,4 @@
         </div>
     </div>
 
-    <script>
-        const bookings = @json($bookings ?? []);
-        const courses = @json($courses ?? []);
-        const resourceableType = document.getElementById('resourceable_type');
-        const resourceableId = document.getElementById('resourceable_id');
-
-        if (resourceableType && resourceableId) {
-            resourceableType.addEventListener('change', function() {
-                resourceableId.innerHTML = '<option value="">{{ __('common.Select item...') }}</option>';
-                
-                if (this.value === 'App\\Models\\Booking') {
-                    if (bookings.length === 0) {
-                        const option = document.createElement('option');
-                        option.value = '';
-                        option.textContent = '{{ __('common.No bookings available') }}';
-                        option.disabled = true;
-                        resourceableId.appendChild(option);
-                    } else {
-                        bookings.forEach(booking => {
-                            const option = document.createElement('option');
-                            option.value = booking.id;
-                            option.textContent = `${booking.subject_name} - ${booking.student_name} (${booking.formatted_date})`;
-                            resourceableId.appendChild(option);
-                        });
-                    }
-                } else if (this.value === 'App\\Models\\Course') {
-                    if (courses.length === 0) {
-                        const option = document.createElement('option');
-                        option.value = '';
-                        option.textContent = '{{ __('common.No courses available') }}';
-                        option.disabled = true;
-                        resourceableId.appendChild(option);
-                    } else {
-                        courses.forEach(course => {
-                            const option = document.createElement('option');
-                            option.value = course.id;
-                            option.textContent = course.title;
-                            resourceableId.appendChild(option);
-                        });
-                    }
-                }
-            });
-        }
-    </script>
 </x-app-layout>

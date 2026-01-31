@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <form method="POST" action="{{ route('student.teacher-request.store') }}" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6 space-y-6">
+            <form method="POST" action="{{ route('student.teacher-request.store') }}" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6 space-y-6" x-data="{ submitting: false, supportsOnline: {{ old('supports_online') ? 'true' : 'false' }}, supportsInPerson: {{ old('supports_in_person') ? 'true' : 'false' }} }" x-on:submit="submitting = true">
                 @csrf
 
                 <!-- Qualifications -->
@@ -102,14 +102,14 @@
                     </label>
                     <div class="space-y-3">
                         <label class="flex items-center gap-3 p-4 rounded-xl border-2 border-slate-200 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 cursor-pointer transition">
-                            <input type="checkbox" name="supports_online" value="1" {{ old('supports_online') ? 'checked' : '' }} class="rounded border-slate-300 dark:border-gray-600 text-blue-600 dark:text-blue-500 focus:ring-blue-500 dark:bg-gray-700">
+                            <input type="checkbox" name="supports_online" value="1" x-model="supportsOnline" class="rounded border-slate-300 dark:border-gray-600 text-blue-600 dark:text-blue-500 focus:ring-blue-500 dark:bg-gray-700">
                             <div>
                                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ __('common.Online Teaching') }}</span>
                                 <p class="text-xs text-gray-600 dark:text-gray-400">{{ __('common.I can teach online via video calls') }}</p>
                             </div>
                         </label>
                         <label class="flex items-center gap-3 p-4 rounded-xl border-2 border-slate-200 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 cursor-pointer transition">
-                            <input type="checkbox" name="supports_in_person" value="1" {{ old('supports_in_person') ? 'checked' : '' }} class="rounded border-slate-300 dark:border-gray-600 text-blue-600 dark:text-blue-500 focus:ring-blue-500 dark:bg-gray-700">
+                            <input type="checkbox" name="supports_in_person" value="1" x-model="supportsInPerson" class="rounded border-slate-300 dark:border-gray-600 text-blue-600 dark:text-blue-500 focus:ring-blue-500 dark:bg-gray-700">
                             <div>
                                 <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ __('common.In-Person Teaching') }}</span>
                                 <p class="text-xs text-gray-600 dark:text-gray-400">{{ __('common.I can teach in person at a location') }}</p>
@@ -119,7 +119,7 @@
                 </div>
 
                 <!-- Location (if in-person) -->
-                <div id="location-field" style="display: none;">
+                <div x-show="supportsInPerson" x-cloak>
                     <label for="default_location_id" class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
                         {{ __('common.Default Location') }}
                     </label>
@@ -132,7 +132,7 @@
                 </div>
 
                 <!-- Meeting Provider (if online) -->
-                <div id="meeting-provider-field" style="display: none;">
+                <div x-show="supportsOnline" x-cloak>
                     <label for="default_meeting_provider" class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
                         {{ __('common.Meeting Provider') }}
                     </label>
@@ -148,38 +148,19 @@
                     <a href="{{ route('student.dashboard') }}" class="px-4 py-2 border-2 border-slate-300 dark:border-gray-600 rounded-xl text-sm font-semibold text-slate-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-slate-50 dark:hover:bg-gray-700 transition">
                         {{ __('common.Cancel') }}
                     </a>
-                    <button type="submit" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-purple-700 hover:to-indigo-700 transition">
-                        {{ __('common.Submit Request') }}
+                    <button type="submit" :disabled="submitting" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-purple-700 hover:to-indigo-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        <span x-show="!submitting">{{ __('common.Submit Request') }}</span>
+                        <span x-show="submitting" x-cloak class="inline-flex items-center">
+                            <svg class="w-4 h-4 animate-spin mr-2" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            {{ __('common.Loading...') }}
+                        </span>
                     </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const onlineCheckbox = document.querySelector('input[name="supports_online"]');
-            const inPersonCheckbox = document.querySelector('input[name="supports_in_person"]');
-            const locationField = document.getElementById('location-field');
-            const meetingProviderField = document.getElementById('meeting-provider-field');
-
-            function toggleFields() {
-                if (inPersonCheckbox.checked) {
-                    locationField.style.display = 'block';
-                } else {
-                    locationField.style.display = 'none';
-                }
-
-                if (onlineCheckbox.checked) {
-                    meetingProviderField.style.display = 'block';
-                } else {
-                    meetingProviderField.style.display = 'none';
-                }
-            }
-
-            onlineCheckbox.addEventListener('change', toggleFields);
-            inPersonCheckbox.addEventListener('change', toggleFields);
-            toggleFields(); // Initial check
-        });
-    </script>
 </x-app-layout>

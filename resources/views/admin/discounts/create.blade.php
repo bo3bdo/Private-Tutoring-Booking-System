@@ -32,7 +32,7 @@
         <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-lg sm:rounded-xl border border-gray-200 dark:border-gray-700">
                 <div class="p-4 sm:p-6">
-                    <form method="POST" action="{{ route('admin.discounts.store') }}" class="space-y-4 sm:space-y-6">
+                    <form method="POST" action="{{ route('admin.discounts.store') }}" class="space-y-4 sm:space-y-6" x-data="{ submitting: false }" x-on:submit="submitting = true">
                         @csrf
                         <div>
                             <label for="code" class="block text-sm font-semibold text-gray-900 dark:text-white mb-1.5 sm:mb-2">{{ __('common.Code') }} <span class="text-red-500">*</span></label>
@@ -104,8 +104,15 @@
                             </label>
                         </div>
                         <div class="flex gap-2 sm:gap-3 pt-4">
-                            <button type="submit" class="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition shadow-lg hover:shadow-xl">
-                                {{ __('common.Create') }}
+                            <button type="submit" :disabled="submitting" class="flex-1 sm:flex-none bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-600 text-white px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span x-show="!submitting">{{ __('common.Create') }}</span>
+                                <span x-show="submitting" x-cloak class="inline-flex items-center">
+                                    <svg class="w-4 h-4 animate-spin mr-2" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    {{ __('common.Loading...') }}
+                                </span>
                             </button>
                             <a href="{{ route('admin.discounts.index') }}" class="flex-1 sm:flex-none bg-gray-600 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold transition shadow-lg hover:shadow-xl text-center">
                                 {{ __('common.Cancel') }}

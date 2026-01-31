@@ -15,7 +15,7 @@
     <div class="py-8">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
-                <form method="POST" action="{{ route('student.support-tickets.store') }}">
+                <form method="POST" action="{{ route('student.support-tickets.store') }}" x-data="{ submitting: false }" x-on:submit="submitting = true">
                     @csrf
                     <div class="mb-4">
                         <label for="subject" class="block text-sm font-semibold text-gray-900 mb-2">
@@ -66,8 +66,15 @@
                         <a href="{{ route('student.support-tickets.index') }}" class="px-4 py-2 border-2 border-slate-300 rounded-xl text-sm font-semibold text-slate-700 bg-white hover:bg-slate-50 transition">
                             {{ __('common.Cancel') }}
                         </a>
-                        <button type="submit" class="px-6 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-emerald-700 hover:to-emerald-800 transition">
-                            {{ __('common.Create Ticket') }}
+                        <button type="submit" :disabled="submitting" class="px-6 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-emerald-700 hover:to-emerald-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span x-show="!submitting">{{ __('common.Create Ticket') }}</span>
+                            <span x-show="submitting" x-cloak class="inline-flex items-center">
+                                <svg class="w-4 h-4 animate-spin mr-2" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                {{ __('common.Loading...') }}
+                            </span>
                         </button>
                     </div>
                 </form>

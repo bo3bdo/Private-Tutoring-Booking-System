@@ -14,21 +14,30 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="POST" action="{{ route('admin.badges.store') }}" class="space-y-6">
+                    <form method="POST" action="{{ route('admin.badges.store') }}" class="space-y-6"
+                        x-data="{
+                            name: '{{ old('name') }}',
+                            slug: '{{ old('slug') }}',
+                            color: '{{ old('color', '#F59E0B') }}',
+                            slugEdited: {{ old('slug') ? 'true' : 'false' }},
+                            generateSlug(name) {
+                                return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                            }
+                        }">
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Name -->
                             <div>
                                 <x-input-label for="name" :value="__('Name')" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name')" required autofocus />
+                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" x-model="name" @input="if(!slugEdited) slug = generateSlug(name)" required autofocus />
                                 <x-input-error class="mt-2" :messages="$errors->get('name')" />
                             </div>
 
                             <!-- Slug -->
                             <div>
                                 <x-input-label for="slug" :value="__('Slug')" />
-                                <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full" :value="old('slug')" required />
+                                <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full" x-model="slug" @input="slugEdited = true" required />
                                 <x-input-error class="mt-2" :messages="$errors->get('slug')" />
                                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Unique identifier for the badge (e.g., bronze-learner)') }}</p>
                             </div>
@@ -48,8 +57,8 @@
                             <div>
                                 <x-input-label for="color" :value="__('Color')" />
                                 <div class="flex items-center mt-1 space-x-2">
-                                    <input type="color" id="color" name="color" value="{{ old('color', '#F59E0B') }}" class="h-10 w-20 rounded border-gray-300 dark:border-gray-700">
-                                    <x-text-input type="text" name="color_text" :value="old('color', '#F59E0B')" class="w-full" placeholder="#F59E0B" />
+                                    <input type="color" id="color" name="color" x-model="color" class="h-10 w-20 rounded border-gray-300 dark:border-gray-700">
+                                    <x-text-input type="text" name="color_text" x-model="color" class="w-full" placeholder="#F59E0B" />
                                 </div>
                                 <x-input-error class="mt-2" :messages="$errors->get('color')" />
                             </div>
@@ -85,21 +94,4 @@
         </div>
     </div>
 
-    <script>
-        // Sync color picker with text input
-        document.getElementById('color').addEventListener('input', function(e) {
-            document.querySelector('input[name="color_text"]').value = e.target.value;
-        });
-        document.querySelector('input[name="color_text"]').addEventListener('input', function(e) {
-            document.getElementById('color').value = e.target.value;
-        });
-
-        // Auto-generate slug from name
-        document.getElementById('name').addEventListener('input', function(e) {
-            const slug = e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            if (!document.getElementById('slug').value) {
-                document.getElementById('slug').value = slug;
-            }
-        });
-    </script>
 </x-app-layout>

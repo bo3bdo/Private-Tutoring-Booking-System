@@ -71,11 +71,15 @@
     </div>
 @empty
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-8 text-center">
-            <div class="rounded-2xl border border-dashed border-slate-300 dark:border-gray-600 bg-slate-50 dark:bg-gray-700 p-8">
-                <div class="text-sm font-semibold text-slate-800 dark:text-gray-200">{{ __('common.No available slots') }}</div>
-                <div class="mt-1 text-xs text-slate-500 dark:text-gray-400">{{ __('common.Try changing the week or teacher.') }}</div>
-            </div>
-        </div>
+        <x-empty-state
+            :title="__('common.No available slots')"
+            :description="__('common.Try changing the week or teacher.')"
+        >
+            <x-slot name="icon">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+            </x-slot>
+        </x-empty-state>
     </div>
 @endforelse

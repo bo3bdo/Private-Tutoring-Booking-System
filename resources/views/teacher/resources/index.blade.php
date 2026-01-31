@@ -57,13 +57,21 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-end gap-2 pt-4 border-t border-slate-200 dark:border-gray-700">
-                                    <form method="POST" action="{{ route('teacher.resources.destroy', $resource) }}" onsubmit="return confirm('{{ __('common.Are you sure you want to delete this resource?') }}');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="px-4 py-2 bg-red-600 dark:bg-red-700 text-white rounded-xl text-sm font-semibold hover:bg-red-700 dark:hover:bg-red-600 transition">
-                                            {{ __('common.Delete') }}
-                                        </button>
-                                    </form>
+                                    <button
+                                        type="button"
+                                        @click="$dispatch('open-dialog', { id: 'delete-resource-{{ $resource->id }}' })"
+                                        class="px-4 py-2 bg-red-600 dark:bg-red-700 text-white rounded-xl text-sm font-semibold hover:bg-red-700 dark:hover:bg-red-600 transition"
+                                    >
+                                        {{ __('common.Delete') }}
+                                    </button>
+                                    <x-confirm-dialog
+                                        id="delete-resource-{{ $resource->id }}"
+                                        :title="__('common.Delete Resource')"
+                                        :message="__('common.Are you sure you want to delete this resource?')"
+                                        :confirmText="__('common.Delete')"
+                                        :action="route('teacher.resources.destroy', $resource)"
+                                        method="DELETE"
+                                    />
                                 </div>
                             </div>
                         </div>

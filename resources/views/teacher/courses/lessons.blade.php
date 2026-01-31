@@ -91,15 +91,34 @@
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <button type="button" onclick="openEditModal({{ $lesson->id }})" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 text-sm font-semibold">Edit</button>
-                                    <form method="POST" action="{{ route('teacher.lessons.destroy', $lesson) }}" onsubmit="return confirm('Delete this lesson?')" class="inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 text-sm font-semibold">Delete</button>
-                                    </form>
+                                    <button
+                                        type="button"
+                                        @click="$dispatch('open-dialog', { id: 'delete-lesson-{{ $lesson->id }}' })"
+                                        class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 text-sm font-semibold"
+                                    >
+                                        Delete
+                                    </button>
+                                    <x-confirm-dialog
+                                        id="delete-lesson-{{ $lesson->id }}"
+                                        title="Delete Lesson"
+                                        message="Are you sure you want to delete this lesson?"
+                                        confirmText="Delete"
+                                        :action="route('teacher.lessons.destroy', $lesson)"
+                                        method="DELETE"
+                                    />
                                 </div>
                             </div>
                         @empty
-                            <p class="text-gray-500 dark:text-gray-400 text-center py-8">No lessons yet. Add your first lesson above.</p>
+                            <x-empty-state
+                                :title="__('common.No Lessons Found')"
+                                :description="__('common.Get started by adding your first lesson.')"
+                            >
+                                <x-slot name="icon">
+                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                </x-slot>
+                            </x-empty-state>
                         @endforelse
                     </div>
                 </div>

@@ -48,20 +48,38 @@
                                 <a href="{{ route('admin.subjects.edit', $subject) }}" class="flex-1 text-center px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition">
                                     {{ __('common.Edit') }}
                                 </a>
-                                <form method="POST" action="{{ route('admin.subjects.destroy', $subject) }}" onsubmit="return confirm('{{ __('common.Are you sure you want to delete this subject?') }}')" class="flex-1">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="w-full px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition">
-                                        {{ __('common.Delete') }}
-                                    </button>
-                                </form>
+                                <button
+                                    type="button"
+                                    @click="$dispatch('open-dialog', { id: 'delete-subject-{{ $subject->id }}' })"
+                                    class="flex-1 px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition"
+                                >
+                                    {{ __('common.Delete') }}
+                                </button>
+                                <x-confirm-dialog
+                                    id="delete-subject-{{ $subject->id }}"
+                                    :title="__('common.Delete Subject')"
+                                    :message="__('common.Are you sure you want to delete this subject? This action cannot be undone.')"
+                                    :confirmText="__('common.Delete')"
+                                    :action="route('admin.subjects.destroy', $subject)"
+                                    method="DELETE"
+                                />
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 text-center">
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">{{ __('common.No subjects found.') }}</p>
-                        <a href="{{ route('admin.subjects.create') }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-semibold">{{ __('common.Create one') }}</a>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
+                        <x-empty-state
+                            :title="__('common.No Subjects Found')"
+                            :description="__('common.Get started by creating your first subject.')"
+                            :action="route('admin.subjects.create')"
+                            :actionLabel="__('common.Add New Subject')"
+                        >
+                            <x-slot:icon>
+                                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                            </x-slot>
+                        </x-empty-state>
                     </div>
                 @endforelse
             </div>
@@ -105,18 +123,39 @@
                                             <div class="flex items-center gap-2 flex-wrap">
                                                 <a href="{{ route('admin.subjects.show', $subject) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">{{ __('common.View') }}</a>
                                                 <a href="{{ route('admin.subjects.edit', $subject) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300">{{ __('common.Edit') }}</a>
-                                                <form method="POST" action="{{ route('admin.subjects.destroy', $subject) }}" onsubmit="return confirm('{{ __('common.Are you sure you want to delete this subject?') }}')" class="inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300">{{ __('common.Delete') }}</button>
-                                                </form>
+                                                <button
+                                                    type="button"
+                                                    @click="$dispatch('open-dialog', { id: 'delete-subject-desktop-{{ $subject->id }}' })"
+                                                    class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300"
+                                                >
+                                                    {{ __('common.Delete') }}
+                                                </button>
+                                                <x-confirm-dialog
+                                                    id="delete-subject-desktop-{{ $subject->id }}"
+                                                    :title="__('common.Delete Subject')"
+                                                    :message="__('common.Are you sure you want to delete this subject? This action cannot be undone.')"
+                                                    :confirmText="__('common.Delete')"
+                                                    :action="route('admin.subjects.destroy', $subject)"
+                                                    method="DELETE"
+                                                />
                                             </div>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="px-4 sm:px-6 py-8 sm:py-12 text-center text-gray-500 dark:text-gray-400">
-                                            {{ __('common.No subjects found.') }} <a href="{{ route('admin.subjects.create') }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">{{ __('common.Create one') }}</a>
+                                        <td colspan="5">
+                                            <x-empty-state
+                                                :title="__('common.No Subjects Found')"
+                                                :description="__('common.Get started by creating your first subject.')"
+                                                :action="route('admin.subjects.create')"
+                                                :actionLabel="__('common.Add New Subject')"
+                                            >
+                                                <x-slot:icon>
+                                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                                    </svg>
+                                                </x-slot>
+                                            </x-empty-state>
                                         </td>
                                     </tr>
                                 @endforelse

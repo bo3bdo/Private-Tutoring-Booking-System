@@ -18,7 +18,7 @@
         <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border border-gray-200 dark:border-gray-700">
                 <div class="p-4 sm:p-6">
-                    <form method="POST" action="{{ route('admin.subjects.store') }}" class="space-y-4 sm:space-y-6">
+                    <form method="POST" action="{{ route('admin.subjects.store') }}" class="space-y-4 sm:space-y-6" x-data="{ submitting: false }" x-on:submit="submitting = true">
                         @csrf
 
                         <div>
@@ -51,8 +51,15 @@
                             <a href="{{ route('admin.subjects.index') }}" class="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 border-2 border-slate-300 dark:border-gray-600 rounded-lg sm:rounded-xl text-sm font-semibold text-slate-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-slate-50 dark:hover:bg-gray-600 hover:border-slate-400 dark:hover:border-gray-500 transition">
                                 {{ __('common.Cancel') }}
                             </a>
-                            <button type="submit" class="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-700 dark:to-slate-600 rounded-lg sm:rounded-xl text-sm font-semibold text-white shadow-lg hover:from-slate-800 hover:to-slate-700 dark:hover:from-slate-600 dark:hover:to-slate-500 transform hover:scale-105 transition">
-                                {{ __('common.Create Subject') }}
+                            <button type="submit" :disabled="submitting" class="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-700 dark:to-slate-600 rounded-lg sm:rounded-xl text-sm font-semibold text-white shadow-lg hover:from-slate-800 hover:to-slate-700 dark:hover:from-slate-600 dark:hover:to-slate-500 transform hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                                <span x-show="!submitting">{{ __('common.Create Subject') }}</span>
+                                <span x-show="submitting" x-cloak class="inline-flex items-center">
+                                    <svg class="w-4 h-4 animate-spin mr-2" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    {{ __('common.Loading...') }}
+                                </span>
                             </button>
                         </div>
                     </form>

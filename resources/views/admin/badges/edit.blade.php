@@ -14,7 +14,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="POST" action="{{ route('admin.badges.update', $badge) }}" class="space-y-6">
+                    <form method="POST" action="{{ route('admin.badges.update', $badge) }}" class="space-y-6"
+                        x-data="{ color: '{{ old('color', $badge->color) }}' }">
                         @csrf
                         @method('PUT')
 
@@ -48,8 +49,8 @@
                             <div>
                                 <x-input-label for="color" :value="__('Color')" />
                                 <div class="flex items-center mt-1 space-x-2">
-                                    <input type="color" id="color" name="color" value="{{ old('color', $badge->color) }}" class="h-10 w-20 rounded border-gray-300 dark:border-gray-700">
-                                    <x-text-input type="text" name="color_text" :value="old('color', $badge->color)" class="w-full" placeholder="#F59E0B" />
+                                    <input type="color" id="color" name="color" x-model="color" class="h-10 w-20 rounded border-gray-300 dark:border-gray-700">
+                                    <x-text-input type="text" name="color_text" x-model="color" class="w-full" placeholder="#F59E0B" />
                                 </div>
                                 <x-input-error class="mt-2" :messages="$errors->get('color')" />
                             </div>
@@ -84,13 +85,4 @@
         </div>
     </div>
 
-    <script>
-        // Sync color picker with text input
-        document.getElementById('color').addEventListener('input', function(e) {
-            document.querySelector('input[name="color_text"]').value = e.target.value;
-        });
-        document.querySelector('input[name="color_text"]').addEventListener('input', function(e) {
-            document.getElementById('color').value = e.target.value;
-        });
-    </script>
 </x-app-layout>

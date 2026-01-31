@@ -76,13 +76,21 @@
                                         <div class="text-sm text-gray-900 dark:text-white">{{ $userBadge->awarded_at->format('M d, Y H:i') }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <form action="{{ route('admin.badges.revoke', ['badge' => $badge, 'user_id' => $userBadge->user_id]) }}" method="POST" class="inline" onsubmit="return confirm('{{ __('Are you sure you want to revoke this badge?') }}')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-900">
-                                                {{ __('Revoke') }}
-                                            </button>
-                                        </form>
+                                        <button
+                                            type="button"
+                                            @click="$dispatch('open-dialog', { id: 'revoke-badge-{{ $userBadge->user_id }}' })"
+                                            class="text-red-600 dark:text-red-400 hover:text-red-900"
+                                        >
+                                            {{ __('Revoke') }}
+                                        </button>
+                                        <x-confirm-dialog
+                                            id="revoke-badge-{{ $userBadge->user_id }}"
+                                            :title="__('Revoke Badge')"
+                                            :message="__('Are you sure you want to revoke this badge?')"
+                                            :confirmText="__('Revoke')"
+                                            :action="route('admin.badges.revoke', ['badge' => $badge, 'user_id' => $userBadge->user_id])"
+                                            method="DELETE"
+                                        />
                                     </td>
                                 </tr>
                                 @endforeach

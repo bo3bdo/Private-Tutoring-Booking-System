@@ -52,6 +52,7 @@
             @endif
 
             <!-- Profile Summary Card -->
+            <x-skeleton-loader type="profile" :delay="100">
             <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
                     <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Profile Summary') }}</h3>
@@ -116,8 +117,10 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Statistics Cards -->
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="150">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <!-- Today Earnings -->
                 <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-emerald-200 dark:border-emerald-700/50 p-4 sm:p-6">
@@ -171,8 +174,10 @@
                     <p class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">{{ number_format($totalEarnings, 2) }} BHD</p>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Booking Statistics -->
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="200">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <a href="{{ route('teacher.bookings.index') }}" class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-4 sm:p-6 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-xl transition cursor-pointer group">
                     <div class="flex items-center justify-between">
@@ -245,8 +250,10 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Performance & Additional Statistics -->
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="250">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Attendance Rate -->
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
@@ -313,8 +320,10 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Growth & Subjects Statistics -->
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="300">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Monthly Growth -->
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
@@ -383,8 +392,10 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Quick Actions -->
+            <x-skeleton-loader type="quick-actions" :delay="350">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-6 border-b border-slate-200 dark:border-gray-700">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Quick Actions') }}</h3>
@@ -468,9 +479,11 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Upcoming Bookings -->
             @if($upcomingBookings->isNotEmpty())
+                <x-skeleton-loader type="booking-list" :rows="3" :delay="400">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                     <div class="p-6 border-b border-slate-200 dark:border-gray-700">
                         <div class="flex items-center justify-between">
@@ -517,6 +530,7 @@
                         </div>
                     </div>
                 </div>
+                </x-skeleton-loader>
             @endif
         </div>
     </div>

@@ -111,7 +111,7 @@
                         <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('common.Select your preferred lesson mode and provide any additional notes') }}</p>
                     </div>
 
-                    <form method="POST" action="{{ route('student.bookings.store') }}" class="space-y-6">
+                    <form method="POST" action="{{ route('student.bookings.store') }}" class="space-y-6" x-data="{ submitting: false }" x-on:submit="submitting = true">
                         @csrf
                         <input type="hidden" name="time_slot_id" value="{{ $slot->id }}">
                         <input type="hidden" name="subject_id" value="{{ $subject->id }}">
@@ -240,11 +240,20 @@
                             <a href="{{ url()->previous() }}" class="inline-flex items-center justify-center px-6 py-3 border-2 border-slate-300 dark:border-gray-600 rounded-xl text-sm font-semibold text-slate-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-slate-50 dark:hover:bg-gray-700 hover:border-slate-400 dark:hover:border-gray-500 focus:outline-none focus:ring-2 focus:ring-slate-400 dark:focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition">
                                 {{ __('common.Cancel') }}
                             </a>
-                            <button type="submit" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-700 dark:to-slate-600 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-slate-800 hover:to-slate-700 dark:hover:from-slate-600 dark:hover:to-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-500 dark:focus:ring-gray-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform hover:scale-105 transition duration-200">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                {{ __('common.Confirm Booking') }}
+                            <button type="submit" :disabled="submitting" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-700 dark:to-slate-600 rounded-xl text-sm font-semibold text-white shadow-lg hover:from-slate-800 hover:to-slate-700 dark:hover:from-slate-600 dark:hover:to-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-500 dark:focus:ring-gray-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transform hover:scale-105 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                                <span x-show="!submitting" class="inline-flex items-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    {{ __('common.Confirm Booking') }}
+                                </span>
+                                <span x-show="submitting" x-cloak class="inline-flex items-center">
+                                    <svg class="w-5 h-5 mr-2 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    {{ __('common.Loading...') }}
+                                </span>
                             </button>
                         </div>
                     </form>

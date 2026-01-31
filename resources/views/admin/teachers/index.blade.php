@@ -78,25 +78,38 @@
                                 <a href="{{ route('admin.teachers.edit', $teacher) }}" class="flex-1 text-center px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg transition">
                                     {{ __('common.Edit') }}
                                 </a>
-                                <form method="POST" action="{{ route('admin.teachers.destroy', $teacher) }}" onsubmit="return confirm('{{ __('common.Are you sure you want to delete this teacher?') }}')" class="flex-1">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="w-full px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition">
-                                        {{ __('common.Delete') }}
-                                    </button>
-                                </form>
+                                <button
+                                    type="button"
+                                    @click="$dispatch('open-dialog', { id: 'delete-teacher-mobile-{{ $teacher->id }}' })"
+                                    class="flex-1 w-full px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition"
+                                >
+                                    {{ __('common.Delete') }}
+                                </button>
+                                <x-confirm-dialog
+                                    id="delete-teacher-mobile-{{ $teacher->id }}"
+                                    :title="__('common.Delete Teacher')"
+                                    :message="__('common.Are you sure you want to delete this teacher?')"
+                                    :confirmText="__('common.Delete')"
+                                    :action="route('admin.teachers.destroy', $teacher)"
+                                    method="DELETE"
+                                />
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 p-8 text-center">
-                        <div class="w-16 h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                            </svg>
-                        </div>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">No teachers found.</p>
-                        <a href="{{ route('admin.teachers.create') }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-semibold">Add one</a>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
+                        <x-empty-state
+                            :title="__('common.No Teachers Found')"
+                            :description="__('common.Get started by adding your first teacher.')"
+                            :action="route('admin.teachers.create')"
+                            :actionLabel="__('common.Add New Teacher')"
+                        >
+                            <x-slot name="icon">
+                                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </x-slot>
+                        </x-empty-state>
                     </div>
                 @endforelse
             </div>
@@ -164,26 +177,39 @@
                                             <div class="flex items-center justify-end gap-2 flex-wrap">
                                                 <a href="{{ route('admin.teachers.show', $teacher) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300 font-semibold text-xs sm:text-sm">{{ __('common.View') }}</a>
                                                 <a href="{{ route('admin.teachers.edit', $teacher) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 font-semibold text-xs sm:text-sm">{{ __('common.Edit') }}</a>
-                                                <form method="POST" action="{{ route('admin.teachers.destroy', $teacher) }}" onsubmit="return confirm('{{ __('common.Are you sure you want to delete this teacher?') }}')" class="inline-block">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 font-semibold text-xs sm:text-sm">{{ __('common.Delete') }}</button>
-                                                </form>
+                                                <button
+                                                    type="button"
+                                                    @click="$dispatch('open-dialog', { id: 'delete-teacher-desktop-{{ $teacher->id }}' })"
+                                                    class="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-300 font-semibold text-xs sm:text-sm"
+                                                >
+                                                    {{ __('common.Delete') }}
+                                                </button>
+                                                <x-confirm-dialog
+                                                    id="delete-teacher-desktop-{{ $teacher->id }}"
+                                                    :title="__('common.Delete Teacher')"
+                                                    :message="__('common.Are you sure you want to delete this teacher?')"
+                                                    :confirmText="__('common.Delete')"
+                                                    :action="route('admin.teachers.destroy', $teacher)"
+                                                    method="DELETE"
+                                                />
                                             </div>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-4 sm:px-6 py-8 sm:py-12 text-center">
-                                            <div class="flex flex-col items-center">
-                                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-slate-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-3 sm:mb-4">
-                                                    <svg class="w-6 h-6 sm:w-8 sm:h-8 text-slate-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <td colspan="6" class="px-4 sm:px-6 py-4">
+                                            <x-empty-state
+                                                :title="__('common.No Teachers Found')"
+                                                :description="__('common.Get started by adding your first teacher.')"
+                                                :action="route('admin.teachers.create')"
+                                                :actionLabel="__('common.Add New Teacher')"
+                                            >
+                                                <x-slot name="icon">
+                                                    <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                                     </svg>
-                                                </div>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">No teachers found.</p>
-                                                <a href="{{ route('admin.teachers.create') }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-semibold">Add one</a>
-                                            </div>
+                                                </x-slot>
+                                            </x-empty-state>
                                         </td>
                                     </tr>
                                 @endforelse

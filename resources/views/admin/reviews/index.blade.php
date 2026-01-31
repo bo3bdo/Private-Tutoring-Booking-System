@@ -70,13 +70,21 @@
                                                 </button>
                                             </form>
                                         @endif
-                                        <form method="POST" action="{{ route('admin.reviews.destroy', $review) }}" class="flex-1 sm:flex-initial" onsubmit="return confirm('{{ __('common.Are you sure you want to delete this review?') }}');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="w-full sm:w-auto px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold hover:bg-red-700 transition">
-                                                {{ __('common.Delete') }}
-                                            </button>
-                                        </form>
+                                        <button
+                                            type="button"
+                                            @click="$dispatch('open-dialog', { id: 'delete-review-{{ $review->id }}' })"
+                                            class="flex-1 sm:flex-initial w-full sm:w-auto px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg sm:rounded-xl text-xs sm:text-sm font-semibold hover:bg-red-700 transition"
+                                        >
+                                            {{ __('common.Delete') }}
+                                        </button>
+                                        <x-confirm-dialog
+                                            id="delete-review-{{ $review->id }}"
+                                            :title="__('common.Delete Review')"
+                                            :message="__('common.Are you sure you want to delete this review?')"
+                                            :confirmText="__('common.Delete')"
+                                            :action="route('admin.reviews.destroy', $review)"
+                                            method="DELETE"
+                                        />
                                     </div>
                                 </div>
                             </div>

@@ -19,7 +19,7 @@
                         <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{{ __('common.Manage your teaching profile, hourly rate, and preferences') }}</p>
                     </div>
 
-                    <form method="POST" action="{{ route('teacher.profile.update') }}" class="space-y-4 sm:space-y-6">
+                    <form method="POST" action="{{ route('teacher.profile.update') }}" class="space-y-4 sm:space-y-6" x-data="{ submitting: false }" x-on:submit="submitting = true">
                         @csrf
                         @method('PUT')
 
@@ -153,11 +153,20 @@
                         </div>
 
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-4 sm:pt-6 border-t border-slate-200 dark:border-gray-700">
-                            <button type="submit" class="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-700 dark:to-slate-600 rounded-lg sm:rounded-xl text-sm font-semibold text-white shadow-lg hover:from-slate-800 hover:to-slate-700 dark:hover:from-slate-600 dark:hover:to-slate-500 transform hover:scale-105 transition">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                {{ __('common.Update Profile') }}
+                            <button type="submit" :disabled="submitting" class="inline-flex items-center justify-center px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-700 dark:to-slate-600 rounded-lg sm:rounded-xl text-sm font-semibold text-white shadow-lg hover:from-slate-800 hover:to-slate-700 dark:hover:from-slate-600 dark:hover:to-slate-500 transform hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                                <span x-show="!submitting" class="inline-flex items-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    {{ __('common.Update Profile') }}
+                                </span>
+                                <span x-show="submitting" x-cloak class="inline-flex items-center">
+                                    <svg class="w-5 h-5 mr-2 animate-spin" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    {{ __('common.Loading...') }}
+                                </span>
                             </button>
                         </div>
                     </form>

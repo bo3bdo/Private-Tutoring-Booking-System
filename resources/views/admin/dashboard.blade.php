@@ -29,6 +29,7 @@
     <div class="py-4 sm:py-6 lg:py-8 -mt-4 sm:-mt-6 lg:-mt-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6">
             <!-- Stats Cards -->
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="100">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <a href="{{ route('admin.bookings.index') }}" class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-blue-200 dark:border-blue-700/50 p-4 sm:p-6 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-xl transition cursor-pointer group">
                     <div class="flex items-center justify-between mb-3 sm:mb-4">
@@ -90,8 +91,10 @@
                     <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-purple-700 dark:group-hover:text-purple-400 transition">{{ $stats['active_students'] }}</p>
                 </a>
             </div>
+            </x-skeleton-loader>
 
             <!-- Additional Stats Cards -->
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="150">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <a href="{{ route('admin.payments.index', ['filter' => 'succeeded']) }}" class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 rounded-xl sm:rounded-2xl shadow-lg border-2 border-green-200 dark:border-green-700/50 p-4 sm:p-6 hover:border-green-300 dark:hover:border-green-600 hover:shadow-xl transition cursor-pointer group">
                     <div class="flex items-center justify-between mb-3 sm:mb-4">
@@ -153,8 +156,10 @@
                     <p class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-red-700 dark:group-hover:text-red-400 transition">{{ $stats['open_support_tickets'] }}</p>
                 </a>
             </div>
+            </x-skeleton-loader>
 
             <!-- Quick Actions -->
+            <x-skeleton-loader type="quick-actions" :delay="200">
             <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
                     <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Quick Actions') }}</h3>
@@ -224,9 +229,11 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Monthly Statistics -->
             @if(isset($monthlyStats))
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="250">
             <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
                     <h3 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Monthly Statistics') }}</h3>
@@ -264,6 +271,7 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
             @endif
 
             <!-- Revenue Chart -->
@@ -303,6 +311,7 @@
             @endif
 
             <!-- Recent Bookings -->
+            <x-skeleton-loader type="booking-list" :rows="5" :delay="300">
             <div class="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-gray-700">
                     <div class="flex items-center justify-between">
@@ -350,6 +359,7 @@
                     @endif
                 </div>
             </div>
+            </x-skeleton-loader>
         </div>
     </div>
 

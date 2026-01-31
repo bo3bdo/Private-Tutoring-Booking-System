@@ -29,6 +29,7 @@
     <div class="py-8 -mt-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <!-- Payment Statistics -->
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="100">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Total Paid -->
                 <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 rounded-2xl shadow-lg border-2 border-emerald-200 dark:border-emerald-700/50 p-6">
@@ -85,8 +86,10 @@
                     <p class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-amber-800 dark:group-hover:text-amber-200 transition">{{ number_format($pendingPayments, 2) }} BHD</p>
                 </a>
             </div>
+            </x-skeleton-loader>
 
             <!-- Booking Statistics -->
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="150">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <a href="{{ route('student.bookings.index') }}" class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-xl transition cursor-pointer group">
                     <div class="flex items-center justify-between">
@@ -164,8 +167,10 @@
                     </div>
                 </a>
             </div>
+            </x-skeleton-loader>
 
             <!-- Learning Statistics -->
+            <x-skeleton-loader type="stats" :count="4" :cols="4" :delay="200">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Total Learning Hours -->
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
@@ -232,8 +237,10 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Additional Statistics -->
+            <x-skeleton-loader type="stats" :count="2" :cols="3" :delay="250">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Most Studied Subject -->
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 p-6">
@@ -265,8 +272,10 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Gamification Widget -->
+            <x-skeleton-loader type="gamification" :delay="300">
             <div class="bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 dark:from-purple-900/30 dark:via-pink-900/30 dark:to-orange-900/30 rounded-2xl shadow-lg border-2 border-purple-200 dark:border-purple-700/50 overflow-hidden">
                 <div class="p-6 border-b border-purple-200 dark:border-purple-700/50">
                     <div class="flex items-center justify-between">
@@ -330,6 +339,7 @@
                     @endif
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- AI Recommendations -->
             @if(count($recommendedTeachers) > 0 || count($recommendedCourses) > 0)
@@ -438,6 +448,7 @@
             @endif
 
             <!-- Quick Actions -->
+            <x-skeleton-loader type="quick-actions" :delay="350">
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-6 border-b border-slate-200 dark:border-gray-700">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ __('common.Quick Actions') }}</h3>
@@ -514,6 +525,7 @@
                     </div>
                 </div>
             </div>
+            </x-skeleton-loader>
 
             <!-- Upcoming Bookings -->
             <!-- Become a Teacher Section -->
@@ -568,6 +580,7 @@
             @endif
 
             @if($upcomingBookingsList->isNotEmpty())
+                <x-skeleton-loader type="booking-list" :rows="3" :delay="400">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-slate-200 dark:border-gray-700 overflow-hidden">
                     <div class="p-6 border-b border-slate-200 dark:border-gray-700">
                         <div class="flex items-center justify-between">
@@ -614,6 +627,7 @@
                         </div>
                     </div>
                 </div>
+                </x-skeleton-loader>
             @endif
         </div>
     </div>
