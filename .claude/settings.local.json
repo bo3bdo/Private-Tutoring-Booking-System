@@ -9,7 +9,9 @@
       "Bash(vendor/bin/pint:*)",
       "mcp__laravel-boost__last-error",
       "Bash(vendor\\\\bin\\\\pint:*)",
-      "Bash(php vendor/bin/pint:*)"
+      "Bash(php vendor/bin/pint:*)",
+      "Bash(wc:*)",
+      "Bash(npm run build:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

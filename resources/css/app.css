@@ -14,15 +14,84 @@
 /* Custom Button Styles */
 @layer components {
     .btn-primary {
-        @apply inline-flex items-center px-6 py-3 bg-dark-blue-600 border border-transparent rounded-button font-medium text-sm text-white tracking-wide hover:bg-dark-blue-700 focus:bg-dark-blue-700 active:bg-dark-blue-800 focus:outline-none focus:ring-2 focus:ring-dark-blue-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md;
+        @apply inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-dark-blue-600 to-dark-blue-700 border border-transparent rounded-button font-medium text-sm text-white tracking-wide hover:from-dark-blue-700 hover:to-dark-blue-800 focus:outline-none focus:ring-2 focus:ring-dark-blue-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md active:scale-[0.98];
     }
 
     .btn-secondary {
-        @apply inline-flex items-center px-6 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-button font-medium text-sm text-gray-700 dark:text-gray-200 tracking-wide shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-dark-blue-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out;
+        @apply inline-flex items-center justify-center px-6 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-button font-medium text-sm text-gray-700 dark:text-gray-200 tracking-wide shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-dark-blue-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out active:scale-[0.98];
     }
 
     .btn-danger {
-        @apply inline-flex items-center px-6 py-3 bg-red-600 border border-transparent rounded-button font-medium text-sm text-white tracking-wide hover:bg-red-700 active:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md;
+        @apply inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 border border-transparent rounded-button font-medium text-sm text-white tracking-wide hover:from-red-700 hover:to-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md active:scale-[0.98];
+    }
+
+    .btn-success {
+        @apply inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 border border-transparent rounded-button font-medium text-sm text-white tracking-wide hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out shadow-sm hover:shadow-md active:scale-[0.98];
+    }
+
+    .btn-ghost {
+        @apply inline-flex items-center justify-center px-6 py-3 bg-transparent border border-transparent rounded-button font-medium text-sm text-gray-700 dark:text-gray-300 tracking-wide hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 transition-all duration-200 ease-in-out active:scale-[0.98];
+    }
+
+    /* Glass-morphism utilities */
+    .glass {
+        @apply bg-white/70 dark:bg-gray-800/70 backdrop-blur-md border border-white/20 dark:border-gray-700/50;
+    }
+
+    .glass-card {
+        @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-white/30 dark:border-gray-700/50 shadow-lg;
+    }
+
+    /* Enhanced shadow system */
+    .shadow-soft {
+        box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04);
+    }
+
+    .dark .shadow-soft {
+        box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.25), 0 10px 20px -2px rgba(0, 0, 0, 0.15);
+    }
+
+    .shadow-elevated {
+        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .dark .shadow-elevated {
+        box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.35), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    }
+
+    .shadow-glow-blue {
+        box-shadow: 0 0 20px rgba(0, 102, 204, 0.3);
+    }
+
+    .dark .shadow-glow-blue {
+        box-shadow: 0 0 25px rgba(0, 102, 204, 0.4);
+    }
+
+    /* Hover lift effect */
+    .hover-lift {
+        @apply transition-all duration-300 ease-out;
+    }
+
+    .hover-lift:hover {
+        @apply -translate-y-1;
+        box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.15), 0 4px 10px -2px rgba(0, 0, 0, 0.08);
+    }
+
+    .dark .hover-lift:hover {
+        box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.4), 0 4px 10px -2px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Form component classes */
+    .form-input {
+        @apply block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 focus:border-dark-blue-500 dark:focus:border-dark-blue-400 focus:ring-2 focus:ring-dark-blue-500/20 dark:focus:ring-dark-blue-400/20;
+    }
+
+    .form-select {
+        @apply block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 focus:border-dark-blue-500 dark:focus:border-dark-blue-400 focus:ring-2 focus:ring-dark-blue-500/20 dark:focus:ring-dark-blue-400/20;
+    }
+
+    .form-textarea {
+        @apply block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-xl shadow-sm transition-all duration-200 hover:border-gray-400 dark:hover:border-gray-500 focus:border-dark-blue-500 dark:focus:border-dark-blue-400 focus:ring-2 focus:ring-dark-blue-500/20 dark:focus:ring-dark-blue-400/20 resize-none;
     }
 }
 
@@ -41,17 +110,30 @@
     .animate-fade-in {
         animation: fadeIn 0.3s ease-in-out;
     }
-    
+
     .animate-slide-up {
         animation: slideUp 0.3s ease-out;
     }
-    
+
     .animate-slide-down {
         animation: slideDown 0.3s ease-out;
     }
-    
+
     .animate-scale-in {
         animation: scaleIn 0.2s ease-out;
+    }
+
+    .animate-pulse-soft {
+        animation: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .animate-bounce-subtle {
+        animation: bounceSubtle 1s ease-in-out infinite;
+    }
+
+    .animate-gradient-shift {
+        animation: gradientShift 3s ease infinite;
+        background-size: 200% 200%;
     }
 }
 
@@ -97,6 +179,36 @@
     }
 }
 
+@keyframes pulseSoft {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes bounceSubtle {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 /* Focus visible for better accessibility */
 @layer base {
     *:focus-visible {
@@ -107,20 +219,37 @@
 /* Loading skeleton animation */
 @keyframes shimmer {
     0% {
-        background-position: -1000px 0;
+        background-position: -200% 0;
     }
     100% {
-        background-position: 1000px 0;
+        background-position: 200% 0;
     }
 }
 
 .animate-shimmer {
-    animation: shimmer 2s infinite linear;
-    background: linear-gradient(to right, #f0f0f0 8%, #e0e0e0 18%, #f0f0f0 33%);
-    background-size: 1000px 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #e8e8e8 20%,
+        #f5f5f5 40%,
+        #e8e8e8 60%,
+        #f0f0f0 80%,
+        #f0f0f0 100%
+    );
+    background-size: 200% 100%;
 }
 
 .dark .animate-shimmer {
-    background: linear-gradient(to right, #374151 8%, #4b5563 18%, #374151 33%);
-    background-size: 1000px 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    background: linear-gradient(
+        90deg,
+        #374151 0%,
+        #4b5563 20%,
+        #6b7280 40%,
+        #4b5563 60%,
+        #374151 80%,
+        #374151 100%
+    );
+    background-size: 200% 100%;
 }
